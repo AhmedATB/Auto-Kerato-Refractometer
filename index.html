@@ -173,23 +173,28 @@
             <section id="sec-sim-light" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: مسار الضوء وجزيئات الأشعة (Particle System)</h2>
-                    <p class="text-slate-300 text-lg mb-6">محاكي فيزيائي متطور يوضح تدفق فوتونات الـ IR داخل النظام البصري المعقد للجهاز.</p>
+                    <p class="text-slate-300 text-lg mb-6">محاكي فيزيائي متطور يوضح تدفق فوتونات الـ IR، مع محاكاة لنظام التضبيب (Fogging) الذي يقوم بتغويش الرؤية لإرخاء عين المريض.</p>
 
-                    <div class="sim-container h-[450px] mb-6 border border-purple-900/50 pulse-glow relative">
-                        <div class="scanline"></div>
-                        <canvas id="lightPathCanvas"></canvas>
-                        <div class="absolute top-4 right-4 bg-black/90 p-4 rounded border border-purple-700 text-sm backdrop-blur-md" style="box-shadow: 0 0 20px rgba(157,0,255,0.2);">
-                            <h4 class="font-bold text-purple-400 mb-2 border-b border-purple-900 pb-1">لوحة التحكم الهندسية (HUD)</h4>
-                            <div class="flex flex-col gap-2">
-                                <button onclick="simLight.toggleFogging()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-right flex justify-between border border-slate-600">
+                    <div class="flex flex-col lg:flex-row gap-6">
+                        <div class="lg:w-2/3 sim-container h-[450px] border border-purple-900/50 pulse-glow relative">
+                            <div class="scanline"></div>
+                            <canvas id="lightPathCanvas"></canvas>
+                        </div>
+                        <div class="lg:w-1/3 bg-black p-6 rounded-xl border border-purple-700/50 flex flex-col shadow-[0_0_20px_rgba(157,0,255,0.2)]">
+                            <h4 class="font-bold text-purple-400 mb-4 border-b border-purple-900 pb-2">لوحة التحكم الهندسية (HUD)</h4>
+                            <div class="flex flex-col gap-4">
+                                <button onclick="simLight.toggleFogging()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-lg text-right flex justify-between border border-slate-600 transition">
                                     <span>نظام التضبيب (Fogging):</span> <span id="btn-fogging" class="text-red-400 font-bold">مغلق</span>
                                 </button>
-                                <button onclick="simLight.fireLaser()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-right flex justify-between border border-slate-600">
-                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400 font-bold">▶ إطلاق</span>
+                                <button onclick="simLight.fireLaser()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-lg text-right flex justify-between border border-slate-600 transition">
+                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400 font-bold text-lg">▶ إطلاق</span>
                                 </button>
                             </div>
-                            <div id="sim-light-log" class="mt-4 text-xs font-mono text-green-400 h-16 overflow-hidden">
-                                > SYSTEM INITIALIZED<br>> STANDBY FOR DIAGNOSTIC...
+                            <div class="mt-6 p-4 border border-slate-800 rounded bg-slate-950 flex-grow">
+                                <h5 class="text-xs text-slate-500 mb-2 font-mono">SYSTEM LOG:</h5>
+                                <div id="sim-light-log" class="text-sm font-mono text-green-400 leading-relaxed">
+                                    > SYSTEM INITIALIZED<br>> STANDBY FOR DIAGNOSTIC...
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -268,34 +273,34 @@
                 </div>
             </section>
 
-            <section id="sec-sim-ai" class="content-sec hidden fade-in">
+           <section id="sec-sim-ai" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الخوارزميات: الذكاء الاصطناعي والرؤية الحاسوبية (Computer Vision)</h2>
-                    <p class="text-slate-300 text-lg mb-6">شاهد الخوارزمية وهي تفكك التشويش (Perlin Noise) وتستخلص مركز بؤبؤ العين باستخدام تقنيات Hough Transform عسكريّة الدقة.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الخوارزميات: التتبع الآلي للعين (3D Auto-Tracking)</h2>
+                    <p class="text-slate-300 text-lg mb-6">المرضى لا يثبتون في مكانهم (خاصة الأطفال). شاهد كيف تقوم خوارزميات الرؤية الحاسوبية (Computer Vision) بتتبع حركة العين المستمرة وإعطاء أوامر لمحركات الجهاز للملاحقة حتى تحقيق الإغلاق (Lock-on).</p>
 
                     <div class="flex flex-col lg:flex-row gap-6">
                         <div class="lg:w-1/2 flex flex-col gap-4">
                             <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center relative overflow-hidden shadow-inner">
-                                <h4 class="font-bold text-slate-400 mb-2 relative z-10 font-mono text-sm tracking-widest">RAW IR CAMERA FEED</h4>
+                                <h4 class="font-bold text-slate-400 mb-2 relative z-10 font-mono text-sm tracking-widest">RAW IR CAMERA FEED (MOVING EYE)</h4>
                                 <div class="sim-container h-[250px] border-none rounded-none">
                                     <div class="scanline"></div>
                                     <canvas id="aiRawCanvas"></canvas>
                                 </div>
                             </div>
                             <button onclick="simAI.process()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-black font-black text-lg py-4 rounded-lg shadow-[0_0_20px_rgba(0,240,255,0.4)] transition transform active:scale-95 uppercase tracking-widest">
-                                تشغيل معالج الصور (Execute DSP) ⬇
+                                تفعيل نظام التتبع الآلي (ENGAGE AUTO-TRACK) 🎯
                             </button>
                         </div>
                        
                         <div class="lg:w-1/2 flex flex-col gap-4">
                             <div class="bg-black p-4 rounded border border-cyan-800 text-center relative overflow-hidden shadow-[0_0_20px_rgba(0,240,255,0.1)]">
-                                <h4 class="font-bold text-cyan-400 mb-2 relative z-10 font-mono text-sm tracking-widest">FEATURE EXTRACTION & LOCK</h4>
+                                <h4 class="font-bold text-cyan-400 mb-2 relative z-10 font-mono text-sm tracking-widest">AI TRACKING & MOTOR ALIGNMENT</h4>
                                 <div class="sim-container h-[250px] border-none rounded-none">
                                     <canvas id="aiProcessedCanvas"></canvas>
                                 </div>
                             </div>
                             <div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 rounded h-16 flex items-center border border-slate-800 shadow-inner overflow-hidden">
-                                > AWAITING EXECUTION COMMAND...<br>_
+                                > AWAITING ENGAGEMENT COMMAND...<br>_
                             </div>
                         </div>
                     </div>
@@ -444,7 +449,7 @@
         });
 
         // ==========================================
-        // 4. Simulator: Internal Light Path (UPGRADED PARTICLE SYSTEM)
+        // 4. Simulator: Internal Light Path (UPGRADED PARTICLE SYSTEM & FOGGING)
         // ==========================================
         class Particle {
             constructor(x, y, vx, vy, color, glow) {
@@ -465,7 +470,7 @@
         const simLight = {
             initialized: false, canvas: document.getElementById('lightPathCanvas'), ctx: null,
             time: 0, animId: null, foggingOn: false, firing: false,
-            particles: [],
+            particles: [], lensCurrentX: 0,
 
             init() {
                 this.ctx = this.canvas.getContext('2d');
@@ -476,20 +481,23 @@
             resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; },
             toggleFogging() {
                 this.foggingOn = !this.foggingOn;
-                document.getElementById('btn-fogging').innerText = this.foggingOn ? "مفعّل (يتحرك)" : "مغلق";
+                document.getElementById('btn-fogging').innerText = this.foggingOn ? "مفعّل (تشويش)" : "مغلق (واضح)";
                 document.getElementById('btn-fogging').className = this.foggingOn ? "text-green-400 font-bold" : "text-red-400 font-bold";
-                document.getElementById('sim-light-log').innerHTML = this.foggingOn ? "> ENGAGING AUTO-FOGGING MOTOR...<br>> LENS DISPLACED BY 2.5mm." : "> FOGGING MOTOR RETRACTED.<br>> LENS AT BASE POSITION.";
+                document.getElementById('sim-light-log').innerHTML = this.foggingOn ? "> ENGAGING AUTO-FOGGING MOTOR...<br>> LENS DISPLACED.<br>> TARGET BLURRED TO RELAX EYE." : "> FOGGING MOTOR RETRACTED.<br>> LENS AT BASE POSITION.<br>> TARGET SHARP.";
             },
             fireLaser() {
                 if(this.firing) return;
                 this.firing = true;
                 document.getElementById('sim-light-log').innerHTML = "> EXECUTING IR PULSE SEQUENCE...<br>> TRACKING WAVEFRONT...";
                 
-                // Burst of particles
+                const w = this.canvas.width;
                 let sldY = this.canvas.height/2;
+                let sldX = w * 0.1;
+
+                // Burst of particles
                 for(let i=0; i<30; i++) {
                     setTimeout(() => {
-                        this.particles.push(new Particle(80, sldY + (Math.random()*10-5), 18, 0, '#ff003c', 20)); // Red IR out
+                        this.particles.push(new Particle(sldX + 20, sldY + (Math.random()*10-5), 18, 0, '#ff003c', 20)); // Red IR out
                     }, i * 30);
                 }
                 setTimeout(() => { 
@@ -509,8 +517,17 @@
                 for(let i=0; i<h; i+=40) { c.moveTo(0,i); c.lineTo(w,i); }
                 c.stroke();
 
-                const cx = w/2; const cy = h/2;
-                const mirrorX = 250; const eyeX = w - 100;
+                // Dynamic Positions based on canvas width
+                const cy = h/2;
+                const sldX = w * 0.1;
+                const mirrorX = w * 0.35;
+                const eyeX = w * 0.85;
+                const ccdY = h * 0.85;
+
+                // Smooth Lens Movement
+                const targetLensX = this.foggingOn ? w * 0.5 : w * 0.65;
+                if(this.lensCurrentX === 0) this.lensCurrentX = targetLensX;
+                this.lensCurrentX += (targetLensX - this.lensCurrentX) * 0.1; // Smooth interpolation
 
                 // Physics update for particles
                 for(let i = this.particles.length - 1; i >= 0; i--) {
@@ -536,8 +553,8 @@
                 // SLD Emitter
                 c.shadowBlur = 15; c.shadowColor = '#9d00ff';
                 c.fillStyle = '#111'; c.strokeStyle = '#9d00ff'; c.lineWidth = 3;
-                c.fillRect(40, cy-30, 40, 60); c.strokeRect(40, cy-30, 40, 60);
-                c.fillStyle = '#fff'; c.font = '12px monospace'; c.fillText('SLD', 50, cy+45);
+                c.fillRect(sldX - 20, cy-30, 40, 60); c.strokeRect(sldX - 20, cy-30, 40, 60);
+                c.fillStyle = '#fff'; c.font = 'bold 12px monospace'; c.fillText('SLD', sldX - 10, cy+45);
                
                 // Beam Splitter
                 c.shadowColor = '#00f0ff'; c.strokeStyle = '#00f0ff';
@@ -546,16 +563,24 @@
                 c.beginPath(); c.moveTo(mirrorX-40, cy-40); c.lineTo(mirrorX+40, cy+40); c.lineTo(mirrorX+40, cy+20); c.lineTo(mirrorX-20, cy-40); c.fill();
                
                 // Fogging Lens
-                const fogOffset = this.foggingOn ? Math.sin(this.time)*30 : 0;
                 c.shadowColor = '#fff'; c.shadowBlur = 5;
                 c.fillStyle = 'rgba(255, 255, 255, 0.15)'; c.strokeStyle = '#fff';
-                c.beginPath(); c.ellipse(450 + fogOffset, cy, 10, 45, 0, 0, Math.PI*2); c.fill(); c.stroke();
+                c.beginPath(); c.ellipse(this.lensCurrentX, cy, 10, 45, 0, 0, Math.PI*2); c.fill(); c.stroke();
+                c.shadowBlur = 0; c.fillStyle = '#94a3b8'; c.font = '10px monospace'; c.fillText('FOG LENS', this.lensCurrentX - 25, cy + 65);
 
                 // CCD Sensor
                 c.shadowColor = '#ffaa00'; c.shadowBlur = 15;
                 c.fillStyle = '#222'; c.strokeStyle = '#ffaa00';
-                c.fillRect(mirrorX-50, h-40, 100, 30); c.strokeRect(mirrorX-50, h-40, 100, 30);
-                c.fillStyle = '#ffaa00'; c.font = 'bold 12px monospace'; c.fillText('CCD SENSOR', mirrorX-35, h-20);
+                c.fillRect(mirrorX-50, ccdY-15, 100, 30); c.strokeRect(mirrorX-50, ccdY-15, 100, 30);
+                c.fillStyle = '#ffaa00'; c.font = 'bold 12px monospace'; c.fillText('CCD SENSOR', mirrorX-35, ccdY+5);
+
+                // Draw Target (Balloon Indicator)
+                c.save();
+                if(this.foggingOn) { c.filter = 'blur(4px)'; } // Visually blur the target!
+                c.fillStyle = '#ef4444'; c.beginPath(); c.arc(eyeX - 110, cy - 20, 15, 0, Math.PI*2); c.fill(); // Balloon top
+                c.fillStyle = '#f59e0b'; c.beginPath(); c.moveTo(eyeX-110, cy-5); c.lineTo(eyeX-105, cy+5); c.lineTo(eyeX-115, cy+5); c.fill(); // Balloon base
+                c.restore();
+                c.fillStyle = '#fff'; c.font = '10px monospace'; c.fillText('TARGET', eyeX - 125, cy + 20);
 
                 // Patient Eye
                 c.shadowBlur = 0;
@@ -569,7 +594,6 @@
                 this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
-
         // ==========================================
         // 5. Simulator: Optics (UPGRADED RAY TRACING)
         // ==========================================
@@ -736,111 +760,106 @@
             }
         };
 
-        // ==========================================
-        // 7. Simulator: AI Edge Detection (UPGRADED CYBERPUNK HUD)
+        //// ==========================================
+        // 7. Simulator: AI Edge Detection & Auto Tracking (DYNAMIC EYE)
         // ==========================================
         const simAI = {
             initialized: false, rawCanvas: document.getElementById('aiRawCanvas'), procCanvas: document.getElementById('aiProcessedCanvas'),
-            rawCtx: null, procCtx: null, time: 0, animId: null, processing: false,
+            rawCtx: null, procCtx: null, time: 0, animId: null, trackingActive: false,
+            eyeX: 0, eyeY: 0, trackX: 0, trackY: 0,
 
             init() {
                 this.rawCtx = this.rawCanvas.getContext('2d'); this.procCtx = this.procCanvas.getContext('2d');
                 this.resize();
                 window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-ai').classList.contains('hidden')) this.resize(); });
-                this.initialized = true; this.drawRaw();
-                this.procCtx.fillStyle = '#000'; this.procCtx.fillRect(0,0,this.procCanvas.width, this.procCanvas.height);
+                this.initialized = true;
+                this.eyeX = this.rawCanvas.width / 2; this.eyeY = this.rawCanvas.height / 2;
+                this.trackX = this.eyeX; this.trackY = this.eyeY;
+                this.animate(); 
             },
             resize() {
                 this.rawCanvas.width = this.rawCanvas.parentElement.clientWidth; this.rawCanvas.height = 250;
                 this.procCanvas.width = this.procCanvas.parentElement.clientWidth; this.procCanvas.height = 250;
-            },
-            drawRaw() {
-                const c = this.rawCtx; const w = this.rawCanvas.width; const h = this.rawCanvas.height;
-                const cx = w/2; const cy = h/2;
-               
-                c.fillStyle = '#050505'; c.fillRect(0,0,w,h);
-                // Iris
-                const grd = c.createRadialGradient(cx, cy, 10, cx, cy, 100);
-                grd.addColorStop(0, '#000'); grd.addColorStop(0.2, '#111'); grd.addColorStop(1, '#050505');
-                c.fillStyle = grd; c.beginPath(); c.arc(cx, cy, 100, 0, Math.PI*2); c.fill();
-               
-                // Perlin-style noise overlay
-                const imgData = c.getImageData(0, 0, w, h);
-                const data = imgData.data;
-                for (let i = 0; i < data.length; i += 4) {
-                    let noise = Math.random() * 30;
-                    data[i] += noise; data[i+1] += noise; data[i+2] += noise;
-                }
-                c.putImageData(imgData, 0, 0);
+                this.eyeX = this.rawCanvas.width / 2; this.eyeY = this.rawCanvas.height / 2;
             },
             process() {
-                if(this.processing) return;
-                this.processing = true; this.time = 0;
-                document.getElementById('ai-log').innerHTML = "> INIT CANNY EDGE DETECTOR...<br>> APPLYING GAUSSIAN FILTER...";
-                this.animId = requestAnimationFrame(this.animateProcess.bind(this));
+                if(this.trackingActive) return;
+                this.trackingActive = true;
+                document.getElementById('ai-log').innerHTML = "> AUTO-TRACKING ENGAGED...<br>> ACQUIRING PUPIL COORDINATES...";
             },
-            animateProcess() {
-                const c = this.procCtx; const w = this.procCanvas.width; const h = this.procCanvas.height;
+            animate() {
+                this.time += 0.05;
+                const w = this.rawCanvas.width; const h = this.rawCanvas.height;
                 const cx = w/2; const cy = h/2;
-                const log = document.getElementById('ai-log');
-               
-                this.time++;
-                // Trail
-                c.fillStyle = 'rgba(0,0,0,0.15)'; c.fillRect(0,0,w,h); 
 
-                // Radar sweep
-                c.fillStyle = 'rgba(157, 0, 255, 0.4)';
-                const scanY = (this.time * 8) % h;
-                c.fillRect(0, scanY, w, 4);
+                // 1. Move the eye (Simulating patient head/eye wandering)
+                this.eyeX = cx + Math.sin(this.time * 0.8) * 50 + Math.cos(this.time * 1.3) * 20;
+                this.eyeY = cy + Math.cos(this.time * 0.6) * 30 + Math.sin(this.time * 1.1) * 15;
 
-                c.shadowBlur = 10; c.shadowColor = '#00f0ff';
+                // 2. Draw Raw Feed (Camera capturing the moving eye)
+                const cRaw = this.rawCtx;
+                cRaw.fillStyle = '#050505'; cRaw.fillRect(0,0,w,h);
+                
+                // Draw Iris Glow
+                const grd = cRaw.createRadialGradient(this.eyeX, this.eyeY, 10, this.eyeX, this.eyeY, 80);
+                grd.addColorStop(0, '#000'); grd.addColorStop(0.2, '#111'); grd.addColorStop(1, '#050505');
+                cRaw.fillStyle = grd; cRaw.beginPath(); cRaw.arc(this.eyeX, this.eyeY, 80, 0, Math.PI*2); cRaw.fill();
+                
+                // Draw Fake CCD Noise
+                cRaw.fillStyle = 'rgba(255,255,255,0.03)';
+                for(let i=0; i<400; i++) cRaw.fillRect(Math.random()*w, Math.random()*h, 2, 2);
 
-                if(this.time > 30 && this.time < 70) {
-                    log.innerHTML = "> COMPUTING IMAGE GRADIENTS...<br>> SUPPRESSING NON-MAXIMUMS...";
-                    // Draw fractured edges
-                    c.strokeStyle = '#00f0ff'; c.lineWidth = 1;
-                    for(let i=0; i<10; i++) {
-                        c.beginPath(); 
-                        c.arc(cx, cy, 35 + (Math.random()*2), Math.random()*Math.PI*2, Math.random()*Math.PI*2); 
-                        c.stroke();
+                // 3. Draw Processed Feed (AI Tracking HUD)
+                const c = this.procCtx;
+                if(!this.trackingActive) {
+                    c.fillStyle = '#000'; c.fillRect(0,0,w,h);
+                    c.fillStyle = '#1e293b'; c.font = "bold 14px monospace"; c.textAlign = "center";
+                    c.fillText("SYSTEM STANDBY. PRESS ENGAGE.", cx, cy);
+                } else {
+                    const log = document.getElementById('ai-log');
+                    c.fillStyle = 'rgba(0,0,0,0.3)'; c.fillRect(0,0,w,h); // trailing effect
+
+                    // Scanning line radar
+                    c.fillStyle = 'rgba(0, 240, 255, 0.2)';
+                    c.fillRect(0, (this.time * 40) % h, w, 3);
+
+                    // Motor Tracking physics (Interpolation simulating robotic motors catching up)
+                    let dx = this.eyeX - this.trackX;
+                    let dy = this.eyeY - this.trackY;
+                    this.trackX += dx * 0.15; // Motor speed
+                    this.trackY += dy * 0.15;
+
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    let locked = dist < 5; // Lock threshold
+
+                    if(locked) {
+                        log.innerHTML = "> TARGET LOCKED. ALIGNMENT: 100%<br>> MOTORS STABILIZED. READY TO FIRE.";
+                        c.strokeStyle = '#ff003c'; c.shadowColor = '#ff003c';
+                    } else {
+                        log.innerHTML = `> TRACKING... OFFSET X:${Math.abs(dx).toFixed(1)} Y:${Math.abs(dy).toFixed(1)}<br>> ADJUSTING MOTORS...`;
+                        c.strokeStyle = '#39ff14'; c.shadowColor = '#39ff14';
                     }
-                }
-                else if (this.time >= 70 && this.time < 120) {
-                    log.innerHTML = "> EXECUTING HOUGH CIRCLE TRANSFORM...<br>> VOTING SPACE OPTIMIZATION...";
-                    c.strokeStyle = '#39ff14'; c.lineWidth = 2; c.shadowColor = '#39ff14';
-                    c.beginPath(); c.arc(cx, cy, 35, 0, Math.PI*2); c.stroke(); // Pupil found
-                    
-                    // Rotating HUD elements
-                    c.save(); c.translate(cx, cy); c.rotate(this.time * 0.1);
-                    c.strokeStyle = 'rgba(57, 255, 20, 0.5)';
-                    c.strokeRect(-50, -50, 100, 100);
-                    c.restore();
-                }
-                else if (this.time >= 120) {
-                    log.innerHTML = "> TARGET LOCKED. PUPIL CENTER ACQUIRED.<br>> DISPATCHING COORDINATES TO DSP.";
-                    c.strokeStyle = '#39ff14'; c.lineWidth = 3; c.shadowColor = '#39ff14';
-                    c.beginPath(); c.arc(cx, cy, 35, 0, Math.PI*2); c.stroke();
-                    
-                    // Solid Lock HUD
-                    c.fillStyle = '#ff003c'; c.shadowBlur=0;
-                    c.fillRect(cx-2, cy-2, 4, 4); // Center dot
-                    c.strokeStyle = '#ff003c'; c.lineWidth = 2;
-                    c.beginPath(); c.moveTo(cx-15, cy); c.lineTo(cx+15, cy); c.stroke(); // Crosshair
-                    c.beginPath(); c.moveTo(cx, cy-15); c.lineTo(cx, cy+15); c.stroke();
 
-                    // Bounding brackets
-                    c.strokeStyle = '#00f0ff'; c.lineWidth = 4;
-                    const b = 60; const l = 15;
-                    c.beginPath(); c.moveTo(cx-b, cy-b+l); c.lineTo(cx-b, cy-b); c.lineTo(cx-b+l, cy-b); c.stroke(); // TL
-                    c.beginPath(); c.moveTo(cx+b, cy-b+l); c.lineTo(cx+b, cy-b); c.lineTo(cx+b-l, cy-b); c.stroke(); // TR
-                    c.beginPath(); c.moveTo(cx-b, cy+b-l); c.lineTo(cx-b, cy+b); c.lineTo(cx-b+l, cy+b); c.stroke(); // BL
-                    c.beginPath(); c.moveTo(cx+b, cy+b-l); c.lineTo(cx+b, cy+b); c.lineTo(cx+b-l, cy+b); c.stroke(); // BR
+                    c.shadowBlur = 10; c.lineWidth = 2;
+                    let tx = this.trackX; let ty = this.trackY;
 
-                    this.processing = false;
-                    return; 
+                    // Draw bounding box (Auto-focus square)
+                    const b = 45; const l = 15;
+                    c.beginPath(); c.moveTo(tx-b, ty-b+l); c.lineTo(tx-b, ty-b); c.lineTo(tx-b+l, ty-b); c.stroke(); 
+                    c.beginPath(); c.moveTo(tx+b, ty-b+l); c.lineTo(tx+b, ty-b); c.lineTo(tx+b-l, ty-b); c.stroke(); 
+                    c.beginPath(); c.moveTo(tx-b, ty+b-l); c.lineTo(tx-b, ty+b); c.lineTo(tx-b+l, ty+b); c.stroke(); 
+                    c.beginPath(); c.moveTo(tx+b, ty+b-l); c.lineTo(tx+b, ty+b); c.lineTo(tx+b-l, ty+b); c.stroke(); 
+
+                    // Draw Crosshair
+                    c.beginPath(); c.moveTo(tx-10, ty); c.lineTo(tx+10, ty); c.stroke();
+                    c.beginPath(); c.moveTo(tx, ty-10); c.lineTo(tx, ty+10); c.stroke();
+
+                    // Pupil detected ring
+                    c.beginPath(); c.arc(tx, ty, 30, 0, Math.PI*2); c.stroke();
+                    c.shadowBlur = 0;
                 }
-                c.shadowBlur = 0;
-                this.animId = requestAnimationFrame(this.animateProcess.bind(this));
+
+                this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
 
