@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموسوعة الشاملة القصوى: Auto Kerato-Refractometer</title>
+    <title>Auto Kerato-Refractometer | Advanced Engineering Simulator</title>
    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -33,8 +33,8 @@
         h1, h2, h3, h4 { letter-spacing: -0.02em; }
         .glass-box { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
        
-        .fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
        
         .pulse-glow { animation: pulseGlow 2s infinite alternate; }
         @keyframes pulseGlow { from { box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); } to { box-shadow: 0 0 30px rgba(157, 0, 255, 0.5); border-color: rgba(157,0,255,0.8); } }
@@ -51,7 +51,7 @@
         .term { color: var(--accent-amber); cursor: help; border-bottom: 1px dashed var(--accent-amber); transition: all 0.2s; font-weight: 600; }
         .term:hover { background: rgba(245, 158, 11, 0.2); text-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
 
-        #prof-modal, #history-modal { transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        #prof-modal { transition: all 0.3s ease-in-out; }
         #prof-modal.show { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
        
         .receipt-bg { background-color: #fdfbf7; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; color: #1e293b; font-family: monospace; border-top: 2px dashed #94a3b8; border-bottom: 2px dashed #94a3b8; }
@@ -64,7 +64,6 @@
             background-size: 100% 4px; z-index: 10; opacity: 0.3;
         }
 
-        /* الجداول الاحترافية */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { padding: 15px; text-align: right; border-bottom: 1px solid #334155; font-size: 0.95rem; }
         th { background-color: #0f172a; color: #00f0ff; font-weight: bold; border-top: 2px solid #00f0ff; border-bottom: 2px solid #00f0ff; }
@@ -77,154 +76,94 @@
     <nav class="w-full md:w-80 bg-slate-900 border-l border-slate-800 flex flex-col z-40 shadow-2xl h-auto md:h-full flex-shrink-0">
         <div class="p-6 border-b border-slate-800 relative bg-slate-950">
             <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-600"></div>
-            <h1 class="text-3xl font-black text-white mb-2 tracking-tight">AR/AK <span class="text-purple-500">Mastery</span></h1>
-            <p class="text-xs text-slate-400 leading-relaxed">المرجع الهندسي والطبي الشامل | من الأصول التقليدية إلى الذكاء الاصطناعي.</p>
+            <h1 class="text-3xl font-black text-white mb-2 tracking-tight">AR/AK <span class="text-purple-500">Core</span></h1>
+            <p class="text-xs text-slate-400 leading-relaxed">المنصة الهندسية التعليمية المتقدمة | Advanced Simulation</p>
             <div class="mt-4 flex items-center text-xs font-mono text-green-400 bg-green-900/20 p-2 rounded border border-green-500/30">
-                <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full ml-2" style="box-shadow: 0 0 8px #39ff14;"></span> النظام متصل ومستعد للتحليل
+                <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full ml-2" style="box-shadow: 0 0 8px #39ff14;"></span> SYSTEMS ONLINE
             </div>
         </div>
        
         <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-3 space-y-0 md:space-y-1 space-x-2 md:space-x-0 rtl:space-x-reverse" id="nav-container">
-            <button onclick="nav('sec-intro')" class="nav-btn active w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap"><span class="text-xl ml-3">🏛️</span> الملخص والأصول التاريخية</button>
-            <button onclick="nav('sec-components')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚙️</span> التشريح الداخلي للمنظومة</button>
-            <button onclick="nav('sec-operation')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">📋</span> دليل التشغيل والبرمجيات</button>
-            <button onclick="nav('sec-sim-light')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔦</span> محاكي: مسار الضوء والتضبيب</button>
-            <button onclick="nav('sec-sim-optics')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔭</span> محاكي: فيزياء الانكسار</button>
-            <button onclick="nav('sec-sim-kerato')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">👁️</span> محاكي: تضاريس القرنية</button>
-            <button onclick="nav('sec-sim-ai')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🤖</span> محاكي: التتبع الآلي (AI)</button>
-            <button onclick="nav('sec-multi')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🌌</span> الاندماج الوظيفي (5 في 1)</button>
-            <button onclick="nav('sec-printout')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🧾</span> تحليل الوصل الطبي (النتائج)</button>
-            <button onclick="nav('sec-market')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">📊</span> التحليل التجاري والمواصفات</button>
-            <button onclick="nav('sec-future')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🌍</span> البصريات 3.0 والواقع الإقليمي</button>
-            <button onclick="nav('sec-maintenance')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔧</span> بروتوكولات الصيانة الدقيقة</button>
-            <button onclick="nav('sec-scenarios')" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔬</span> مختبر الحالات السريرية المعقدة</button>
+            <button onclick="nav('sec-intro', event)" class="nav-btn active w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap"><span class="text-xl ml-3">🏛️</span> الملخص والأصول التاريخية</button>
+            <button onclick="nav('sec-mechanics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚙️</span> الميكانيكا والتحكم (Control)</button>
+            <button onclick="nav('sec-limitations', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚠️</span> المشاكل الواقعية (Limitations)</button>
+            <button onclick="nav('sec-sim-light', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔦</span> محاكي: مسار الضوء والتضبيب</button>
+            <button onclick="nav('sec-sim-optics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔬</span> محاكي: الخطأ الفيزيائي (Error Mode)</button>
+            <button onclick="nav('sec-sim-kerato', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">👁️</span> محاكي: تضاريس القرنية</button>
+            <button onclick="nav('sec-sim-ai', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🤖</span> محاكي: التتبع الآلي (AI Tracker)</button>
+            <button onclick="nav('sec-printout', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🧾</span> تحليل البيانات المطبوعة</button>
+            <button onclick="nav('sec-market', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">📊</span> السوق والتحليل التجاري</button>
+            <button onclick="nav('sec-maintenance', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔧</span> بروتوكولات الصيانة والهندسة</button>
         </div>
     </nav>
 
     <main class="flex-grow overflow-y-auto relative p-4 md:p-8 scroll-smooth" id="main-content">
+        <div id="loading-overlay" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center">
+            <div class="text-cyan-400 font-mono text-xl animate-pulse">> INITIALIZING SYSTEM...</div>
+        </div>
+
         <div class="max-w-6xl mx-auto pb-32">
 
             <section id="sec-intro" class="content-sec block fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الملخص التنفيذي: ذروة التطور التشخيصي</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الملخص التنفيذي والتاريخي</h2>
                     <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                        يجمع جهاز القياس الأوتوماتيكي للانكسار والقرنية (Auto Kerato-Refractometer) بين وظيفة فحص العيوب البصرية ووظيفة قياس انحناء القرنية في منصة واحدة. هذا الجهاز ليس مجرد أداة إلكترونية عابرة، بل هو منظومة متكاملة تدمج بين علم <span class="term" onclick="openProf('optics')">البصريات الفيزيائية</span>، و<span class="term" onclick="openProf('mechatronics')">الميكاترونكس</span> لتوفير قياسات <span class="term" onclick="openProf('objective_ref')">موضوعية</span> دقيقة للخطأ الانكساري للعين وانحناء القرنية <span class="term" onclick="openProf('auto')">آليًا</span> وفي آن واحد بدقة تصل إلى أجزاء من المليمتر.
+                        يجمع جهاز القياس الأوتوماتيكي (Auto Kerato-Refractometer) بين علم <span class="term" onclick="openProf('optics')">البصريات الفيزيائية</span>، و<span class="term" onclick="openProf('mechatronics')">الميكاترونكس</span> لتوفير قياسات دقيقة. تاريخياً، فشلت الطرق اليدوية (Retinoscopy) بسبب الأخطاء البشرية، وفشلت أجهزة (Early Optometers) بسبب بطئها الشديد وتفاعلها المعقد مع المريض. الحل الحقيقي بدأ عندما قررت وكالة ناسا (1960s) تطوير تتبع آلي بالأشعة تحت الحمراء، مما مهد الطريق لظهور الأجهزة التي تقيس الخطأ الانكساري <span class="term" onclick="openProf('auto')">آليًا</span> دون خداع العين.
                     </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                            <h3 class="text-cyan-400 font-bold text-2xl mb-4 flex items-center"><span class="text-3xl ml-2">🎯</span> القيمة السريرية والمجتمعية</h3>
-                            <ul class="space-y-4 text-slate-300">
-                                <li class="flex items-start">
-                                    <span class="text-amber-400 font-bold ml-2">1.</span>
-                                    <div><strong>الموضوعية في الفئات الصعبة:</strong> يوفر قياسًا دقيقًا في ثوانٍ للأطفال، وذوي الاحتياجات الخاصة، والمرضى غير القادرين على التواصل، دون الحاجة لاستجابتهم الذاتية.</div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-amber-400 font-bold ml-2">2.</span>
-                                    <div><strong>نقطة البداية الدقيقة:</strong> يوفر 80% من وقت الطبيب المستغرق في تجربة العدسات يدوياً لتشخيص قصر النظر وطول النظر والاستجماتيزم، وكذلك قبل جراحات الليزك وزراعة العدسات (IOL).</div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-amber-400 font-bold ml-2">3.</span>
-                                    <div><strong>تطبيقات الصحة العامة:</strong> النسخ المحمولة تساهم في المسوحات المدرسية والوقاية من "كسل العين" (Amblyopia).</div>
-                                </li>
-                            </ul>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-amber-400 font-bold text-2xl mb-4">كيف يرى الجهاز العين فعلياً؟ (Vergence)</h3>
+                        <p class="text-slate-300 mb-4">الجهاز لا يرى "صورة"، بل يطلق حزمة تحت حمراء (لأن المريض لا يراها ولا يتفاعل بؤبؤه معها)، ويحلل الضوء العائد (Reflection from Retina). المعادلة الأساسية هي:</p>
+                        <div class="bg-black p-4 rounded text-center font-mono text-cyan-400 border border-cyan-900" dir="ltr">
+                            $$ V (Vergence) = \frac{1}{d (distance)} $$
                         </div>
-                       
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                            <h3 class="text-amber-400 font-bold text-2xl mb-4 flex items-center"><span class="text-3xl ml-2">📜</span> التسلسل التاريخي العبقري</h3>
-                           <div class="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-500 before:to-transparent">
-                                
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('scheiner')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1619</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">مبدأ شاينر (Scheiner)</div>
-                                        <div class="text-xs text-slate-400 mt-1">اكتشاف الفتحة المزدوجة لتحديد بؤرة التركيز.</div>
-                                    </div>
-                                </div>
+                        <p class="text-slate-300 mt-4">حيث يحسب الجهاز الفرق (Phase Shift) بين حزمة الضوء الخارجة (Outgoing) والمنعكسة (Incoming) لتحديد قوة العدسة المطلوبة.</p>
+                    </div>
+                </div>
+            </section>
 
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('porterfield')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1759</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">مبدأ الأبتوميتر (Badal)</div>
-                                        <div class="text-xs text-slate-400 mt-1">ابتكار نظام العدسات المتغيرة لقياس الانكسار.</div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('helmholtz')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1851</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">اختراع الكيراتوميتر</div>
-                                        <div class="text-xs text-slate-400 mt-1">أول قياس دقيق لانحناء السطح الأمامي للقرنية.</div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('nasa')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1960s</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">تدخل وكالة ناسا (NASA)</div>
-                                        <div class="text-xs text-slate-400 mt-1">تطوير أجهزة تتبع العين آليًا وIR Optometers.</div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('wavefront')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">2000s</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">ثورة Wavefront</div>
-                                        <div class="text-xs text-slate-400 mt-1">رسم خريطة للتشوهات البصرية بدقة متناهية.</div>
-                                    </div>
-                                </div>
-
-                            </div>
+            <section id="sec-mechanics" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الميكانيكية الداخلية: كيف يتحرك الصندوق؟</h2>
+                    <p class="text-slate-300 text-lg mb-6">بعيداً عن واجهة المستخدم، الجهاز يعتمد على بنية ميكانيكية حيوية (Robotic Architecture) للعمل بدقة المايكرون.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-900 p-6 rounded-xl border-l-4 border-purple-500">
+                            <h3 class="text-xl font-bold text-purple-400 mb-3">1. محركات الخطوة (Stepper Motors)</h3>
+                            <p class="text-slate-400">رأس الجهاز بأكمله مركب على محاور ثلاثية (X, Y, Z). يتم التحكم فيها بواسطة (Stepper Motors) دقيقة جداً. عصا التحكم (Joystick) ليست ميكانيكية بحتة، بل تحول حركة يد الطبيب إلى إشارات كهربائية ترسل للوحة التحكم (Motor Driver).</p>
+                        </div>
+                        <div class="bg-slate-900 p-6 rounded-xl border-l-4 border-cyan-500">
+                            <h3 class="text-xl font-bold text-cyan-400 mb-3">2. نظام التحكم المغلق (Closed-Loop Control)</h3>
+                            <p class="text-slate-400">في وضع المحاذاة التلقائية (Auto Alignment)، يعمل الجهاز بنظام تغذية راجعة عالي السرعة (مئات المرات في الثانية):
+                                <br>1. <strong>Sensor (CCD):</strong> يحدد موقع بؤبؤ العين.
+                                <br>2. <strong>Controller:</strong> يحسب نسبة الخطأ (Offset) عن المركز.
+                                <br>3. <strong>Motor:</strong> يصحح الموقع فوراً.
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="sec-components" class="content-sec hidden fade-in">
+            <section id="sec-limitations" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">التشريح الداخلي وحلول الهندسة المبتكرة</h2>
-                    <p class="text-slate-300 text-lg mb-8">يمكن تقسيم مكونات الجهاز إلى بنية بصرية وحساسة، وأجزاء ميكانيكية وإلكترونية داعمة. انقر على المكونات لفهم وظيفتها الفيزيائية.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
+                    <p class="text-slate-300 text-lg mb-6">هذا هو الجانب المظلم الذي يميز المهندس الفاهم عن غيره. متى يفشل الجهاز أو يعطي قراءات كارثية؟</p>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-1 space-y-4" id="component-list">
-                            </div>
-                        <div class="lg:col-span-2 bg-slate-950 rounded-xl p-6 border border-slate-700 shadow-2xl flex flex-col justify-center min-h-[400px] relative overflow-y-auto">
-                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMzMzQxNTUiLz48L3N2Zz4=')] opacity-20"></div>
-                            <div id="component-display" class="relative z-10 text-center">
-                                <div class="text-6xl mb-6">🔍</div>
-                                <h3 class="text-2xl font-bold text-slate-400">اختر مكوّنًا من القائمة الجانبية</h3>
-                                <p class="text-slate-500 mt-2">لنعرض لك وظيفته الفيزيائية وكيف يتغلب على مشاكل مثل "العتامة" و"التكيف البصري".</p>
-                            </div>
+                    <div class="space-y-4">
+                        <div class="bg-red-950/20 p-5 rounded-xl border border-red-900/50">
+                            <h4 class="text-red-400 font-bold text-lg mb-2">1. مشكلة التكيف الآلي (Instrument Myopia)</h4>
+                            <p class="text-slate-300 text-sm"><strong>المشكلة:</strong> المريض لا إرادياً يركز على الجهاز القريب منه، فتتشنج العضلة الداخلية للعين. الجهاز سيقرأ هذا التشنج على أنه "قصر نظر" كاذب.<br><strong>الحل الهندسي:</strong> نظام الـ Fogging (شرحناه في المحاكي)، لكنه قد يفشل مع الشباب المدمنين على الهواتف الذكية (Spasm of Accommodation)، مما يستدعي تدخلاً صيدلانياً بقطرات شالة (Cycloplegic).</p>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-operation" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">دليل التشغيل السريري والبرمجيات</h2>
-                    <p class="text-slate-300 text-lg mb-8">تتميز الأجهزة الحديثة بواجهة مستخدم رسومية (UI) متطورة وتكامل مع السجلات الطبية. إليك التسلسل الأوتوماتيكي لخطوات الفحص السريري:</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-cyan-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-cyan-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">1</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">تحضير المريض</h3>
-                            <p class="text-sm text-slate-400">يجلس المريض ويثبت الذقن والجبهة. يتم ضبط المسندات عموديًا بمحركات دقيقة ليناسب ارتفاع المريض تمامًا.</p>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                            <h4 class="text-amber-400 font-bold text-lg mb-2">2. المياه البيضاء (Media Opacity / Cataract)</h4>
+                            <p class="text-slate-300 text-sm"><strong>المشكلة:</strong> العدسة البلورية داخل العين تصبح غائمة وتشتت ضوء الـ IR. الضوء المرتد للحساس يكون ضعيفاً جداً.<br><strong>النتيجة:</strong> الأجهزة الرخيصة تعطي قراءات خاطئة تماماً. الأجهزة المتطورة تستخدم مصادر ضوء أقوى (SLD) أو تفعل وضع Cataract Mode لتضخيم كسب الكاميرا (Gain).</p>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-purple-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-purple-500 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center">2</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">المحاذاة والتمركز</h3>
-                            <p class="text-sm text-slate-400">يوجّه المريض نظره نحو الهدف (بالون). يحرك الفاحص عصا التحكم للتأكد من تمركز بؤبؤ العين، وتتدخل أنظمة التتبع الآلي للضبط الدقيق.</p>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                            <h4 class="text-cyan-400 font-bold text-lg mb-2">3. حجم البؤبؤ (Pupil Size Problem)</h4>
+                            <p class="text-slate-300 text-sm"><strong>البؤبؤ الصغير (< 2mm):</strong> لا يسمح بمرور ضوء كافٍ للحساس، الجهاز سيعطي (ERROR).<br><strong>البؤبؤ الكبير جداً:</strong> يسمح بمرور الأشعة من أطراف القرنية المشوهة (Spherical Aberrations)، مما يعطي قراءات استجماتيزم غير دقيقة في الليل.</p>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-amber-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-amber-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">3</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">التصوير والمعالجة</h3>
-                            <p class="text-sm text-slate-400">عند ثبات التركيز، يبدأ القياس تلقائيًا (Auto-Shoot). تُضاء الحلقات ويحلل المستشعر الانعكاسات. إذا كان المريض زارعاً لعدسة، يُفعل <span class="term" onclick="openProf('iol_mode')">IOL Mode</span>.</p>
-                        </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-green-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-green-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">4</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">النتائج والتصدير</h3>
-                            <p class="text-sm text-slate-400">تظهر النتائج (SPH/CYL/AXIS) آنياً. تُطبع عبر طابعة حرارية مدمجة، وتُصدّر بصيغة XML/PDF عبر منافذ USB أو Ethernet أو RS-232 لنظام السجلات الطبية (EMR).</p>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                            <h4 class="text-purple-400 font-bold text-lg mb-2">4. جفاف العين (Dry Eye Syndrome)</h4>
+                            <p class="text-slate-300 text-sm"><strong>المشكلة:</strong> طبقة الدموع هي سطح الانعكاس الأول. إذا تكسرت بسبب الجفاف، فإن حلقات القياس (Mires) تتشوه هندسياً، ويعتبر الجهاز هذا التشوه "استجماتيزم قرني" وهمي.</p>
                         </div>
                     </div>
                 </div>
@@ -232,36 +171,26 @@
 
             <section id="sec-sim-light" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: مسار الضوء وجزيئات الأشعة (Particle System)</h2>
-                    <p class="text-slate-300 text-lg mb-6">حل مشكلة التكيف البصري الناجم عن الجهاز (<span class="term" onclick="openProf('instrument_myopia')">Instrument Myopia</span>) عبر نظام التضبيب الآلي.</p>
-
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: مسار الضوء ونظام التضبيب</h2>
                     <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="lg:w-2/3 sim-container h-[450px] border border-purple-900/50 pulse-glow relative">
+                        <div class="lg:w-2/3 sim-container h-[450px] border border-purple-900/50 relative">
                             <div class="scanline"></div>
                             <canvas id="lightPathCanvas"></canvas>
                         </div>
                         <div class="lg:w-1/3 bg-black p-6 rounded-xl border border-purple-700/50 flex flex-col shadow-[0_0_20px_rgba(157,0,255,0.2)]">
-                            <h4 class="font-bold text-purple-400 mb-4 border-b border-purple-900 pb-2">لوحة التحكم الهندسية (HUD)</h4>
+                            <h4 class="font-bold text-purple-400 mb-4 border-b border-purple-900 pb-2">لوحة التحكم (HUD)</h4>
                             <div class="flex flex-col gap-4">
-                                <button onclick="simLight.toggleFogging()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-lg text-right flex justify-between border border-slate-600 transition">
+                                <button onclick="simLight.toggleFogging()" class="bg-slate-900 text-white px-4 py-3 rounded-lg text-right flex justify-between border border-slate-600 hover:bg-slate-800 transition">
                                     <span>نظام التضبيب (Fogging):</span> <span id="btn-fogging" class="text-red-400 font-bold">مغلق (الهدف واضح)</span>
                                 </button>
-                                <button onclick="simLight.fireLaser()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-lg text-right flex justify-between border border-cyan-800 transition shadow-[0_0_10px_rgba(0,240,255,0.2)]">
-                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400 font-bold text-lg">▶ إطلاق</span>
+                                <button onclick="simLight.fireLaser()" class="bg-cyan-900/50 text-white px-4 py-3 rounded-lg text-right flex justify-between border border-cyan-500 hover:bg-cyan-800 transition">
+                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400 font-bold">▶ إطلاق</span>
                                 </button>
                             </div>
-                            
-                            <div class="mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20 flex-grow transition-all duration-500" id="fogging-explanation">
-                                <h5 class="text-sm text-amber-400 mb-3 font-bold flex items-center"><span class="text-xl ml-2">🧠</span> التأثير الفسيولوجي على المريض:</h5>
-                                <div id="physio-status" class="text-sm text-slate-300 leading-relaxed">
-                                    <span class="text-red-400 font-bold">عضلة العين متشنجة (Accommodation Active).</span><br><br>
-                                    العدسة اقتربت، المريض يرى المنطاد بوضوح، مما يجبر عينه على التركيز. <br><span class='text-xs text-amber-300'>*لاحظ انتفاخ عدسة العين الداخلية في الرسم*</span>
-                                </div>
-                            </div>
-
-                            <div class="mt-4 p-3 border border-slate-800 rounded bg-slate-950">
-                                <div id="sim-light-log" class="text-xs font-mono text-green-400 leading-relaxed h-10 overflow-hidden">
-                                    > SYSTEM INITIALIZED<br>> STANDBY FOR DIAGNOSTIC...
+                            <div class="mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20" id="fogging-explanation">
+                                <h5 class="text-sm text-amber-400 mb-2 font-bold">🧠 التأثير الفسيولوجي:</h5>
+                                <div id="physio-status" class="text-sm text-slate-300">
+                                    عضلة العين متشنجة (Accommodation). قراءة خاطئة متوقعة.
                                 </div>
                             </div>
                         </div>
@@ -271,23 +200,29 @@
 
             <section id="sec-sim-optics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الفيزياء: انكسار الضوء وتتبع الأشعة (Ray Tracing)</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">محاكي الأخطاء (Simulation Error Mode)</h2>
+                    <p class="text-slate-300 text-lg mb-6">جرب تعمد تخريب القياس عبر تفعيل حالات سريرية سيئة لترى كيف يتشوه انكسار الضوء وتتأثر قراءة الحساس (بسبب הـ Noise).</p>
+
                     <div class="flex flex-col lg:flex-row gap-6">
                         <div class="lg:w-2/3 sim-container h-[400px] border border-cyan-900/50">
                             <div class="scanline"></div>
                             <canvas id="opticsCanvas"></canvas>
                         </div>
                         <div class="lg:w-1/3 bg-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.1)]">
-                            <label class="block text-white font-bold mb-4">الخطأ الانكساري (طول محوري):</label>
-                            <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer mb-6" style="box-shadow: 0 0 10px #00f0ff;">
-                            <div class="flex justify-between text-xs text-cyan-300 mb-6 px-1 font-bold">
-                                <span>قصر نظر (-D)</span><span>مثالي (0D)</span><span>طول نظر (+D)</span>
-                            </div>
-                            <div class="bg-black p-4 rounded border border-slate-800 flex-grow relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-cyan-900/20"></div>
-                                <h4 class="text-sm text-slate-500 mb-1 relative z-10">تحليل معالج الإشارة (DSP):</h4>
-                                <div id="optics-result" class="text-4xl font-mono text-green-400 font-bold mb-2 relative z-10 text-shadow">SPH: 0.00 D</div>
-                                <p id="optics-desc" class="text-sm text-slate-300 leading-relaxed relative z-10">العين مثالية. البؤرة تقع بدقة متناهية على مركز الشبكية (Fovea). حجم بقعة التشتت = 0.</p>
+                            <label class="block text-white font-bold mb-2">الطول المحوري (الخطأ البصري الأساسي):</label>
+                            <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer mb-6">
+                            
+                            <label class="block text-red-400 font-bold mb-2">حالة المريض (Error Mode):</label>
+                            <select id="patientCondition" class="w-full bg-black text-white border border-red-900 rounded p-2 mb-6 outline-none focus:border-red-500">
+                                <option value="normal">مريض مثالي (ثابت، عدسة نقية)</option>
+                                <option value="cataract">مياه بيضاء (Cataract - تشتت الضوء)</option>
+                                <option value="shake">عدم استقرار (Patient Shaking - ضوضاء CCD)</option>
+                            </select>
+
+                            <div class="bg-black p-4 rounded border border-slate-800 flex-grow">
+                                <h4 class="text-sm text-slate-500 mb-1">النتيجة المسجلة (مع Sensor Drift):</h4>
+                                <div id="optics-result" class="text-3xl font-mono text-green-400 font-bold mb-2">SPH: 0.00 D</div>
+                                <p id="optics-desc" class="text-xs text-slate-400">إشارة نقية. دقة عالية.</p>
                             </div>
                         </div>
                     </div>
@@ -296,27 +231,23 @@
 
             <section id="sec-sim-kerato" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي القرنية ثلاثي الأبعاد: تشويه الحلقات (Trigonometric Mires)</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي تضاريس القرنية (Trigonometric Mires)</h2>
                     <div class="flex flex-col md:flex-row gap-8">
                         <div class="md:w-1/2">
-                            <div class="bg-black/80 p-4 rounded-xl mb-6 border border-purple-700/50 font-mono text-center overflow-x-auto shadow-[0_0_15px_rgba(157,0,255,0.2)]" dir="ltr">
-                                <span class="text-sm text-purple-400 mb-2 block font-sans font-bold tracking-wider">CORNEAL POWER EQUATION</span>
-                                $$P (Diopters) = \frac{n' - n}{r} \approx \frac{337.5}{r (mm)}$$
-                            </div>
-                            <div class="bg-slate-800/80 p-4 rounded-xl mb-6 border border-slate-600">
-                                <label class="block text-white font-bold mb-2">اختر طوبوغرافيا القرنية (Topography):</label>
-                                <select id="corneaSelect" class="w-full bg-black text-cyan-400 font-bold border border-cyan-800 rounded p-3 focus:border-cyan-400 outline-none shadow-inner" onchange="simMires.update()">
-                                    <option value="normal">قرنية كروية مثالية (Normal)</option>
-                                    <option value="astig_with">استجماتيزم مع القاعدة (WTR Astigmatism)</option>
-                                    <option value="astig_against">استجماتيزم ضد القاعدة (ATR Astigmatism)</option>
-                                    <option value="keratoconus">قرنية مخروطية (Keratoconus - Advanced)</option>
-                                    <option value="dry_eye">تكسر طبقة الدموع (Tear Film Breakup)</option>
+                            <div class="bg-slate-800 p-4 rounded-xl mb-6 border border-slate-600">
+                                <label class="block text-white font-bold mb-2">اختر حالة القرنية أو طبقة الدموع:</label>
+                                <select id="corneaSelect" class="w-full bg-black text-cyan-400 font-bold border border-cyan-800 rounded p-3 outline-none">
+                                    <option value="normal">قرنية كروية مثالية</option>
+                                    <option value="astig_with">استجماتيزم مع القاعدة (WTR)</option>
+                                    <option value="astig_against">استجماتيزم ضد القاعدة (ATR)</option>
+                                    <option value="keratoconus">قرنية مخروطية (Keratoconus)</option>
+                                    <option value="dry_eye">جفاف عين (Tear Film Breakup) - Error</option>
                                 </select>
                             </div>
-                            <div id="mire-analysis" class="bg-black p-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24 shadow-inner font-mono"></div>
+                            <div id="mire-analysis" class="bg-black p-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24 font-mono"></div>
                         </div>
                         <div class="md:w-1/2">
-                            <div class="sim-container h-[350px] flex items-center justify-center bg-black border-cyan-900/50 shadow-[0_0_30px_rgba(0,240,255,0.15)] relative">
+                            <div class="sim-container h-[350px] flex items-center justify-center bg-black border-cyan-900/50 relative">
                                 <div class="scanline"></div><canvas id="miresCanvas" width="350" height="350"></canvas>
                                 <div class="absolute inset-0 pointer-events-none flex items-center justify-center text-cyan-500/20 text-[200px] font-black">+</div>
                             </div>
@@ -327,56 +258,24 @@
 
             <section id="sec-sim-ai" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي التتبع الآلي 3D (Computer Vision)</h2>
-                    <p class="text-slate-300 text-lg mb-6">لحل صعوبات المحاذاة وحركة المريض المستمرة، تم دمج أنظمة التتبع الآلي 3D لاكتشاف موقع البؤبؤ (X, Y, Z) وضبط الجهاز تلقائيًا.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي التتبع الآلي للعين (AI Tracker)</h2>
+                    <p class="text-slate-300 text-lg mb-6">خوارزميات الـ Computer Vision تتعامل مع الاهتزاز المجهري للعين (Micro-saccades) وتوجه المحركات لضبط الإغلاق (Lock).</p>
                     <div class="flex flex-col lg:flex-row gap-6">
                         <div class="lg:w-1/2 flex flex-col gap-4">
-                            <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center relative overflow-hidden shadow-inner">
-                                <h4 class="font-bold text-slate-400 mb-2 relative z-10 font-mono text-sm tracking-widest">RAW IR CAMERA FEED</h4>
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center relative overflow-hidden">
                                 <div class="sim-container h-[250px] border-none rounded-none"><div class="scanline"></div><canvas id="aiRawCanvas"></canvas></div>
                             </div>
                             <button onclick="simAI.process()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-black font-black text-lg py-4 rounded-lg transition transform active:scale-95 uppercase tracking-widest">
-                                تفعيل نظام التتبع الآلي (ENGAGE AUTO-TRACK) 🎯
+                                تفعيل نظام التتبع الآلي (ENGAGE)
                             </button>
                         </div>
                         <div class="lg:w-1/2 flex flex-col gap-4">
-                            <div class="bg-black p-4 rounded border border-cyan-800 text-center relative overflow-hidden shadow-[0_0_20px_rgba(0,240,255,0.1)]">
-                                <h4 class="font-bold text-cyan-400 mb-2 relative z-10 font-mono text-sm tracking-widest">AI TRACKING & MOTOR ALIGNMENT</h4>
+                            <div class="bg-black p-4 rounded border border-cyan-800 text-center relative overflow-hidden">
                                 <div class="sim-container h-[250px] border-none rounded-none"><canvas id="aiProcessedCanvas"></canvas></div>
                             </div>
-                            <div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 rounded h-16 flex items-center border border-slate-800 shadow-inner overflow-hidden">
-                                > AWAITING ENGAGEMENT COMMAND...<br>_
+                            <div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 rounded h-16 flex items-center border border-slate-800">
+                                > SYSTEM STANDBY...
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-multi" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">ثورة الاندماج الوظيفي: أجهزة 5 في 1</h2>
-                    <p class="text-slate-300 text-lg mb-8">في العقدين الأخيرين، لم يعد الجهاز مقتصراً على وظيفتين فقط، بل تحول إلى محطة فحص شاملة (Multi-functional Units) مثل Nidek Tonoref III و Topcon KR-800S لتقليل وقت الانتظار وتوفير مساحة العيادة.</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">💨</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">1. قياس ضغط العين (Non-contact Tonometry)</h3>
-                            <p class="text-slate-400">باستخدام نفخة هواء لطيفة (Air Puff) لقياس الضغط الداخلي للعين دون تلامس، للكشف المبكر عن الجلوكوما.</p>
-                        </div>
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">📏</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">2. قياس سماكة القرنية (Pachymetry)</h3>
-                            <p class="text-slate-400">أمر ضروري لتصحيح قراءات ضغط العين الحقيقية وتقييم أهلية المريض لجراحات تصحيح النظر مثل الليزك.</p>
-                        </div>
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">🔦</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">3. تصوير القسم الأمامي (Retro-illumination)</h3>
-                            <p class="text-slate-400">استخدام الإضاءة الخلفية لاكتشاف وجود عتامات في العدسة (المياه البيضاء - Cataract) أو عتامة في القرنية.</p>
-                        </div>
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">🗺️</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">4. خرائط تضاريس القرنية (Corneal Mapping)</h3>
-                            <p class="text-slate-400">توفير تحليل طبوغرافي دقيق لسطح العين الأمامي وتحديد مناطق الانحدار العالي والشذوذ الهيكلي.</p>
                         </div>
                     </div>
                 </div>
@@ -384,12 +283,12 @@
 
             <section id="sec-printout" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">تحليل الوصل الطبي (The Printout)</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">تحليل البيانات المطبوعة (Printout)</h2>
+                    <p class="text-slate-300 mb-6">انقر على الأسطر لفهم معانيها السريرية والإحصائية.</p>
                     <div class="flex flex-col md:flex-row gap-8">
                         <div class="md:w-1/3 flex justify-center">
-                            <div class="receipt-bg w-full max-w-[300px] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transform hover:scale-105 transition duration-300">
+                            <div class="receipt-bg w-full max-w-[300px] p-6 shadow-xl transform hover:scale-105 transition">
                                 <div class="text-center font-bold text-xl mb-4 border-b-2 border-slate-800 pb-2">AUTO REF/KERATO</div>
-                                <div class="text-xs mb-4 text-center">DATE: 24/04/2026<br>VD: 12.0mm</div>
                                 <div class="font-bold mb-1">&lt;RIGHT [R]&gt;</div>
                                 <div class="w-full text-sm mb-4 border-b border-slate-300 pb-2">
                                     <div class="flex justify-between font-bold border-b border-slate-300 mb-1"><span></span><span>SPH</span><span>CYL</span><span>AX</span></div>
@@ -400,21 +299,16 @@
                                     <div class="flex justify-start receipt-row py-1 font-bold mt-1" onclick="showReceiptDesc('se')"><span>S.E. : -2.66</span></div>
                                 </div>
                                 <div class="font-bold mb-1">&lt;KERATOMETRY&gt;</div>
-                                <div class="w-full text-sm mb-4 border-b border-slate-300 pb-2">
+                                <div class="w-full text-sm mb-4">
                                     <div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('k1')"><span>R1</span><span>7.80mm</span><span>43.25D</span></div>
                                     <div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('k2')"><span>R2</span><span>7.60mm</span><span>44.50D</span></div>
-                                    <div class="flex justify-between receipt-row py-1 font-bold mt-1 border-t border-slate-400" onclick="showReceiptDesc('cylk')"><span>CYL</span><span></span><span>-1.25D</span></div>
-                                </div>
-                                <div class="flex justify-between font-bold text-lg receipt-row py-2" onclick="showReceiptDesc('pd')">
-                                    <span>PD:</span><span>64 mm</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="md:w-2/3 bg-slate-900/80 rounded-xl p-8 border border-slate-700 flex flex-col justify-center min-h-[300px] shadow-2xl backdrop-blur-md">
+                        <div class="md:w-2/3 bg-slate-900 rounded-xl p-8 border border-slate-700 flex flex-col justify-center min-h-[300px]">
                             <div id="receipt-explainer" class="text-center">
-                                <span class="text-7xl block mb-6 animate-bounce" style="text-shadow: 0 0 20px rgba(0,240,255,0.5);">👆</span>
-                                <h3 class="text-3xl font-bold text-cyan-400 mb-2">انقر على الورقة المطبوعة</h3>
-                                <p class="text-slate-400 text-lg">ليقوم النظام بفك شفرة الأرقام والمصطلحات.</p>
+                                <span class="text-5xl block mb-4 animate-bounce">👆</span>
+                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">انقر على الورقة للتحليل</h3>
                             </div>
                         </div>
                     </div>
@@ -423,220 +317,106 @@
 
             <section id="sec-market" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">التحليل التجاري والمواصفات (Market & Specs)</h2>
-                    <p class="text-slate-300 text-lg mb-6">يشهد السوق العالمي لأجهزة قياس الانكسار نموًا مطردًا؛ حيث قدر حجم السوق بحوالي 73.26 مليون دولار في 2025، ومن المتوقع أن يصل إلى 120.19 مليون دولار بحلول 2034 بمعدل نمو مركب ~5.7%. يعتبر السوق في أمريكا الشمالية هو الأكبر حالياً.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">التحليل التجاري وصناعة الأجهزة (Market Insights)</h2>
+                    <p class="text-slate-300 text-lg mb-6">سوق الأجهزة يخضع لاحتكار تكنولوجي ياباني وألماني. الأجهزة الرخيصة (المقلدة) تعطي نتائج "تقريبية" لأنها تفتقر لخوارزميات تصحيح الضوضاء والـ Aberrations.</p>
 
-                    <div class="overflow-x-auto rounded-xl border border-cyan-800 shadow-[0_0_20px_rgba(0,240,255,0.15)] bg-slate-900">
+                    <div class="overflow-x-auto rounded-xl border border-cyan-800 bg-slate-900 mb-6">
                         <table>
                             <thead>
-                                <tr>
-                                    <th>الشركة (الطراز)</th>
-                                    <th>المدى SPH (ديوبتر)</th>
-                                    <th>المدى CYL (ديوبتر)</th>
-                                    <th>الميزة الهندسية الرئيسية</th>
-                                    <th>السعر التقريبي (USD)</th>
-                                </tr>
+                                <tr><th>الشركة (الطراز)</th><th>الميزة الهندسية الرئيسية</th><th>السوق والتصنيع</th></tr>
                             </thead>
                             <tbody class="text-slate-300">
-                                <tr>
-                                    <td class="font-bold text-white">Zeiss Meditech<br><span class="text-xs text-slate-500">Visuref 150</span></td>
-                                    <td dir="ltr" class="text-center">-25 إلى +22</td>
-                                    <td dir="ltr" class="text-center">0 إلى ±10</td>
-                                    <td>وضع العدسات المزروعة (IOL Mode)، استقرار وموثوقية عالية</td>
-                                    <td class="td-highlight">~$2,999</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-white">Topcon<br><span class="text-xs text-slate-500">KR-1</span></td>
-                                    <td dir="ltr" class="text-center">-25 إلى +22</td>
-                                    <td dir="ltr" class="text-center">0 إلى ±10</td>
-                                    <td>تقنية المنشور الدوار (Rotary Prism)، شاشة قابلة للتدوير 360°</td>
-                                    <td class="td-highlight">~$14,000</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-white">Nidek<br><span class="text-xs text-slate-500">ARK-1s</span></td>
-                                    <td dir="ltr" class="text-center">-30 إلى +25</td>
-                                    <td dir="ltr" class="text-center">0 إلى ±12</td>
-                                    <td>قياس منطقة البؤبؤ الواسعة (6 مم)، LED/CCD حساس جداً</td>
-                                    <td class="td-highlight">N/A</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-white">Huvitz<br><span class="text-xs text-slate-500">HRK-1</span></td>
-                                    <td dir="ltr" class="text-center">-30 إلى +25</td>
-                                    <td dir="ltr" class="text-center">0 إلى ±12</td>
-                                    <td>تقنية SAMC للحركة الذكية، تتبع تلقائي للذقن والرأس</td>
-                                    <td class="td-highlight">N/A</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-white">Essilor<br><span class="text-xs text-slate-500">AKR-800</span></td>
-                                    <td dir="ltr" class="text-center">-30 إلى +22</td>
-                                    <td dir="ltr" class="text-center">0 إلى ±10</td>
-                                    <td>نظام استيريو لإحداثيات بصرية عالية الدقة</td>
-                                    <td class="td-highlight">~$6,900</td>
-                                </tr>
+                                <tr><td class="font-bold text-white">Topcon (اليابان)</td><td>تقنية المنشور الدوار (Rotary Prism) لتنقية الإشارة.</td><td class="text-amber-400">هيمنة عالمية</td></tr>
+                                <tr><td class="font-bold text-white">Nidek (اليابان)</td><td>Large Pupil Zone Imaging (قياس من 6mm).</td><td class="text-amber-400">منافس رئيسي</td></tr>
+                                <tr><td class="font-bold text-white">Zeiss (ألمانيا)</td><td>بصريات ألمانية خالصة، دمج مع أنظمة الليزك.</td><td class="text-cyan-400">القطاع الفاخر</td></tr>
+                                <tr><td class="font-bold text-white">Huvitz (كوريا)</td><td>أنظمة تتبع ذكية، شاشات متقدمة، قيمة مقابل سعر.</td><td class="text-green-400">نمو متسارع</td></tr>
                             </tbody>
                         </table>
-                    </div>
-                    
-                    <div class="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
-                        <h4 class="text-amber-400 font-bold mb-2">💡 اعتبارات الشراء والصيانة</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">الأسعار تتفاوت بحسب الموديل والملحقات المضافة (مثل الطابعة الداخلية، أو الترخيص البرمجي للربط بالشبكات). تتطلب الأجهزة مستهلكات دورية مثل أوراق مسند الذقن، وعقود صيانة دورية لضمان استجابة سريعة. يجب تدريب الطاقم الطبي تقنياً على استيعاب تنبيهات البرمجيات وتفسير قراءات المعايرة.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-future" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">آفاق المستقبل: البصريات 3.0 والواقع الإقليمي</h2>
-                    <p class="text-slate-300 text-lg mb-8">نحن الآن على أعتاب عصر "البصريات 3.0"، حيث يتجاوز الجهاز دوره التقليدي ليصبح أداة تنبؤية بالاعتماد على البيانات الضخمة، مع تبني إقليمي واسع لهذه التكنولوجيا المتقدمة.</p>
-
-                    <div class="space-y-8">
-                        <div class="flex flex-col md:flex-row gap-6 bg-slate-900 p-6 rounded-xl border border-purple-500/30">
-                            <div class="md:w-1/4 flex items-center justify-center text-7xl">🧠</div>
-                            <div class="md:w-3/4">
-                                <h3 class="text-2xl font-bold text-purple-400 mb-2">الكشف المبكر عن القرنية المخروطية (AI)</h3>
-                                <p class="text-slate-400 leading-relaxed">يتم دمج خوارزميات التعلم العميق (Deep Learning) لتحليل التغيرات المجهرية (Subclinical) في تضاريس القرنية بدقة تصل إلى 99% قبل ظهور الأعراض السريرية، مما ينقذ المرضى من فقدان البصر.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col md:flex-row gap-6 bg-slate-900 p-6 rounded-xl border border-cyan-500/30">
-                            <div class="md:w-1/4 flex items-center justify-center text-7xl">🌍</div>
-                            <div class="md:w-3/4">
-                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">التاريخ والتنبني في العالم العربي</h3>
-                                <p class="text-slate-400 leading-relaxed">يرتبط تاريخ البصريات بجذور عميقة تعود لكتاب المناظر لـ "ابن الهيثم". حديثاً، في لبنان، أثبتت أجهزة الرؤية الآلية (مثل PlusoptiX) كفاءة في المسوحات المدرسية. وفي المملكة العربية السعودية، تم دمج أجهزة Auto-Refractor بالكامل مع السجلات الصحية الإلكترونية (EHR) تماشياً مع رؤية 2030 للعيادات الذكية والتشخيص عن بُعد (Tele-optometry).</p>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col md:flex-row gap-6 bg-slate-900 p-6 rounded-xl border border-red-500/30">
-                            <div class="md:w-1/4 flex items-center justify-center text-7xl">❤️</div>
-                            <div class="md:w-3/4">
-                                <h3 class="text-2xl font-bold text-red-400 mb-2">العين كنافذة على الصحة العامة</h3>
-                                <p class="text-slate-400 leading-relaxed">تشير الأبحاث المتطورة إلى أن تحليل الأوعية الدموية في الشبكية عبر هذه الأجهزة يمكن استخدامه للتنبؤ بمخاطر الإصابة بأمراض القلب، والسكري، وحتى الزهايمر قبل ظهور الأعراض السريرية في باقي أجزاء الجسم.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="sec-maintenance" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">البروتوكولات الهندسية الحيوية للصيانة والمعايرة</h2>
-                    <p class="text-slate-300 text-lg mb-6">لكي يظل الجهاز ركيزة موثوقة في التشخيص، يجب الالتزام بجدول صيانة هندسي صارم؛ فأدنى انحراف قد يؤدي إلى وصفات طبية كارثية للمرضى.</p>
-
-                    <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-xl">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>نوع الصيانة</th>
-                                    <th>الإجراء الهندسي المطلوب</th>
-                                    <th>التكرار الموصى به</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-slate-300">
-                                <tr>
-                                    <td class="font-bold text-amber-400">وقائية</td>
-                                    <td>تنظيف وتعقيم مساند الذقن والجبهة لسلامة المرضى ومكافحة العدوى.</td>
-                                    <td>بعد كل مريض</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-cyan-400">تقنية</td>
-                                    <td>تنظيف عدسة القياس الخارجية بقطن خاص ومحلول بصري لتجنب تشتت الضوء.</td>
-                                    <td>أسبوعياً</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-purple-400">فنية</td>
-                                    <td>فحص استقرار مصدر الضوء (Infrared LED / SLD) واختبار الفيوزات الكهربائية.</td>
-                                    <td>شهرياً</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-red-400">معايرة (Calibration)</td>
-                                    <td>استخدام "العين النموذجية" (Model Eye) ذات القوة المعروفة مسبقًا لضبط دقة قراءات الحساس.</td>
-                                    <td>سنوياً / بعد أي إصلاح</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold text-green-400">برمجية</td>
-                                    <td>تحديث نظام التشغيل (Firmware) لدمج أحدث خوارزميات المعالجة (DSP).</td>
-                                    <td>عند توفرها</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">العمر التشغيلي وبروتوكولات الصيانة</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500">
+                            <h3 class="text-xl font-bold text-white mb-3">العمر التشغيلي (Lifespan)</h3>
+                            <p class="text-slate-300">يتراوح عمر الجهاز في العيادات المزدحمة بين <strong>5 إلى 10 سنوات</strong>. العمر يعتمد كلياً على بيئة التشغيل وتجنب الأتربة.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-red-500">
+                            <h3 class="text-xl font-bold text-white mb-3">نقاط الفشل الشائعة (Points of Failure)</h3>
+                            <ul class="text-slate-300 list-disc list-inside space-y-2">
+                                <li><strong>تدهور مصدر الضوء:</strong> ضعف إضاءة الـ IR LED يقلل دقة اختراق العين.</li>
+                                <li><strong>انحراف الحساس (Sensor Drift):</strong> يتطلب إعادة معايرة (Calibration) سنوية باستخدام Model Eye.</li>
+                                <li><strong>تراكم الغبار:</strong> يؤثر على مسار الضوء والمرايا الداخلية.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="mt-4 text-sm text-slate-500 bg-slate-900 p-3 rounded border-l-4 border-amber-500">
-                        <strong>ملاحظة هندسية:</strong> يُنصح دائمًا بأن تتم الصيانة الدقيقة بواسطة مهندسين طبيين معتمدين، لتجنب التسبب في خدوش مجهرية لعدسات المستشعر قد تشوه استخراج جبهة الموجة (Wavefront).
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-scenarios" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">مختبر الحالات السريرية المعقدة (ماذا لو؟)</h2>
-                    <p class="text-slate-300 text-lg mb-8">الواقع ليس مثاليًا. البشر يتحركون، يمرضون، وتتغير أعينهم. استكشف كيف تتعامل خوارزميات الجهاز مع هذه التحديات الضخمة.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="scenarios-container"></div>
                 </div>
             </section>
 
         </div>
     </main>
 
-    <div id="prof-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4 opacity-0 transition-opacity duration-300">
+    <div id="prof-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4 opacity-0">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeProf()"></div>
-        <div class="bg-slate-950 border-[3px] border-amber-500 rounded-2xl w-full max-w-lg shadow-[0_0_50px_rgba(245,158,11,0.4)] relative z-10 flex flex-col overflow-hidden">
-            <div class="bg-gradient-to-r from-amber-600 to-amber-500 p-4 text-slate-950 flex justify-between items-center font-bold">
-                <div class="flex items-center gap-2"><span class="text-2xl">👨‍🏫</span> <span class="text-xl">توضيح أكاديمي عميق</span></div>
-                <button onclick="closeProf()" class="text-slate-950 hover:text-white text-3xl leading-none transition">&times;</button>
+        <div class="bg-slate-950 border-[3px] border-amber-500 rounded-2xl w-full max-w-lg shadow-2xl relative z-10 flex flex-col">
+            <div class="bg-amber-600 p-4 text-slate-950 font-bold flex justify-between">
+                <span>👨‍🏫 قاموس الهندسة الطبية</span><button onclick="closeProf()">&times;</button>
             </div>
             <div class="p-6">
-                <h3 id="prof-title" class="text-2xl font-black text-amber-400 mb-4 border-b border-slate-700 pb-2"></h3>
-                <p id="prof-text" class="text-slate-300 text-lg leading-relaxed"></p>
-                <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-amber-600 font-mono tracking-widest uppercase">Source: Embedded Engineering Database</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="history-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4 md:p-10 opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-lg" onclick="closeHistory()"></div>
-        <div class="bg-slate-950 border border-slate-700 rounded-2xl w-full max-w-6xl shadow-[0_0_80px_rgba(157,0,255,0.3)] relative z-10 flex flex-col md:flex-row overflow-hidden max-h-full">
-            <div class="md:w-1/2 bg-black p-6 flex flex-col justify-center items-center border-b md:border-b-0 md:border-l border-slate-800 relative">
-                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"></div>
-                <div id="history-media" class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-inner flex items-center justify-center relative z-10"></div>
-                <p id="history-caption" class="text-xs text-cyan-500 mt-4 font-mono text-center tracking-widest relative z-10 uppercase"></p>
-            </div>
-            <div class="md:w-1/2 p-8 md:p-10 overflow-y-auto" style="scrollbar-width: thin; scrollbar-color: #9d00ff #0f172a;">
-                <button onclick="closeHistory()" class="absolute top-4 right-4 text-slate-500 hover:text-red-500 text-4xl leading-none transition">&times;</button>
-                <div class="inline-block px-4 py-1 bg-purple-900/40 border border-purple-500/50 text-purple-400 rounded-full text-sm font-bold mb-4 font-mono tracking-widest shadow-[0_0_10px_rgba(157,0,255,0.3)]" id="history-year"></div>
-                <h3 id="history-title" class="text-4xl font-black text-white mb-6 border-b border-slate-800 pb-4"></h3>
-                <div id="history-content" class="space-y-6 text-slate-300 text-lg leading-relaxed"></div>
+                <h3 id="prof-title" class="text-2xl font-black text-amber-400 mb-2"></h3>
+                <p id="prof-text" class="text-slate-300 text-lg"></p>
             </div>
         </div>
     </div>
 
     <script>
-        function nav(secId) {
+        // === MODULE: NAVIGATION & STATE ===
+        let currentActiveSim = null;
+
+        function nav(secId, e) {
+            // Hide all sections
             document.querySelectorAll('.content-sec').forEach(el => el.classList.add('hidden'));
             document.getElementById(secId).classList.remove('hidden');
-            document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('active'); btn.classList.add('text-slate-300'); });
-            event.currentTarget.classList.add('active'); event.currentTarget.classList.remove('text-slate-300');
-            if(secId === 'sec-sim-light' && !simLight.initialized) simLight.init();
-            if(secId === 'sec-sim-optics' && !simOptics.initialized) simOptics.init();
-            if(secId === 'sec-sim-kerato' && !simMires.initialized) simMires.init();
-            if(secId === 'sec-sim-ai' && !simAI.initialized) simAI.init();
+            
+            // Update UI
+            document.querySelectorAll('.nav-btn').forEach(btn => { 
+                btn.classList.remove('active'); 
+                btn.classList.add('text-slate-300'); 
+            });
+            if(e) {
+                e.currentTarget.classList.add('active'); 
+                e.currentTarget.classList.remove('text-slate-300');
+            }
+
+            // Stop CPU burning: Stop previous simulator if running
+            if(currentActiveSim && currentActiveSim.stop) currentActiveSim.stop();
+
+            // Init and Start specific simulators
+            if(secId === 'sec-sim-light') { if(!simLight.initialized) simLight.init(); simLight.start(); currentActiveSim = simLight; }
+            if(secId === 'sec-sim-optics') { if(!simOptics.initialized) simOptics.init(); simOptics.start(); currentActiveSim = simOptics; }
+            if(secId === 'sec-sim-kerato') { if(!simMires.initialized) simMires.init(); simMires.start(); currentActiveSim = simMires; }
+            if(secId === 'sec-sim-ai') { if(!simAI.initialized) simAI.init(); simAI.start(); currentActiveSim = simAI; }
+            
+            // Optional UX Touch
+            // new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgA').play().catch(e=>{});
         }
 
-        // FULL PROFESSOR DB
+        // === MODULE: DATA (PROFESSOR) ===
         const profDB = {
-            'optics': { t: "البصريات الفيزيائية (Physical Optics)", d: "فرع من الفيزياء يدرس سلوك وخصائص الضوء وتفاعله مع المادة. في جهازنا، يدرس كيفية انكسار ضوء الأشعة تحت الحمراء عند مروره عبر قرنية وعدسة المريض." },
-            'mechatronics': { t: "الميكاترونكس (Mechatronics)", d: "هندسة تجمع بين الميكانيكا، الإلكترونيات، وبرمجة الحاسب. الجهاز يتحرك ميكانيكيًا لضبط محاذاة العين، ويقرأ إلكترونيًا بالكاميرا، ويحلل برمجيًا بالخوارزميات. هذا هو جوهر الميكاترونكس!" },
-            'objective_ref': { t: "الانكسار الموضوعي (Objective Refraction)", d: "هو قياس الضعف البصري دون الحاجة لأي إجابة من المريض. الجهاز يطلق الضوء، يقرأ الانعكاس، ويعطي الرقم. على النقيض من 'الانكسار الذاتي' حيث يسأل الطبيب: هل ترى هذا الحرف بوضوح؟" },
-            'auto': { t: "الأتمتة (Automation)", d: "قدرة الجهاز على أداء مهامه آليًا دون تدخل بشري. الجهاز الحديث يجد بؤبؤ العين، يقترب منه، يأخذ القياس، وينتقل للعين الأخرى بضغطة زر واحدة." },
-            'totally': { t: "الإلغاء التام للجهد", d: "كان فحص الشبكية اليدوي (Retinoscopy) يتطلب طبيبًا بمهارة استثنائية وجو غرفة مظلم، ويستغرق وقتًا طويلًا. الجهاز ألغى كل هذا تمامًا، ليصبح الفحص متاحًا في أي وقت وبدقة قياسية." },
-            'instrument_myopia': { t: "التكيف الناجم عن الجهاز (Instrument Myopia)", d: "ميل المريض للتركيز على الهدف داخل الجهاز، مما يجعل العين تبدو أكثر قصراً للنظر مما هي عليه. ويحل بالتضبيب (Fogging)." },
-            'iol_mode': { t: "وضع العدسات المزروعة (IOL Mode)", d: "وضع برمجي خاص يتم تفعيله للمرضى الذين أجروا عمليات زراعة عدسات داخل العين (Intraocular Lens) بسبب المياه البيضاء، وذلك لأن انعكاس الضوء من العدسة الصناعية يختلف عن الطبيعية." }
+            'optics': { t: "البصريات الفيزيائية", d: "دراسة سلوك الضوء. الجهاز يدرس كيفية انكسار الـ IR عبر القرنية." },
+            'mechatronics': { t: "الميكاترونكس", d: "هندسة تجمع الميكانيكا، الإلكترونيات، والبرمجة معاً (Control Systems)." },
+            'objective_ref': { t: "الانكسار الموضوعي", d: "قياس الضعف دون الاعتماد على جواب المريض (عكس الـ Subjective)." },
+            'auto': { t: "الأتمتة", d: "الأداء عبر خوارزميات التتبع الآلي دون تدخل يدوي." },
         };
 
         function openProf(key) {
             const data = profDB[key];
             if(data) {
                 document.getElementById('prof-title').innerText = data.t;
-                document.getElementById('prof-text').innerHTML = data.d;
+                document.getElementById('prof-text').innerText = data.d; // Safe text injection
                 document.getElementById('prof-modal').style.opacity = '1';
                 document.getElementById('prof-modal').classList.remove('pointer-events-none');
             }
@@ -646,378 +426,222 @@
             setTimeout(() => document.getElementById('prof-modal').classList.add('pointer-events-none'), 300);
         }
 
-        // FULL HISTORY DB
-        const historyDB = {
-            'scheiner': {
-                year: "YEAR 1619", title: "مبدأ شاينر: البداية النظرية",
-                media: `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-black relative overflow-hidden">
-                            <div class="w-32 h-32 rounded-full border-4 border-cyan-500 flex items-center justify-center relative animate-pulse">
-                                <div class="w-4 h-4 bg-red-500 rounded-full absolute left-4 shadow-[0_0_10px_red]"></div>
-                                <div class="w-4 h-4 bg-red-500 rounded-full absolute right-4 shadow-[0_0_10px_red]"></div>
-                            </div>
-                            <p class="text-slate-400 mt-4 font-mono text-sm">[Simulation: Double Pinhole Disc]</p>
-                        </div>`,
-                caption: "انقسام حزم الضوء عبر الفتحة المزدوجة.",
-                content: `<div><strong class="text-cyan-400 block mb-2">كيف بدأت القصة؟</strong>
-                    في القرن السابع عشر، كان الفلكي والفيزيائي كريستوف شاينر مهووسًا بفهم كيفية تركيز العين للضوء. قام بصنع قرص معتم بسيط يحتوي على ثقبين صغيرين متقاربين جدًا.</div>
-                    
-                    <div><strong class="text-amber-400 block mb-2">التجربة والاكتشاف الجوهري:</strong>
-                    يطلب من الشخص النظر عبر الثقبين إلى مصدر ضوئي. إذا كانت عينه سليمة تمامًا، ستسقط الأشعة في نقطة واحدة على الشبكية ويرى ضوءًا واحدًا. أما إذا كان يعاني من قصر أو طول نظر، فلن تتركز الأشعة، وسيرى الضوء مزدوجًا (نقطتين)! تحريك الفتحات حتى تلتقي النقطتان يحدد القوة التصحيحية.</div>
-                    
-                    <div class="bg-purple-900/20 p-5 rounded-lg border border-purple-500/50 mt-6 shadow-inner">
-                        <strong class="text-purple-400 text-lg block mb-2">الربط بجهازنا (Auto-Refractor):</strong>
-                        الأجهزة الحديثة أخذت هذا المبدأ القديم وطبقته آليًا! الجهاز يسقط حزمتين من الأشعة تحت الحمراء، وبدلاً من سؤال المريض "هل ترى نقطة أم نقطتين؟"، تقوم الكاميرا (CCD) بتصوير الشبكية وحساب المسافة بين النقطتين رياضيًا وتحويلها إلى ديوبتر في أجزاء من الثانية.
-                    </div>`
-            },
-            'porterfield': {
-                year: "YEAR 1759", title: "ويليام بورترفيلد: أول أبتوميتر",
-                media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
-                            <div class="w-full h-1 bg-cyan-500/50 absolute top-1/2"></div>
-                            <div class="w-12 h-24 border-2 border-cyan-400 rounded-[50%] bg-cyan-900/30 backdrop-blur-sm relative animate-[pulse_3s_infinite]"></div>
-                            <p class="text-slate-400 mt-8 font-mono text-sm">[Badal Principle Simulation]</p>
-                        </div>`,
-                caption: "تطبيق مبدأ بادال لتحريك الهدف.",
-                content: `<div><strong class="text-amber-400 block mb-2">الابتكار:</strong>قدم ويليام بورترفيلد مصطلح "الأبتوميتر" (Optometer)، وهو أول جهاز مصمم لتقييم حدود الرؤية البعيدة. اعتمد هذا الجهاز على مبدأ عدسة متقاربة واحدة توضع على مسافة البعد البؤري من العين.</div>
-                
-                <div><strong class="text-cyan-400 block mb-2">كيف يعمل؟</strong>يسمح هذا التكوين البصري بتغيير القوة البصرية المسلطة على العين بسلاسة من خلال إزاحة الهدف البصري فقط، دون الحاجة لتغيير العدسات، وهو المبدأ الذي نستخدمه اليوم لتضبيب عين المريض (Fogging) والذي يُعرف باسم (Badal Principle).</div>`
-            },
-            'helmholtz': {
-                year: "YEAR 1851", title: "هيلمهولتز وقياس القرنية",
-                media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
-                            <div class="w-32 h-32 rounded-full border-2 border-dashed border-green-500 animate-[spin_10s_linear_infinite]"></div>
-                            <div class="w-24 h-24 rounded-full border-2 border-green-400 absolute"></div>
-                            <p class="text-green-400 mt-4 font-mono text-sm absolute bottom-4">[Keratometry Reflection]</p>
-                        </div>`,
-                caption: "أول كيراتوميتر لتقييم الاستجماتيزم.",
-                content: `<div><strong class="text-purple-400 block mb-2">ثورة السطح الأمامي:</strong>أحدث هيرمان فون هيلمهولتز تحولاً جذريًا في عام 1851 باختراع الكيراتوميتر اليدوي، الذي سمح للأطباء بقياس انحناء السطح الأمامي للقرنية بدقة عالية.</div>
-                
-                <div><strong class="text-cyan-400 block mb-2">أهمية هذا الابتكار:</strong>كان هذا القياس (والذي يركز تحديداً في المنطقة المركزية البالغة 3 ملم) حجر الزاوية في تشخيص الاستجماتيزم القرني، وفيما بعد أصبح الأساس الفيزيائي لتجهيز وملاءمة العدسات اللاصقة على العيون البشرية.</div>`
-            },
-            'nasa': {
-                year: "THE 1960s", title: "أزمة ناسا وقصر النظر الفراغي",
-                media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
-                            <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/grid-me.png')]"></div>
-                            <div class="w-40 h-40 border-2 border-green-500 rounded-full flex items-center justify-center relative">
-                                <div class="w-full h-1 bg-green-500 absolute animate-[spin_2s_linear_infinite]"></div>
-                                <div class="w-8 h-8 bg-green-400/50 rounded-full animate-ping"></div>
-                            </div>
-                            <p class="text-green-500 mt-4 font-mono text-sm z-10">[RADAR: Tracking Eye Movement]</p>
-                        </div>`,
-                caption: "التتبع الآلي والتكيف اللحظي للطيارين.",
-                content: `<div><strong class="text-cyan-400 block mb-2">قصر نظر المجال الفارغ:</strong>خلال الحرب الباردة وبرنامج الفضاء، اكتشفت (NASA) والجيش الأمريكي مشكلة خطيرة تُسمى "Empty Field Myopia". عندما ينظر الطيار في سماء زرقاء فارغة لا تحتوي على تفاصيل، تفقد العين قدرتها على التركيز وتسترخي العضلة وتصاب بقصر نظر مؤقت، مما يمنعهم من رؤية الطائرات المعادية البعيدة!</div>
-                
-                <div><strong class="text-amber-400 block mb-2">الحل التكنولوجي من ناسا:</strong>احتاجت ناسا لطريقة تراقب تركيز عين الطيار آليًا وبشكل مستمر دون أن تسأله. فقامت بتمويل تطوير أوائل أجهزة "الأوبتومتر" (Optometers) التي تستخدم الأشعة تحت الحمراء لقياس الانكسار ديناميكيًا وحركة العين.</div>
-                
-                <div class="bg-purple-900/20 p-5 rounded-lg border border-purple-500/50 mt-6 shadow-inner">
-                        <strong class="text-purple-400 text-lg block mb-2">كيف وصلنا لليوم؟</strong>
-                        بفضل تطور المعالجات الدقيقة (Microprocessors)، تم ضغط تلك التكنولوجيا العسكرية الفضائية الهائلة إلى شريحة صغيرة توضع داخل جهاز الـ Auto-Refractor المكتبي الذي نراه اليوم في كل عيادة.
-                </div>`
-            },
-            'wavefront': {
-                year: "YEAR 2000+", title: "Shack-Hartmann: ثورة التضاريس",
-                media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden perspective-1000">
-                            <div class="grid grid-cols-5 gap-1 transform rotate-x-45 animate-pulse">
-                                ${Array(25).fill('<div class="w-6 h-6 bg-cyan-500/80 rounded-full shadow-[0_0_10px_#00f0ff]"></div>').join('')}
-                            </div>
-                            <p class="text-cyan-400 mt-8 font-mono text-sm z-10">[Lenslet Array Matrix]</p>
-                        </div>`,
-                caption: "مصفوفة العدسات الدقيقة للتشوهات المعقدة.",
-                content: `<div><strong class="text-purple-400 block mb-2">من التلسكوبات إلى العيون:</strong>تقنية (Shack-Hartmann) لم تُخترع للطب، بل صُممت لعلماء الفلك لمراقبة النجوم وإلغاء التشويش الناتج عن الغلاف الجوي الأرضي (Adaptive Optics).</div>
-                
-                <div><strong class="text-cyan-400 block mb-2">نقلة نوعية في القياس:</strong>في أواخر التسعينيات، أدرك مهندسو الطب الحيوي إمكانية استخدام هذه التقنية للعين. بدلاً من قياس "قصر أو طول النظر" فقط، تقوم هذه التقنية بتقسيم الضوء المرتد من الشبكية إلى مئات النقاط عبر مصفوفة من العدسات المجهرية (Lenslets)، مما يسمح برسم خريطة ثلاثية الأبعاد لاكتشاف التشوهات البصرية المعقدة (Higher-Order Aberrations).</div>`
-            }
-        };
-
-        function openHistory(key) {
-            const data = historyDB[key];
-            if(data) {
-                document.getElementById('history-year').innerText = data.year; document.getElementById('history-title').innerText = data.title;
-                document.getElementById('history-media').innerHTML = data.media; document.getElementById('history-caption').innerText = data.caption;
-                document.getElementById('history-content').innerHTML = data.content;
-                document.getElementById('history-modal').classList.remove('pointer-events-none');
-                document.getElementById('history-modal').style.opacity = '1';
-            }
-        }
-        function closeHistory() {
-            document.getElementById('history-modal').style.opacity = '0';
-            setTimeout(() => { document.getElementById('history-modal').classList.add('pointer-events-none'); document.getElementById('history-media').innerHTML = ''; }, 300);
-        }
-
-        // FULL COMPONENTS DB
-        const components = [
-            { id: 'sld', name: '1. مصدر الأشعة (SLD Source)', desc: 'تستخدم الأجهزة الحديثة ثنائيات فائقة الإضاءة (Super Luminescent Diode) لتوفر شعاعًا أكثر حدة واختراقًا للوسائط المعتمة (مثل المياه البيضاء)، وتسمح بالقياس الدقيق من خلال بؤبؤ صغير جداً يصل قطره إلى 2.0 ملم فقط، وتكون بطول موجي يقارب 800-900 نانومتر (Infrared) لتجنب انزعاج المريض.', icon: '💡' },
-            { id: 'mirror', name: '2. نظام المنشور الدوار (Rotary Prism)', desc: 'في أجهزة شركة Topcon، يعتمد النظام على "منشور دوار" يدور لامركزيًا لمسح منطقة أوسع من الشبكية وتقليل العيوب الناتجة عن قاع العين. بينما تتبنى شركة Nidek نظام تصوير منطقة البؤبؤ الواسعة (Large Pupil Zone Imaging) الذي يقيس الانكسار عبر منطقة تصل إلى 6 ملم.', icon: '🪞' },
-            { id: 'fog', name: '3. عدسات التضبيب (Auto-Fogging)', desc: 'لحل مشكلة "Instrument Myopia"، يتم عرض هدف تثبيت (مثل بالون هواء ساخن أو صورة منزل) ويقوم الجهاز بتحريكه بصريًا إلى ما وراء نقطة التركيز، مما يجبر عضلات العين الهدبية على الاسترخاء والوصول لحالة السكون الانكساري قبل أخذ القراءة.', icon: '🌫️' },
-            { id: 'ccd', name: '4. مستشعر الصور وحساس التتبع', desc: 'للتغلب على حركة رأس المريض، دمجت أنظمة التتبع الآلي 3D حساسات CCD لاكتشاف البؤبؤ في الأبعاد (X, Y, Z) وضبط الجهاز تلقائيًا للقياس من المركز البصري الدقيق. في الأجهزة الحديثة يوضع أمام المستشعر مصفوفة عدسات (Shack-Hartmann) تقيس انحراف جبهة الموجة رياضياً:<div class="my-4 p-3 bg-black rounded shadow-inner text-center overflow-x-auto border border-cyan-800" dir="ltr">$$\\Delta W(x,y) = \\frac{\\partial W}{\\partial x}\\Delta x + \\frac{\\partial W}{\\partial y}\\Delta y$$</div>', icon: '📸' },
-            { id: 'joy', name: '5. عصا التحكم (Joystick)', desc: 'واجهة المستخدم الميكانيكية للطبيب. تتحرك في 3 اتجاهات (X, Y, Z). في الأجهزة الحديثة جداً، تم تزويدها بزر إطلاق ذكي، أو تم استبدالها كليًا بشاشة لمس (Touch Screen) تدير محركات التتبع الآلي بالكامل.', icon: '🕹️' }
-        ];
-
-        const compList = document.getElementById('component-list');
-        const compDisplay = document.getElementById('component-display');
-        components.forEach(comp => {
-            const div = document.createElement('div');
-            div.className = "bg-slate-800/80 p-4 rounded-xl border border-slate-700 hover:border-purple-500 cursor-pointer transition transform hover:-translate-x-2 backdrop-blur-sm";
-            div.innerHTML = `<h4 class="font-bold text-white flex items-center"><span class="mr-2 text-xl">${comp.icon}</span> ${comp.name}</h4>`;
-            div.onclick = () => {
-                Array.from(compList.children).forEach(child => child.classList.replace('border-purple-500', 'border-slate-700'));
-                div.classList.replace('border-slate-700', 'border-purple-500');
-                compDisplay.innerHTML = `<div class="text-7xl mb-4 animate-pulse drop-shadow-[0_0_20px_rgba(0,240,255,0.8)]">${comp.icon}</div>
-                    <h3 class="text-3xl font-black text-cyan-400 mb-4 border-b border-cyan-900 pb-2 inline-block">${comp.name}</h3>
-                    <p class="text-slate-300 text-lg leading-relaxed max-w-lg mx-auto bg-black/60 p-6 rounded-xl border border-slate-800 shadow-inner">${comp.desc}</p>`;
-                if (window.MathJax) { MathJax.typesetPromise([compDisplay]); }
-            };
-            compList.appendChild(div);
-        });
-
-        // ----------------- LIGHT PATH SIMULATOR (FULL ACCURATE) -----------------
+        // === MODULE: SIM LIGHT PATH ===
         class Particle {
             constructor(x, y, vx, vy, color, glow) { this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.color = color; this.glow = glow; this.life = 1.0; }
             update() { this.x += this.vx; this.y += this.vy; this.life -= 0.005; }
-            draw(c) {
-                if(this.life <= 0) return;
-                c.globalAlpha = this.life; c.shadowBlur = this.glow; c.shadowColor = this.color; c.fillStyle = this.color;
-                c.beginPath(); c.arc(this.x, this.y, 3.5, 0, Math.PI*2); c.fill(); 
-                c.globalAlpha = 1.0; c.shadowBlur = 0;
-            }
+            draw(c) { if(this.life <= 0) return; c.globalAlpha = this.life; c.shadowBlur = this.glow; c.shadowColor = this.color; c.fillStyle = this.color; c.beginPath(); c.arc(this.x, this.y, 3, 0, Math.PI*2); c.fill(); c.globalAlpha = 1.0; c.shadowBlur = 0; }
         }
 
         const simLight = {
-            initialized: false, canvas: document.getElementById('lightPathCanvas'), ctx: null, time: 0, animId: null, foggingOn: false, firing: false, particles: [], lensCurrentX: 0,
-            eyeLensThickness: 18, 
-
-            init() { this.ctx = this.canvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-light').classList.contains('hidden')) this.resize(); }); this.initialized = true; this.animate(); },
+            initialized: false, canvas: document.getElementById('lightPathCanvas'), ctx: null, time: 0, animId: null, foggingOn: false, firing: false, particles: [], lensCurrentX: 0, eyeLensThick: 18, isRunning: false,
+            init() { this.ctx = this.canvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => { if(this.isRunning) this.resize(); }); this.initialized = true; },
+            start() { this.isRunning = true; this.animate(); },
+            stop() { this.isRunning = false; cancelAnimationFrame(this.animId); },
             resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; },
-            
             toggleFogging() {
                 this.foggingOn = !this.foggingOn;
                 document.getElementById('btn-fogging').innerText = this.foggingOn ? "مفعّل (تشويش)" : "مغلق (واضح)";
                 document.getElementById('btn-fogging').className = this.foggingOn ? "text-green-400 font-bold" : "text-red-400 font-bold";
-                
-                const physioBox = document.getElementById('fogging-explanation'); 
-                const physioText = document.getElementById('physio-status');
-                
+                const pBox = document.getElementById('fogging-explanation'); const pText = document.getElementById('physio-status');
                 if(this.foggingOn) {
-                    physioBox.className = "mt-6 p-4 border-2 border-green-500/30 rounded-lg bg-green-950/20 flex-grow transition-all duration-500";
-                    physioText.innerHTML = "<span class='text-green-400 font-bold'>عضلة العين مسترخية تماماً (Relaxed).</span><br><br>العدسة ابتعدت عن العين، المنطاد أصبح ضبابياً. الدماغ يئس من التوضيح فأرخى العضلات. <br><span class='text-xs text-cyan-300'>*لاحظ تسطح عدسة العين الداخلية في الرسم*</span>";
-                    document.getElementById('sim-light-log').innerHTML = "> FOGGING LENS MOVED AWAY.<br>> TARGET BLURRED. READY TO FIRE.";
+                    pBox.className = "mt-6 p-4 border-2 border-green-500/30 rounded-lg bg-green-950/20";
+                    pText.innerHTML = "<span class='text-green-400'>مسترخية (Relaxed).</span> قراءة دقيقة.";
                 } else {
-                    physioBox.className = "mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20 flex-grow transition-all duration-500";
-                    physioText.innerHTML = "<span class='text-red-400 font-bold'>عضلة العين متشنجة (Accommodation).</span><br><br>العدسة اقتربت، المريض يرى المنطاد بوضوح، مما يجبر عينه على التركيز. <br><span class='text-xs text-amber-300'>*لاحظ انتفاخ عدسة العين الداخلية في الرسم*</span>";
-                    document.getElementById('sim-light-log').innerHTML = "> FOGGING LENS MOVED CLOSER.<br>> WARNING: ACCOMMODATION POSSIBLE.";
+                    pBox.className = "mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20";
+                    pText.innerHTML = "<span class='text-red-400'>متشنجة (Accommodation).</span> قراءة خاطئة!";
                 }
             },
-            
             fireLaser() {
-                if(this.firing) return;
-                this.firing = true; document.getElementById('sim-light-log').innerHTML = "> FIRING IR PULSE...<br>> TRACKING WAVEFRONT DEFORMATION...";
-                const w = this.canvas.width; let sldY = this.canvas.height/2; let sldX = w * 0.1;
-                for(let i=0; i<15; i++) { setTimeout(() => { this.particles.push(new Particle(sldX + 20, sldY, 6, 0, '#ff003c', 15)); }, i * 60); }
-                
-                setTimeout(() => { 
-                    this.firing = false; 
-                    let reading = this.foggingOn ? "0.00D (TRUE REFRACTION)" : "-2.50D (FAKE MYOPIA)";
-                    document.getElementById('sim-light-log').innerHTML = `> DATA RECEIVED AT CCD.<br>> DSP RESULT: ${reading}`; 
-                }, 3000); 
+                if(this.firing) return; this.firing = true; 
+                let sldY = this.canvas.height/2; let sldX = this.canvas.width * 0.1;
+                for(let i=0; i<15; i++) { setTimeout(() => { this.particles.push(new Particle(sldX+20, sldY, 8, 0, '#ff003c', 15)); }, i*50); }
+                setTimeout(() => { this.firing = false; }, 2500); 
             },
-            
             animate() {
+                if(!this.isRunning) return;
                 const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
                 this.time += 0.05; c.fillStyle = 'rgba(0, 0, 0, 0.4)'; c.fillRect(0, 0, w, h);
-                c.strokeStyle = '#1e293b'; c.lineWidth = 1; c.beginPath();
-                for(let i=0; i<w; i+=40) { c.moveTo(i,0); c.lineTo(i,h); }
-                for(let i=0; i<h; i+=40) { c.moveTo(0,i); c.lineTo(w,i); } c.stroke();
+                const cy = h/2; const sldX = w*0.1; const mirrorX = w*0.4; const eyeX = w*0.85; const ccdY = h*0.85;
                 
-                const cy = h/2; const sldX = w * 0.1; const mirrorX = w * 0.4; const eyeX = w * 0.85; const ccdY = h * 0.85;
-                
-                const targetLensX = this.foggingOn ? w * 0.45 : w * 0.65;
+                const targetLensX = this.foggingOn ? w*0.45 : w*0.65;
                 if(this.lensCurrentX === 0) this.lensCurrentX = targetLensX;
                 this.lensCurrentX += (targetLensX - this.lensCurrentX) * 0.05;
-
-                const targetEyeLensThickness = this.foggingOn ? 8 : 18; 
-                this.eyeLensThickness += (targetEyeLensThickness - this.eyeLensThickness) * 0.05;
+                this.eyeLensThick += ((this.foggingOn ? 8 : 18) - this.eyeLensThick) * 0.05;
 
                 for(let i = this.particles.length - 1; i >= 0; i--) {
                     let p = this.particles[i]; p.update();
-                    if(p.vx > 0 && p.x >= eyeX - 40) { p.vx = -6; p.color = '#39ff14'; p.glow = 15; }
-                    if(p.vx < 0 && p.x <= mirrorX && p.y < cy + 10) { p.vx = 0; p.vy = 6; }
+                    // Refraction & Bounce Physics
+                    if(p.vx > 0 && p.x >= eyeX - 55) { p.vx *= -0.8; p.vy += (Math.random()-0.5)*2; p.color = '#39ff14'; p.glow = 15; }
+                    if(p.vx < 0 && p.x <= mirrorX && p.y < cy+10) { p.vx = 0; p.vy = 8; }
                     p.draw(c); if(p.life <= 0 || p.y > h) this.particles.splice(i, 1);
                 }
 
-                c.shadowBlur = 15; c.shadowColor = '#9d00ff'; c.fillStyle = '#111'; c.strokeStyle = '#9d00ff'; c.lineWidth = 3;
-                c.fillRect(sldX - 20, cy-30, 40, 60); c.strokeRect(sldX - 20, cy-30, 40, 60); c.fillStyle = '#fff'; c.fillText('SLD', sldX - 10, cy+45);
+                // Drawing Hardware
+                c.fillStyle = '#111'; c.strokeStyle = '#9d00ff'; c.lineWidth = 3; c.fillRect(sldX-20, cy-30, 40, 60); c.strokeRect(sldX-20, cy-30, 40, 60);
+                c.strokeStyle = '#00f0ff'; c.beginPath(); c.moveTo(mirrorX-30, cy-30); c.lineTo(mirrorX+30, cy+30); c.stroke();
+                c.strokeStyle = '#fff'; c.beginPath(); c.ellipse(this.lensCurrentX, cy, 10, 45, 0, 0, Math.PI*2); c.stroke();
+                c.fillStyle = '#222'; c.strokeStyle = '#ffaa00'; c.fillRect(mirrorX-40, ccdY-15, 80, 30); c.strokeRect(mirrorX-40, ccdY-15, 80, 30);
                 
-                c.shadowColor = '#00f0ff'; c.strokeStyle = '#00f0ff'; c.beginPath(); c.moveTo(mirrorX-30, cy-30); c.lineTo(mirrorX+30, cy+30); c.stroke();
-                c.fillStyle = 'rgba(0, 240, 255, 0.1)'; c.beginPath(); c.moveTo(mirrorX-30, cy-30); c.lineTo(mirrorX+30, cy+30); c.lineTo(mirrorX+30, cy+15); c.lineTo(mirrorX-15, cy-30); c.fill();
-                
-                c.shadowColor = '#fff'; c.shadowBlur = 5; c.fillStyle = 'rgba(255, 255, 255, 0.15)'; c.strokeStyle = '#fff';
-                c.beginPath(); c.ellipse(this.lensCurrentX, cy, 10, 45, 0, 0, Math.PI*2); c.fill(); c.stroke(); c.shadowBlur = 0; c.fillStyle = '#94a3b8'; c.fillText('FOG LENS', this.lensCurrentX - 25, cy + 65);
-                
-                c.shadowColor = '#ffaa00'; c.shadowBlur = 15; c.fillStyle = '#222'; c.strokeStyle = '#ffaa00';
-                c.fillRect(mirrorX-40, ccdY-15, 80, 30); c.strokeRect(mirrorX-40, ccdY-15, 80, 30); c.fillStyle = '#ffaa00'; c.fillText('CCD SENSOR', mirrorX-35, ccdY+5);
-
-                c.fillStyle = this.foggingOn ? '#39ff14' : '#ff003c';
-                c.font = '12px monospace';
-                let readingText = this.foggingOn ? "READING: 0.00D (TRUE)" : "READING: -2.50D (FAKE)";
-                c.fillText(readingText, mirrorX - 45, ccdY + 35);
-
-                c.save(); if(this.foggingOn) { c.filter = 'blur(6px)'; } 
-                c.fillStyle = '#ef4444'; c.beginPath(); c.arc(eyeX - 90, cy - 20, 15, 0, Math.PI*2); c.fill(); 
-                c.fillStyle = '#f59e0b'; c.beginPath(); c.moveTo(eyeX-90, cy-5); c.lineTo(eyeX-85, cy+5); c.lineTo(eyeX-95, cy+5); c.fill(); 
-                c.restore(); c.fillStyle = '#fff'; c.fillText('TARGET', eyeX - 105, cy + 20);
-                
-                c.shadowBlur = 0; c.fillStyle = '#0f172a'; c.strokeStyle = '#334155'; c.lineWidth = 4;
-                c.beginPath(); c.arc(eyeX, cy, 60, 0, Math.PI*2); c.fill(); c.stroke();
-                
-                c.shadowBlur = 10; c.shadowColor = '#00f0ff'; c.strokeStyle = '#00f0ff'; c.lineWidth = 4;
-                c.beginPath(); c.arc(eyeX-60, cy, 25, Math.PI*-0.4, Math.PI*0.4, false); c.stroke();
-
-                c.shadowBlur = 0;
-                c.fillStyle = this.foggingOn ? 'rgba(57, 255, 20, 0.2)' : 'rgba(255, 0, 60, 0.2)'; 
-                c.strokeStyle = this.foggingOn ? '#39ff14' : '#ff003c';
-                c.lineWidth = 2;
-                c.beginPath(); 
-                c.ellipse(eyeX - 35, cy, this.eyeLensThickness, 22, 0, 0, Math.PI*2); 
-                c.fill(); c.stroke();
+                // Eye
+                c.fillStyle = '#0f172a'; c.strokeStyle = '#334155'; c.beginPath(); c.arc(eyeX, cy, 60, 0, Math.PI*2); c.fill(); c.stroke();
+                c.strokeStyle = '#00f0ff'; c.beginPath(); c.arc(eyeX-60, cy, 25, Math.PI*-0.4, Math.PI*0.4, false); c.stroke();
+                c.fillStyle = this.foggingOn ? 'rgba(57,255,20,0.2)' : 'rgba(255,0,60,0.2)'; c.beginPath(); c.ellipse(eyeX-35, cy, this.eyeLensThick, 22, 0, 0, Math.PI*2); c.fill();
 
                 this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
 
-        // ----------------- OPTICS SIMULATOR (FULL) -----------------
+        // === MODULE: SIM OPTICS & ERROR MODE ===
         const simOptics = {
-            initialized: false, canvas: document.getElementById('opticsCanvas'), ctx: null, slider: document.getElementById('refractSlider'),
-            init() { this.ctx = this.canvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-optics').classList.contains('hidden')) this.resize(); }); this.slider.addEventListener('input', this.draw.bind(this)); this.initialized = true; this.draw(); },
-            resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; this.draw(); },
-            draw() {
-                const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height; const val = parseFloat(this.slider.value); 
-                c.fillStyle = '#000'; c.fillRect(0, 0, w, h); const cx = w/2 + 50; const cy = h/2;
-                const resEl = document.getElementById('optics-result'); const descEl = document.getElementById('optics-desc');
-                if(val === 0) { resEl.innerText = "SPH: 0.00 D"; resEl.className="text-4xl font-mono text-green-400 font-bold mb-2 text-shadow drop-shadow-[0_0_10px_#39ff14]"; descEl.innerText="العين مثالية. البؤرة تقع على الشبكية تماماً."; }
-                else if(val < 0) { resEl.innerText = `SPH: ${val.toFixed(2)} D`; resEl.className="text-4xl font-mono text-red-500 font-bold mb-2 text-shadow drop-shadow-[0_0_10px_#ff003c]"; descEl.innerText=`قصر نظر (Myopia). الأشعة تتقاطع وتتشتت قبل الوصول للشبكية.`; }
-                else { resEl.innerText = `SPH: +${val.toFixed(2)} D`; resEl.className="text-4xl font-mono text-cyan-400 font-bold mb-2 text-shadow drop-shadow-[0_0_10px_#00f0ff]"; descEl.innerText=`طول نظر (Hyperopia). الأشعة تصطدم بالشبكية قبل أن تتبأر.`; }
+            initialized: false, canvas: document.getElementById('opticsCanvas'), ctx: null, isRunning: false, time: 0,
+            slider: document.getElementById('refractSlider'), condition: document.getElementById('patientCondition'),
+            init() { this.ctx = this.canvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => { if(this.isRunning) this.resize(); }); this.initialized = true; },
+            start() { this.isRunning = true; this.animate(); },
+            stop() { this.isRunning = false; cancelAnimationFrame(this.animId); },
+            resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; },
+            animate() {
+                if(!this.isRunning) return;
+                const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
+                this.time += 0.1;
+                c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+                
+                const val = parseFloat(this.slider.value); 
+                const cond = this.condition.value;
+                const cx = w/2 + 50; const cy = h/2;
 
-                c.lineWidth = 3; c.fillStyle = '#050a15'; c.strokeStyle = '#1e293b'; c.beginPath(); c.ellipse(cx, cy, 140, 110, 0, 0, Math.PI*2); c.fill(); c.stroke();
-                c.shadowBlur = 20; c.shadowColor = '#ff003c'; c.strokeStyle = '#ef4444'; c.lineWidth = 4; c.beginPath(); c.arc(cx, cy, 140, Math.PI*-0.15, Math.PI*0.15, false); c.stroke(); c.shadowBlur = 0;
-                c.strokeStyle = '#00f0ff'; c.lineWidth = 5; c.shadowBlur = 10; c.shadowColor = '#00f0ff'; c.beginPath(); c.arc(cx - 140, cy, 55, Math.PI*-0.35, Math.PI*0.35, false); c.stroke(); c.shadowBlur = 0;
-                c.fillStyle = 'rgba(255,255,255,0.1)'; c.strokeStyle = '#64748b'; c.lineWidth = 2; c.beginPath(); c.ellipse(cx - 90, cy, 15, 45, 0, 0, Math.PI*2); c.fill(); c.stroke();
+                // Noise logic for real world
+                let noise = 0; let readingColor = '#39ff14'; let desc = "إشارة نقية.";
+                if(cond === 'shake') { noise = (Math.random() - 0.5) * 1.5; readingColor = '#ffaa00'; desc = "ERR: حركة عالية، قراءة غير مستقرة."; }
+                if(cond === 'cataract') { noise = (Math.random() - 0.5) * 0.5; readingColor = '#ff003c'; desc = "ERR: إشارة ضعيفة جداً (Media Opacity)."; }
+                
+                let finalReading = (val + noise).toFixed(2);
+                document.getElementById('optics-result').innerText = `SPH: ${finalReading > 0 ? '+':''}${finalReading} D`;
+                document.getElementById('optics-result').style.color = readingColor;
+                document.getElementById('optics-desc').innerText = desc;
 
-                const retinaX = cx + 140; const focalX = retinaX + (val * 15); const lensX = cx - 90; const beamHeight = 40;
+                // Draw Eye
+                let drawCy = cy + (cond === 'shake' ? Math.sin(this.time)*5 : 0); // Shake effect
+                c.lineWidth = 3; c.fillStyle = '#050a15'; c.strokeStyle = '#1e293b'; c.beginPath(); c.ellipse(cx, drawCy, 140, 110, 0, 0, Math.PI*2); c.fill(); c.stroke();
+                c.strokeStyle = '#00f0ff'; c.beginPath(); c.arc(cx - 140, drawCy, 55, Math.PI*-0.35, Math.PI*0.35, false); c.stroke();
+                
+                // Lens (Cloudy if Cataract)
+                c.fillStyle = cond === 'cataract' ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.1)'; 
+                c.beginPath(); c.ellipse(cx - 90, drawCy, 15, 45, 0, 0, Math.PI*2); c.fill();
+
+                // Rays
+                const retinaX = cx + 140; const focalX = retinaX + (val * 15); const lensX = cx - 90;
+                c.strokeStyle = cond === 'cataract' ? 'rgba(255,0,0,0.2)' : 'rgba(0, 240, 255, 0.8)';
                 c.lineWidth = 2;
-                const drawRay = (startY) => {
-                    c.beginPath(); c.moveTo(0, cy + startY); c.lineTo(lensX, cy + startY); 
-                    if(focalX < retinaX) { c.lineTo(focalX, cy); let slope = (cy - (cy + startY)) / (focalX - lensX); let extY = cy + slope * (retinaX - focalX); c.lineTo(retinaX, extY); } else { c.lineTo(focalX, cy); }
+                [-40, 0, 40].forEach(startY => {
+                    c.beginPath(); c.moveTo(0, cy + startY); c.lineTo(lensX, drawCy + startY); 
+                    if(cond !== 'cataract') {
+                        if(focalX < retinaX) { c.lineTo(focalX, drawCy); let slope = (drawCy - (drawCy + startY)) / (focalX - lensX); c.lineTo(retinaX, drawCy + slope*(retinaX-focalX)); } 
+                        else c.lineTo(focalX, drawCy);
+                    } else {
+                        // Light scatters randomly
+                        c.lineTo(lensX + 50, drawCy + startY + (Math.random()-0.5)*100);
+                    }
                     c.stroke();
-                };
-                c.shadowBlur = 10; c.shadowColor = '#00f0ff'; c.strokeStyle = 'rgba(0, 240, 255, 0.8)'; drawRay(-beamHeight); drawRay(beamHeight); drawRay(0);
-                c.shadowBlur = 20; c.shadowColor = '#fff'; c.fillStyle = '#fff'; c.beginPath(); c.arc(focalX, cy, 5, 0, Math.PI*2); c.fill();
+                });
 
-                if(val !== 0) {
-                    let blurRadius = Math.abs(retinaX - focalX) * 0.4; c.fillStyle = 'rgba(255, 0, 60, 0.5)'; c.shadowBlur = 15; c.shadowColor = '#ff003c';
-                    c.beginPath(); c.ellipse(retinaX, cy, 8, Math.min(blurRadius, 60), 0, 0, Math.PI*2); c.fill();
-                }
-                c.shadowBlur = 0;
+                this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
 
-        // ----------------- MIRES SIMULATOR (FULL) -----------------
+        // === MODULE: SIM KERATO (Mires) ===
         const simMires = {
-            initialized: false, canvas: document.getElementById('miresCanvas'), ctx: null, time: 0, animId: null,
-            init() { this.ctx = this.canvas.getContext('2d'); this.initialized = true; this.update(); this.animate(); },
+            initialized: false, canvas: document.getElementById('miresCanvas'), ctx: null, time: 0, animId: null, isRunning: false,
+            init() { this.ctx = this.canvas.getContext('2d'); this.initialized = true; this.update(); },
+            start() { this.isRunning = true; this.animate(); },
+            stop() { this.isRunning = false; cancelAnimationFrame(this.animId); },
             update() {
                 const type = document.getElementById('corneaSelect').value; const log = document.getElementById('mire-analysis');
-                if(type === 'normal') log.innerHTML = "STATUS: <span class='text-green-400'>OPTIMAL.</span><br>حلقات دائرية مثالية. المسافة بين الحلقات متساوية. القرنية سليمة. (Astigmatism = 0.00D).";
-                if(type === 'astig_with') log.innerHTML = "STATUS: <span class='text-amber-400'>WTR ASTIGMATISM.</span><br>شكل بيضوي عرضي. المحور العمودي أكثر انحداراً. Axis ≈ 180°.";
-                if(type === 'astig_against') log.innerHTML = "STATUS: <span class='text-amber-400'>ATR ASTIGMATISM.</span><br>شكل بيضوي طولي. المحور الأفقي أكثر انحداراً. Axis ≈ 90°.";
-                if(type === 'keratoconus') log.innerHTML = "STATUS: <span class='text-red-500 font-bold'>CRITICAL DEFORMATION!</span><br>انحدار سفلي حاد وغير متماثل. اشتباه قرنية مخروطية. يتطلب تصوير طبوغرافي.";
-                if(type === 'dry_eye') log.innerHTML = "STATUS: <span class='text-amber-500'>SIGNAL INTERRUPTED.</span><br>تكسر وتقطع في الحلقات بسبب نقص الدموع. يرجى التقطير وإعادة الفحص.";
+                let texts = {
+                    'normal': "القرنية سليمة.", 'astig_with': "استجماتيزم (Axis ≈ 180°).", 'astig_against': "استجماتيزم (Axis ≈ 90°).",
+                    'keratoconus': "ERR: قرنية مخروطية.", 'dry_eye': "ERR: طبقة الدموع متكسرة."
+                };
+                log.innerText = texts[type];
             },
             animate() {
+                if(!this.isRunning) return;
                 const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height; const cx = w/2; const cy = h/2; const type = document.getElementById('corneaSelect').value;
                 this.time += 0.05; c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
-                c.fillStyle = '#050a15'; c.beginPath(); c.arc(cx, cy, 160, 0, Math.PI*2); c.fill();
-                c.fillStyle = '#02040a'; c.beginPath(); c.arc(cx, cy, 35, 0, Math.PI*2); c.fill(); 
-                c.lineWidth = 3; c.shadowBlur = 10;
-               
+                
+                c.lineWidth = 2;
                 for(let i=1; i<=5; i++) {
-                    let baseRadius = i * 28; c.strokeStyle = `rgba(0, 240, 255, ${1 - (i*0.15)})`; c.shadowColor = '#00f0ff'; c.beginPath();
+                    let baseRadius = i * 28; c.strokeStyle = `rgba(0, 240, 255, ${1 - (i*0.15)})`; c.beginPath();
                     for(let a=0; a<=Math.PI*2; a+=0.05) {
-                        let r = baseRadius; let centerX = cx; let centerY = cy;
+                        let r = baseRadius; let cY = cy;
                         if(type === 'astig_with') r += (i*3) * Math.cos(2*a); 
                         else if(type === 'astig_against') r += (i*3) * Math.sin(2*a); 
-                        else if(type === 'keratoconus') { centerY += i * 8; if (a > 0 && a < Math.PI) r *= 1 + 0.1 * Math.sin(a); r += Math.sin(a*3 + this.time)*2; }
-                        let x = centerX + r * Math.cos(a); let y = centerY + r * Math.sin(a);
+                        else if(type === 'keratoconus') { cY += i*8; if(a>0 && a<Math.PI) r *= 1+0.1*Math.sin(a); r += Math.sin(a*3+this.time)*2; }
+                        
+                        let x = cx + r * Math.cos(a); let y = cY + r * Math.sin(a);
                         if(type === 'dry_eye' && Math.random() < 0.1) { c.moveTo(x, y); continue; }
                         if(a===0) c.moveTo(x,y); else c.lineTo(x,y);
                     }
-                    c.closePath(); c.stroke();
+                    c.stroke();
                 }
                 this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
 
-        // ----------------- AI TRACKING SIMULATOR (FULL) -----------------
+        // === MODULE: SIM AI (Auto Tracking) ===
         const simAI = {
             initialized: false, rawCanvas: document.getElementById('aiRawCanvas'), procCanvas: document.getElementById('aiProcessedCanvas'),
-            rawCtx: null, procCtx: null, time: 0, animId: null, trackingActive: false, eyeX: 0, eyeY: 0, trackX: 0, trackY: 0,
-            init() { this.rawCtx = this.rawCanvas.getContext('2d'); this.procCtx = this.procCanvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-ai').classList.contains('hidden')) this.resize(); }); this.initialized = true; this.eyeX = this.rawCanvas.width / 2; this.eyeY = this.rawCanvas.height / 2; this.trackX = this.eyeX; this.trackY = this.eyeY; this.animate(); },
-            resize() { this.rawCanvas.width = this.rawCanvas.parentElement.clientWidth; this.rawCanvas.height = 250; this.procCanvas.width = this.procCanvas.parentElement.clientWidth; this.procCanvas.height = 250; this.eyeX = this.rawCanvas.width / 2; this.eyeY = this.rawCanvas.height / 2; },
-            process() { if(this.trackingActive) return; this.trackingActive = true; document.getElementById('ai-log').innerHTML = "> AUTO-TRACKING ENGAGED...<br>> ACQUIRING PUPIL COORDINATES..."; },
+            rawCtx: null, procCtx: null, time: 0, animId: null, trackingActive: false, eyeX: 0, eyeY: 0, trackX: 0, trackY: 0, isRunning: false,
+            init() { this.rawCtx = this.rawCanvas.getContext('2d'); this.procCtx = this.procCanvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => { if(this.isRunning) this.resize(); }); this.initialized = true; },
+            start() { this.isRunning = true; this.resize(); this.animate(); },
+            stop() { this.isRunning = false; cancelAnimationFrame(this.animId); },
+            resize() { 
+                if(this.rawCanvas.parentElement) {
+                    this.rawCanvas.width = this.rawCanvas.parentElement.clientWidth; this.rawCanvas.height = 250; 
+                    this.procCanvas.width = this.procCanvas.parentElement.clientWidth; this.procCanvas.height = 250; 
+                }
+            },
+            process() { this.trackingActive = true; document.getElementById('ai-log').innerText = "> AUTO-TRACKING ENGAGED..."; },
             animate() {
+                if(!this.isRunning) return;
                 this.time += 0.05; const w = this.rawCanvas.width; const h = this.rawCanvas.height; const cx = w/2; const cy = h/2;
-                this.eyeX = cx + Math.sin(this.time * 0.8) * 50 + Math.cos(this.time * 1.3) * 20; this.eyeY = cy + Math.cos(this.time * 0.6) * 30 + Math.sin(this.time * 1.1) * 15;
+                
+                // Micro-saccades and head movement
+                this.eyeX = cx + Math.sin(this.time*0.8)*50 + Math.sin(this.time*15)*2; 
+                this.eyeY = cy + Math.cos(this.time*0.6)*30 + Math.cos(this.time*12)*2;
+
                 const cRaw = this.rawCtx; cRaw.fillStyle = '#050505'; cRaw.fillRect(0,0,w,h);
-                const grd = cRaw.createRadialGradient(this.eyeX, this.eyeY, 10, this.eyeX, this.eyeY, 80); grd.addColorStop(0, '#000'); grd.addColorStop(0.2, '#111'); grd.addColorStop(1, '#050505');
-                cRaw.fillStyle = grd; cRaw.beginPath(); cRaw.arc(this.eyeX, this.eyeY, 80, 0, Math.PI*2); cRaw.fill();
-                cRaw.fillStyle = 'rgba(255,255,255,0.03)'; for(let i=0; i<400; i++) cRaw.fillRect(Math.random()*w, Math.random()*h, 2, 2);
+                cRaw.fillStyle = '#111'; cRaw.beginPath(); cRaw.arc(this.eyeX, this.eyeY, 80, 0, Math.PI*2); cRaw.fill();
+                cRaw.fillStyle = 'rgba(255,255,255,0.05)'; for(let i=0; i<300; i++) cRaw.fillRect(Math.random()*w, Math.random()*h, 2, 2); // Noise
 
                 const c = this.procCtx;
-                if(!this.trackingActive) { c.fillStyle = '#000'; c.fillRect(0,0,w,h); c.fillStyle = '#1e293b'; c.font = "bold 14px monospace"; c.textAlign = "center"; c.fillText("SYSTEM STANDBY. PRESS ENGAGE.", cx, cy); } 
+                if(!this.trackingActive) { c.fillStyle = '#000'; c.fillRect(0,0,w,h); c.fillStyle = '#fff'; c.fillText("STANDBY", cx, cy); } 
                 else {
-                    const log = document.getElementById('ai-log'); c.fillStyle = 'rgba(0,0,0,0.3)'; c.fillRect(0,0,w,h); 
-                    c.fillStyle = 'rgba(0, 240, 255, 0.2)'; c.fillRect(0, (this.time * 40) % h, w, 3);
-                    let dx = this.eyeX - this.trackX; let dy = this.eyeY - this.trackY; this.trackX += dx * 0.15; this.trackY += dy * 0.15;
-                    let dist = Math.sqrt(dx*dx + dy*dy); let locked = dist < 5; 
-                    if(locked) { log.innerHTML = "> TARGET LOCKED. ALIGNMENT: 100%<br>> MOTORS STABILIZED. READY TO FIRE."; c.strokeStyle = '#ff003c'; c.shadowColor = '#ff003c'; } 
-                    else { log.innerHTML = `> TRACKING... OFFSET X:${Math.abs(dx).toFixed(1)} Y:${Math.abs(dy).toFixed(1)}<br>> ADJUSTING MOTORS...`; c.strokeStyle = '#39ff14'; c.shadowColor = '#39ff14'; }
-                    c.shadowBlur = 10; c.lineWidth = 2; let tx = this.trackX; let ty = this.trackY;
-                    const b = 45; const l = 15;
-                    c.beginPath(); c.moveTo(tx-b, ty-b+l); c.lineTo(tx-b, ty-b); c.lineTo(tx-b+l, ty-b); c.stroke(); c.beginPath(); c.moveTo(tx+b, ty-b+l); c.lineTo(tx+b, ty-b); c.lineTo(tx+b-l, ty-b); c.stroke(); c.beginPath(); c.moveTo(tx-b, ty+b-l); c.lineTo(tx-b, ty+b); c.lineTo(tx-b+l, ty+b); c.stroke(); c.beginPath(); c.moveTo(tx+b, ty+b-l); c.lineTo(tx+b, ty+b); c.lineTo(tx+b-l, ty+b); c.stroke(); 
-                    c.beginPath(); c.moveTo(tx-10, ty); c.lineTo(tx+10, ty); c.stroke(); c.beginPath(); c.moveTo(tx, ty-10); c.lineTo(tx, ty+10); c.stroke();
-                    c.beginPath(); c.arc(tx, ty, 30, 0, Math.PI*2); c.stroke(); c.shadowBlur = 0;
+                    c.fillStyle = 'rgba(0,0,0,0.3)'; c.fillRect(0,0,w,h); 
+                    let dx = this.eyeX - this.trackX; let dy = this.eyeY - this.trackY; 
+                    this.trackX += dx * 0.15; this.trackY += dy * 0.15; // PID loop simulation
+
+                    if(Math.sqrt(dx*dx + dy*dy) < 5) c.strokeStyle = '#ff003c'; else c.strokeStyle = '#39ff14';
+                    
+                    c.lineWidth = 2; let tx = this.trackX; let ty = this.trackY;
+                    c.strokeRect(tx-45, ty-45, 90, 90);
+                    c.beginPath(); c.arc(tx, ty, 30, 0, Math.PI*2); c.stroke();
                 }
                 this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
 
-        // FULL RECEIPT DB
-        const receiptData = {
-            'meas': { t: "القياسات الفردية (Measurements)", d: "يقوم الجهاز بأخذ 3 قراءات سريعة جدًا للعين الواحدة. لماذا؟ لأن العين البشرية تتحرك بشكل مجهري دائمًا (Micro-saccades)، وقد يتغير التركيز أو ترمش العين. أخذ عدة قراءات يضمن دقة إحصائية لتشخيص الخطأ الانكساري." },
-            'meas_err': { t: "قراءة مع نسبة خطأ", d: "لاحظ كيف أن هذه القراءة تختلف قليلًا عن البقية، وتم تظليلها أو تجاهلها. الجهاز ذكي بما يكفي لمعرفة أن المريض رمش أو تحرك خلال هذا الجزء من الثانية، فقام بتخفيض وزن هذه القراءة (Reliability Index)." },
-            'avg': { t: "المتوسط الحسابي (Average - AVG)", d: "هذا هو السطر الأهم للطبيب! يقوم المعالج الدقيق بجمع القراءات الصالحة وقسمتها رياضيًا لاستخراج الرقم الأكثر استقرارًا وموثوقية الذي سيبنى عليه التشخيص الفعلي للمريض." },
-            'se': { t: "المكافئ الكروي (Spherical Equivalent)", d: "معادلة رياضية بسيطة: SPH + (CYL/2). تُستخدم لتبسيط الوصفة إذا أراد المريض ارتداء عدسات لاصقة كروية عادية لا تصحح الاستجماتيزم، أو تُستخدم في الأبحاث لتقييم الضعف العام للرؤية." },
-            'k1': { t: "انحناء القرنية (R1 / Flat K)", d: "القياس المسطح لمنحنى القرنية (مثل سطح الملعقة من الخلف). الرقم 7.80mm يمثل نصف قطر الانحناء. كلما صغر الرقم بالمليمتر، زادت قوة تحدب القرنية (يعبر عنه بالديوبتر 43.25D)." },
-            'k2': { t: "انحناء القرنية (R2 / Steep K)", d: "القياس المنحدر (الأكثر تقوسًا). يتم قياسه في زاوية عمودية على K1 (لاحظ الـ AX 90 مقابل 180). هذا الاختلاف في التقوس بين المحورين هو ما يخلق الاستجماتيزم القرني في العين." },
-            'cylk': { t: "الاستجماتيزم القرني (Corneal CYL)", d: "هو ببساطة ناتج الطرح بين K2 و K1. يخبرنا هذا الرقم بمقدار التشوه الموجود <span class='text-amber-400 font-bold'>في القرنية فقط</span>. إذا كان هذا الرقم مختلفًا عن الـ CYL الكلي، فهذا يعني أن المشكلة في عدسة العين الداخلية!" },
-            'pd': { t: "المسافة الحدقية (Pupillary Distance)", d: "المسافة بالمليمتر بين مركز بؤبؤ العين اليمنى واليسرى. معلومة حيوية لفني البصريات (Optician) لكي يقوم بوضع مركز عدسة النظارة البلاستيكية تمامًا أمام بؤبؤك، وإلا ستصاب بصداع وحول!" }
-        };
+        // === MODULE: PRINTOUT ===
         function showReceiptDesc(key) {
-            const exp = document.getElementById('receipt-explainer'); const data = receiptData[key];
-            exp.innerHTML = `<div class="text-5xl mb-4 text-cyan-400 drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">📊</div><h3 class="text-3xl font-bold text-white mb-4 border-b border-slate-700 pb-2">${data.t}</h3><p class="text-slate-300 text-lg leading-relaxed">${data.d}</p><div class="mt-6 bg-black p-4 rounded text-sm text-cyan-500 font-mono border border-cyan-900 border-l-4 border-l-cyan-500 shadow-inner">[DSP CORE ENGAGED]: MATRIX CALCULATION COMPLETED IN < 0.08ms.</div>`;
+            const data = {
+                'meas': "قراءات سريعة لتجنب أخطاء حركة العين.", 'meas_err': "تم تقليل وزنها (Reliability Index) لخطأ محتمل.",
+                'avg': "المتوسط الرياضي للتشخيص.", 'se': "S.E. = SPH + (CYL/2)", 'k1': "انحناء القرنية المسطح.",
+                'k2': "الانحناء العمودي المتقوس.", 'cylk': "الاستجماتيزم القرني.", 'pd': "المسافة الحدقية لتنصيف النظارة."
+            };
+            document.getElementById('receipt-explainer').innerHTML = `<h3 class="text-2xl font-bold text-cyan-400 mb-4">${data[key]}</h3>`;
         }
 
-        // FULL SCENARIOS DB
-        const scenarios = [
-            { icon: "👵", title: "مريض يعاني من المياه البيضاء (Cataract)", desc: "العدسة الداخلية للعين معتمة كالزجاج المصنفر. الضوء تحت الأحمر الخاص بالجهاز لا يستطيع اختراقها بسهولة ليرتد من الشبكية. <strong>تصرف الجهاز:</strong> الأجهزة القديمة تفشل. الحديثة تستخدم SLD قوي جدًا لاختراق العتامة، أو تنبه الطبيب (Cataract Mode) وتعرض صورة العتامة." },
-            { icon: "👶", title: "طفل رضيع يبكي ويتحرك", desc: "لا يمكن للطفل تثبيت ذقنه أو النظر للبالون داخل الجهاز المكتبي. <strong>تصرف الجهاز:</strong> لا يمكن استخدام الأجهزة المكتبية. تم اختراع (Handheld Autorefractors) أجهزة محمولة باليد بحجم الكاميرا تصور عيني الطفل معًا من مسافة متر واحد في جزء من الثانية بالاعتماد على ذكاء اصطناعي يقتنص اللحظة المناسبة للقياس." },
-            { icon: "👁️", title: "القرنية المخروطية (Keratoconus)", desc: "القرنية مدببة ومترققة بشكل مخيف وغير منتظم. <strong>تصرف الجهاز:</strong> قراءات الـ Refraction تتغير بعنف مع كل ضغطة لأن الضوء يتكسر عشوائيًا. قراءات الكيراتومتري ستظهر أرقامًا جنونية (K > 55D). الجهاز الحديث سيطلق جرس إنذار للطبيب ليقوم بتصوير طبوغرافي للعين (Topography) لتأكيد الحالة." },
-            { icon: "📱", title: "شاب مدمن للهواتف الذكية", desc: "عضلات العين متشنجة تمامًا على المسافة القريبة بسبب الشاشات (Spasm of accommodation). <strong>تصرف الجهاز:</strong> حتى نظام التضبيب الآلي (Fogging) قد يفشل في إرخاء عضلته المتيبسة. الجهاز سيعطي قراءة خاطئة تفيد بوجود 'قصر نظر' عالٍ. هنا يأتي دور الطبيب بوضع قطرة شالّة للعضلة (Cycloplegic) وإعادة الفحص للحصول على الرقم الحقيقي." },
-            { icon: "🕶️", title: "التصوير الخاطئ في غرفة مشمسة", desc: "الجهاز يعتمد على التقاط الأشعة تحت الحمراء الضعيفة جدًا المرتدة من عينك. أشعة الشمس في الخارج مليئة بالأشعة تحت الحمراء العالية التردد! <strong>تصرف الجهاز:</strong> الكاميرا ستصاب بالعمى (Noise) بسبب تداخل أشعة الشمس مع أشعة الجهاز، ولن تستطيع تمييز الإشارة. لهذا يجب دائمًا وضع الجهاز في غرفة خافتة الإضاءة أو معتمة جزئيًا." },
-            { icon: "🔪", title: "مريض بعد عملية الليزك (Post-LASIK)", desc: "عملية الليزك تقوم بـ 'نحت' وقشط القرنية وتسطيحها بشكل كبير لتصحيح قصر النظر. <strong>تصرف الجهاز:</strong> الخوارزميات القياسية تتوقع قرنية كروية الشكل (Prolate)، فتفشل في حساب التحدب الجديد المسطح جدًا للقرنية (Oblate)، مما يسبب كارثة إذا أراد المريض زراعة عدسة لاحقًا. الأجهزة المتطورة تحتوي وضعًا مخصصًا (Post-Refractive Mode) للتعامل مع هذا التسطيح الشديد جداً." }
-        ];
-        const scContainer = document.getElementById('scenarios-container');
-        scenarios.forEach(sc => {
-            scContainer.innerHTML += `<div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300 group backdrop-blur-sm"><div class="flex items-center gap-4 mb-4"><div class="text-4xl bg-black w-16 h-16 flex items-center justify-center rounded-full border border-cyan-900 group-hover:scale-110 group-hover:border-cyan-400 transition shadow-inner">${sc.icon}</div><h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition">${sc.title}</h3></div><p class="text-slate-300 text-sm leading-relaxed border-t border-slate-700 pt-4">${sc.desc}</p></div>`;
-        });
+        // Initialize first view
+        nav('sec-intro');
     </script>
 </body>
 </html>
