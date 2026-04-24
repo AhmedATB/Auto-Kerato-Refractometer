@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Kerato-Refractometer - Seminar</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         /* إعدادات المتغيرات اللونية - طابع ليلي وبنفسجي فخم */
         :root {
@@ -174,17 +176,19 @@
         </div>
     </section>
 
-    <section class="slide" id="slide2">
+ <section class="slide" id="slide2">
         <div class="content-wrapper">
             <h2>الأساس البصري والهندسي</h2>
             <div class="grid-layout">
                 <div>
-                    <p>يعتمد الجهاز على إسقاط حزمة من الأشعة تحت الحمراء (Infrared) لتجنب تفاعل بؤبؤ العين (Pupil Constriction).</p>
-                    <p>يقوم الحساس بالتقاط الإشارة المرتدة من الشبكية وتحليل تغير الطور (Phase shift) وانحراف الحزمة الضوئية.</p>
+                    <p>يعتمد الجهاز على إسقاط حزمة من الأشعة تحت الحمراء (Infrared) بطول موجي يقارب 800-880 نانومتر، لتجنب تفاعل بؤبؤ العين (Pupil Constriction).</p>
+                    <p>تنعكس الأشعة من شبكية العين وتمر عبر مستشعر <strong>Shack-Hartmann</strong>، والذي يتكون من مصفوفة من العدسات الدقيقة (Lenslet Array) تقوم بتقسيم جبهة الموجة (Wavefront) لتحديد الانحرافات البصرية بدقة.</p>
                 </div>
-                <div class="panel">
-                    <div class="placeholder-box">
-                        [مساحة مخصصة للرسم التوضيحي لمسار الأشعة]
+                <div class="panel" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="color: var(--accent-glow); margin-bottom: 15px;">تحليل الانحراف (Wavefront Aberration)</h3>
+                    <p>عندما تكون العين سليمة (Emmetropic)، تعود الأشعة كجبهة موجة مستوية (Planar). أما في حالة وجود خطأ انكساري (Myopia أو Hyperopia)، تعود الأشعة كجبهة موجة مشوهة.</p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary-purple);">
+                        <p style="margin: 0; font-family: monospace; color: #b39ddb;">Shift in Focal Spot = Δx, Δy</p>
                     </div>
                 </div>
             </div>
@@ -216,13 +220,15 @@
             <h2>الخوارزمية ومعالجة البيانات</h2>
             <div class="grid-layout">
                 <div class="panel">
-                    <p>كيف يتم تحويل القراءات الفيزيائية إلى ديوبتر؟ سنستعرض هنا المعادلات الرياضية المعتمدة.</p>
-                    <div class="placeholder-box">
-                        [المعادلات الرياضية]
+                    <p>حساب قوة تحدب القرنية (Keratometry) يعتمد على معامل الانكسار للقرنية (الذي يقدر طبيعيًا بـ 1.3375) ونصف قطر التكور (r):</p>
+                    <div style="font-size: 1.2rem; text-align: center; margin: 20px 0; background: #000; padding: 15px; border-radius: 8px;">
+                        $$ P_{cornea} = \frac{n' - n}{r} $$
+                        $$ P (Diopters) = \frac{337.5}{r (mm)} $$
                     </div>
                 </div>
                 <div>
-                    <p>يتم فلترة الإشارة من التشويش (Noise) وتمريرها عبر خوارزمية Fast Fourier Transform للحصول على الترددات الدقيقة.</p>
+                    <p>أما بالنسبة للخطأ الانكساري الإجمالي (Refractive Error)، يتم حسابه من خلال قياس الإزاحة في مصفوفة العدسات (Δx, Δy) وتطبيق تحويلات فورييه (Fast Fourier Transform) لفلترة التشويش الناتج عن حركة العين الدقيقة.</p>
+                    <p>بناءً على الإزاحة، يتم حساب القوة الكروية (SPH) والأسطوانية (CYL) ومحور الاستيجماتيزم (AXIS) بدقة تصل إلى 0.25 ديوبتر.</p>
                 </div>
             </div>
         </div>
