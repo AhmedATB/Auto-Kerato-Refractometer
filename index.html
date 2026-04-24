@@ -150,6 +150,100 @@
             color: var(--primary-purple);
             font-weight: bold;
         }
+        /* --- إعدادات الرسم المتحرك لشريحة مسار الأشعة --- */
+
+/* حاوية الأنيميشن */
+.optical-path-anim {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: radial-gradient(circle at center, #121018 0%, #07070a 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+}
+
+/* شكل مبسط للعين */
+.eye-model {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--text-muted);
+    border-radius: 50%;
+}
+/* قرنية العين */
+.eye-model::after {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 80px;
+    background: rgba(179, 157, 219, 0.2);
+    border: 2px solid var(--primary-purple);
+    border-radius: 50% 0 0 50%;
+}
+
+/* شعاع الأشعة تحت الحمراء */
+.ir-beam {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, #ff1744 50%, #ff1744 100%);
+    box-shadow: 0 0 15px #ff1744;
+    border-radius: 2px;
+    animation: beam-entry 4s infinite ease-in-out;
+}
+
+/* تعريف حركة الشعاع */
+@keyframes beam-entry {
+    0% { width: 0; left: 20px; opacity: 0; }
+    20% { width: calc(100% - 170px); left: 20px; opacity: 1; }
+    50% { width: calc(100% - 170px); left: 20px; opacity: 1; } /* توقف قصير عند الشبكية */
+    80% { width: calc(100% - 170px); left: 170px; opacity: 1; } /* انعكاس */
+    100% { width: 0; left: calc(100% - 20px); opacity: 0; }
+}
+
+/* مستشعر جبهة الموجة (Shack-Hartmann) */
+.sensor-pattern {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    opacity: 0;
+    animation: pattern-show 4s infinite ease-in-out;
+}
+.sensor-pattern div {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-glow);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* تعريف توقيت ظهور المستشعر */
+@keyframes pattern-show {
+    0%, 70% { opacity: 0; }
+    80%, 90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* تسمية الأجزاء */
+.label {
+    position: absolute;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: monospace;
+}
     </style>
 </head>
 <body>
@@ -184,31 +278,78 @@
                     <p>يعتمد الجهاز على إسقاط حزمة من الأشعة تحت الحمراء (Infrared) بطول موجي يقارب 800-880 نانومتر، لتجنب تفاعل بؤبؤ العين (Pupil Constriction).</p>
                     <p>تنعكس الأشعة من شبكية العين وتمر عبر مستشعر <strong>Shack-Hartmann</strong>، والذي يتكون من مصفوفة من العدسات الدقيقة (Lenslet Array) تقوم بتقسيم جبهة الموجة (Wavefront) لتحديد الانحرافات البصرية بدقة.</p>
                 </div>
-                <div class="panel" style="display: flex; flex-direction: column; justify-content: center;">
-                    <h3 style="color: var(--accent-glow); margin-bottom: 15px;">تحليل الانحراف (Wavefront Aberration)</h3>
-                    <p>عندما تكون العين سليمة (Emmetropic)، تعود الأشعة كجبهة موجة مستوية (Planar). أما في حالة وجود خطأ انكساري (Myopia أو Hyperopia)، تعود الأشعة كجبهة موجة مشوهة.</p>
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary-purple);">
-                        <p style="margin: 0; font-family: monospace; color: #b39ddb;">Shift in Focal Spot = Δx, Δy</p>
+               <div class="panel">
+                    <div class="optical-path-anim">
+                        <div class="eye-model"></div>
+                        <div class="ir-beam"></div>
+                        
+                        <div class="sensor-pattern">
+                            <div></div><div></div><div></div><div></div><div></div>
+                            <div></div><div></div><div></div><div></div><div></div>
+                            <div></div><div></div><div></div><div></div><div></div>
+                            <div></div><div></div><div></div><div></div><div></div>
+                            <div></div><div></div><div></div><div></div><div></div>
+                        </div>
+
+                        <div class="label" style="top: 10px; left: 10px;">INFRARED EMITTER (880nm)</div>
+                        <div class="label" style="bottom: 10px; left: 10px;">SHACK-HARTMANN SENSOR</div>
+                        <div class="label" style="bottom: 10px; right: 10px;">RETINA</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="slide" id="slide3">
+   <section class="slide" id="slide3">
         <div class="content-wrapper">
             <h2>محاكاة الفحص الآلي (Simulator)</h2>
             <div class="grid-layout">
                 <div class="panel">
-                    <h3 style="margin-bottom: 20px;">المدخلات الفسيولوجية</h3>
-                    <div class="placeholder-box" style="height: 150px;">
-                        [أدوات التحكم بالقرنية والطول المحوري]
+                    <h3 style="margin-bottom: 20px; color: var(--accent-glow);">المدخلات الفسيولوجية (العين)</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label for="sim-axial" style="display: block; margin-bottom: 10px; color: var(--text-main);">
+                            الطول المحوري (Axial Length): <span id="axial-val" style="color: var(--accent-glow); font-weight: bold;">24.0</span> mm
+                        </label>
+                        <input type="range" id="sim-axial" min="20" max="28" step="0.1" value="24" style="width: 100%; accent-color: var(--primary-purple);">
                     </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="sim-radius" style="display: block; margin-bottom: 10px; color: var(--text-main);">
+                            نصف قطر القرنية (Corneal Radius - r): <span id="radius-val" style="color: var(--accent-glow); font-weight: bold;">7.8</span> mm
+                        </label>
+                        <input type="range" id="sim-radius" min="7.0" max="8.5" step="0.05" value="7.8" style="width: 100%; accent-color: var(--primary-purple);">
+                    </div>
+
+                    <button id="scan-btn" style="width: 100%; padding: 15px; background: var(--primary-purple); color: #fff; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(74, 20, 140, 0.4);">
+                        بدء الفحص (Scan Eye)
+                    </button>
                 </div>
-                <div class="panel">
-                    <h3 style="margin-bottom: 20px;">المخرجات (RX)</h3>
-                    <div class="placeholder-box" style="height: 150px; border-color: var(--accent-glow);">
-                        [نتائج SPH, CYL, AXIS]
+
+                <div class="panel" style="position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <h3 style="margin-bottom: 20px; color: var(--accent-glow); align-self: flex-start;">المخرجات الآلية (Machine Output)</h3>
+                    
+                    <div id="scanning-anim" style="display: none; text-align: center; color: var(--accent-glow);">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">⚙️</div>
+                        <p>جاري تحليل جبهة الموجة ومعالجة الإشارة...</p>
+                    </div>
+
+                    <div id="rx-output" style="width: 100%; text-align: left; display: none; background: #000; padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                        <p style="font-size: 1.5rem; margin-bottom: 10px; font-family: monospace;">
+                            <span style="color: var(--text-muted);">SPH:</span> <span id="out-sph" style="color: #fff;"></span>
+                        </p>
+                        <p style="font-size: 1.5rem; margin-bottom: 10px; font-family: monospace;">
+                            <span style="color: var(--text-muted);">CYL:</span> <span id="out-cyl" style="color: #fff;"></span>
+                        </p>
+                        <p style="font-size: 1.5rem; margin-bottom: 20px; font-family: monospace;">
+                            <span style="color: var(--text-muted);">AXIS:</span> <span id="out-axis" style="color: #fff;"></span>
+                        </p>
+                        <hr style="border-color: #333; margin-bottom: 15px;">
+                        <p id="out-diagnosis" style="font-size: 1rem; color: #b39ddb; text-align: center; font-weight: bold;"></p>
+                    </div>
+
+                    <div id="idle-state" style="text-align: center; color: var(--text-muted);">
+                        <p>في انتظار بدء الفحص...</p>
                     </div>
                 </div>
             </div>
@@ -255,5 +396,59 @@
 
         slides.forEach(slide => observer.observe(slide));
     </script>
-</body>
+    <script>
+        // تحديث قيم الواجهة عند تحريك الأشرطة (Sliders)
+        document.getElementById('sim-axial').addEventListener('input', e => document.getElementById('axial-val').innerText = parseFloat(e.target.value).toFixed(1));
+        document.getElementById('sim-radius').addEventListener('input', e => document.getElementById('radius-val').innerText = parseFloat(e.target.value).toFixed(2));
+
+        // خوارزمية الفحص عند الضغط على الزر
+        document.getElementById('scan-btn').addEventListener('click', () => {
+            // إخفاء النتائج وإظهار تأثير التحميل لمحاكاة معالجة الإشارة
+            document.getElementById('idle-state').style.display = 'none';
+            document.getElementById('rx-output').style.display = 'none';
+            document.getElementById('scanning-anim').style.display = 'block';
+
+            // تأخير زمني لمحاكاة الـ Fast Fourier Transform في الجهاز الفعلي
+            setTimeout(() => {
+                const axial = parseFloat(document.getElementById('sim-axial').value);
+                const r = parseFloat(document.getElementById('sim-radius').value);
+
+                // حساب قوة القرنية بالديوبتر بناءً على نصف القطر (n=1.3375)
+                const cornealPower = 337.5 / r; 
+                // القوة الطبيعية للقرنية تقريباً 43.27 ديوبتر (عندما r = 7.8 mm)
+                
+                // حساب الخطأ الانكساري الكروي (Sphere)
+                // العين الطبيعية طولها 24 مم. كل 1 مم اختلاف يسبب تقريباً 3 ديوبتر خطأ
+                let sph = (24.0 - axial) * 3.0;
+                
+                // إضافة تأثير انحراف تحدب القرنية عن الطبيعي
+                sph += (43.27 - cornealPower);
+
+                // تقريب النتيجة لأقرب 0.25 ديوبتر (Standard Ophthalmic Rounding)
+                sph = Math.round(sph * 4) / 4;
+
+                // توليد قيمة استيجماتيزم (CYL) تحاكي تشوه جبهة الموجة غير المتماثل
+                let cyl = (Math.floor(Math.random() * 6) * -0.25);
+                let axis = Math.floor(Math.random() * 180) + 1;
+
+                // تنسيق الأرقام لعرضها طبياً بشكل صحيح (+ أو -)
+                const formatRX = (num) => (num > 0 ? '+' : '') + num.toFixed(2);
+
+                document.getElementById('out-sph').innerText = formatRX(sph);
+                document.getElementById('out-cyl').innerText = formatRX(cyl);
+                document.getElementById('out-axis').innerText = axis + '°';
+
+                // نظام التشخيص المبدئي
+                let diag = sph < -0.25 ? "Myopia (قصر نظر)" : (sph > 0.25 ? "Hyperopia (طول نظر)" : "Emmetropia (رؤية طبيعية)");
+                if (cyl <= -0.50) diag += " | مع Astigmatism (لابؤرية)";
+                document.getElementById('out-diagnosis').innerText = "التشخيص التقريبي: " + diag;
+
+                // إخفاء التحميل وعرض النتائج
+                document.getElementById('scanning-anim').style.display = 'none';
+                document.getElementById('rx-output').style.display = 'block';
+            }, 1800); // 1.8 ثانية من التحميل
+        });
+    </script>
+</body>؟
+
 </html>
