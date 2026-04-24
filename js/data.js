@@ -23,84 +23,136 @@ const receiptDataDB = {
     'cylk': { t: "الاستجماتيزم القرني (Corneal CYL)", d: "هو ببساطة ناتج الطرح بين K2 و K1. يخبرنا هذا الرقم بمقدار التشوه الموجود <span class='text-amber-400 font-bold'>في القرنية فقط</span>. إذا كان هذا الرقم مختلفًا عن الـ CYL الكلي، فهذا يعني أن المشكلة في عدسة العين الداخلية!" },
     'pd': { t: "المسافة الحدقية (Pupillary Distance)", d: "المسافة بالمليمتر بين مركز بؤبؤ العين اليمنى واليسرى. معلومة حيوية لفني البصريات (Optician) لكي يقوم بوضع مركز عدسة النظارة البلاستيكية تمامًا أمام بؤبؤك، وإلا ستصاب بصداع وحول!" }
 };
-// === MODULE: HISTORY DB ===
+// === MODULE: HISTORY DB (EPIC NARRATIVE) ===
 const historyDB = {
     'scheiner': {
-        year: "YEAR 1619", title: "مبدأ شاينر: البداية النظرية",
+        year: "YEAR 1619", title: "مبدأ شاينر: البذرة الأولى للانكسار الموضوعي",
         media: `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-black relative overflow-hidden">
-                    <div class="w-32 h-32 rounded-full border-4 border-cyan-500 flex items-center justify-center relative animate-pulse">
-                        <div class="w-4 h-4 bg-red-500 rounded-full absolute left-4 shadow-[0_0_10px_red]"></div>
-                        <div class="w-4 h-4 bg-red-500 rounded-full absolute right-4 shadow-[0_0_10px_red]"></div>
+                    <div class="w-32 h-32 rounded-full border-4 border-cyan-500 flex items-center justify-center relative animate-pulse shadow-[0_0_20px_#00f0ff]">
+                        <div class="w-4 h-4 bg-red-500 rounded-full absolute left-4 shadow-[0_0_15px_red]"></div>
+                        <div class="w-4 h-4 bg-red-500 rounded-full absolute right-4 shadow-[0_0_15px_red]"></div>
                     </div>
-                    <p class="text-slate-400 mt-4 font-mono text-sm">[Simulation: Double Pinhole Disc]</p>
+                    <p class="text-slate-400 mt-6 font-mono text-sm tracking-widest">[SIMULATION: DOUBLE PINHOLE PHASE SHIFT]</p>
                 </div>`,
-        caption: "انقسام حزم الضوء عبر الفتحة المزدوجة.",
-        content: `<div><strong class="text-cyan-400 block mb-2">كيف بدأت القصة؟</strong>
-            في القرن السابع عشر، كان الفلكي والفيزيائي كريستوف شاينر مهووسًا بفهم كيفية تركيز العين للضوء. قام بصنع قرص معتم بسيط يحتوي على ثقبين صغيرين متقاربين جدًا.</div>
+        caption: "انقسام حزم الضوء يثبت وجود خطأ انكساري في العين.",
+        content: `
+            <div class="mb-6"><strong class="text-cyan-400 block mb-2 text-xl">العقدة التاريخية:</strong>
+            في القرن السابع عشر، لم تكن هناك طريقة علمية لقياس "مدى سوء" رؤية الشخص سوى التجربة والخطأ. أراد الفلكي كريستوف شاينر فهم كيفية تركيز العين للضوء بصورة دقيقة.</div>
             
-            <div><strong class="text-amber-400 block mb-2">التجربة والاكتشاف الجوهري:</strong>
-            يطلب من الشخص النظر عبر الثقبين إلى مصدر ضوئي. إذا كانت عينه سليمة تمامًا، ستسقط الأشعة في نقطة واحدة على الشبكية ويرى ضوءًا واحدًا. أما إذا كان يعاني من قصر أو طول نظر، فلن تتركز الأشعة، وسيرى الضوء مزدوجًا (نقطتين)! تحريك الفتحات حتى تلتقي النقطتان يحدد القوة التصحيحية.</div>
+            <div class="mb-6"><strong class="text-amber-400 block mb-2 text-xl">التجربة والاكتشاف الجوهري:</strong>
+            صنع شاينر قرصًا معتمًا يحتوي على ثقبين صغيرين متقاربين جدًا. عندما ينظر المريض عبرهما إلى مصدر ضوئي نقطي: إذا كانت عينه سليمة، تتجمع الأشعة في نقطة واحدة على الشبكية. أما إذا كان يعاني من قصر/طول نظر، فستسقط الأشعة في مكانين مختلفين، وسيرى المريض "نقطتين".</div>
             
-            <div class="bg-purple-900/20 p-5 rounded-lg border border-purple-500/50 mt-6 shadow-inner">
-                <strong class="text-purple-400 text-lg block mb-2">الربط بجهازنا (Auto-Refractor):</strong>
-                الأجهزة الحديثة أخذت هذا المبدأ القديم وطبقته آليًا! الجهاز يسقط حزمتين من الأشعة تحت الحمراء، وبدلاً من سؤال المريض "هل ترى نقطة أم نقطتين؟"، تقوم الكاميرا (CCD) بتصوير الشبكية وحساب المسافة بين النقطتين رياضيًا وتحويلها إلى ديوبتر في أجزاء من الثانية.
+            <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/50 shadow-inner">
+                <strong class="text-purple-400 text-lg block mb-2">الربط الهندسي بـ Auto-Refractor:</strong>
+                هذا المبدأ البدائي هو حرفيًا ما يفعله الجهاز اليوم! الجهاز يسقط حزمتين منفصلتين من الأشعة تحت الحمراء، وبدلاً من سؤال المريض "هل ترى نقطتين؟"، تقوم المستشعرات الإلكترونية بتصوير انزياح الطور (Phase Shift) وحسابه بالديوبتر في أجزاء من الثانية.
             </div>`
     },
     'porterfield': {
-        year: "YEAR 1759", title: "ويليام بورترفيلد: أول أبتوميتر",
+        year: "YEAR 1759", title: "أبتوميتر ويليام بورترفيلد ومبدأ بادال",
         media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
-                    <div class="w-full h-1 bg-cyan-500/50 absolute top-1/2"></div>
-                    <div class="w-12 h-24 border-2 border-cyan-400 rounded-[50%] bg-cyan-900/30 backdrop-blur-sm relative animate-[pulse_3s_infinite]"></div>
-                    <p class="text-slate-400 mt-8 font-mono text-sm">[Badal Principle Simulation]</p>
+                    <div class="w-full h-1 bg-cyan-500/30 absolute top-1/2"></div>
+                    <div class="w-12 h-28 border-[3px] border-cyan-400 rounded-[50%] bg-cyan-900/30 backdrop-blur-md relative animate-[pulse_3s_infinite] shadow-[0_0_20px_#00f0ff]"></div>
+                    <p class="text-slate-400 mt-10 font-mono text-sm tracking-widest">[OPTICAL RAIL: BADAL LENS SYSTEM]</p>
                 </div>`,
-        caption: "تطبيق مبدأ بادال لتحريك الهدف.",
-        content: `<div><strong class="text-amber-400 block mb-2">الابتكار:</strong>قدم ويليام بورترفيلد مصطلح "الأبتوميتر" (Optometer)، وهو أول جهاز مصمم لتقييم حدود الرؤية البعيدة. اعتمد هذا الجهاز على مبدأ عدسة متقاربة واحدة توضع على مسافة البعد البؤري من العين.</div>
-        
-        <div><strong class="text-cyan-400 block mb-2">كيف يعمل؟</strong>يسمح هذا التكوين البصري بتغيير القوة البصرية المسلطة على العين بسلاسة من خلال إزاحة الهدف البصري فقط، دون الحاجة لتغيير العدسات، وهو المبدأ الذي نستخدمه اليوم لتضبيب عين المريض (Fogging) والذي يُعرف باسم (Badal Principle).</div>`
+        caption: "تطبيق مبدأ بادال لتحريك الهدف بصرياً دون تغيير العدسات.",
+        content: `
+            <div class="mb-6"><strong class="text-cyan-400 block mb-2 text-xl">المشكلة الهندسية:</strong>
+            في الفحوصات القديمة، لتغيير القوة الانكسارية، كان يجب تغيير العدسات الزجاجية باستمرار أمام عين المريض، مما يجعل الأجهزة ضخمة، ميكانيكية، ومزعجة.</div>
+            
+            <div class="mb-6"><strong class="text-amber-400 block mb-2 text-xl">الابتكار (Badal Principle):</strong>
+            استخدم بورترفيلد (ومن بعده بادال) عدسة متقاربة (Positive Lens) توضع على مسافة تعادل بعدها البؤري من العين. العبقرية هنا أنك تستطيع تغيير "القوة البصرية" المسلطة على العين بسلاسة متناهية بمجرد إزاحة الهدف البصري (Target) للأمام أو للخلف على مسار مستقيم.</div>
+            
+            <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/50 shadow-inner">
+                <strong class="text-purple-400 text-lg block mb-2">التطبيق الميكاترونيكي اليوم:</strong>
+                بدون مبدأ بادال، لم يكن لنظام التضبيب (Auto-Fogging) أن يوجد! المحركات الدقيقة (Stepper Motors) داخل جهازنا تقوم بتحريك صورة "المنطاد" على مسار بصري محسوب بدقة لإرخاء عين المريض قبل القياس.
+            </div>`
     },
     'helmholtz': {
-        year: "YEAR 1851", title: "هيلمهولتز وقياس القرنية",
+        year: "YEAR 1851", title: "هيلمهولتز واختراع الكيراتوميتر",
         media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
-                    <div class="w-32 h-32 rounded-full border-2 border-dashed border-green-500 animate-[spin_10s_linear_infinite]"></div>
-                    <div class="w-24 h-24 rounded-full border-2 border-green-400 absolute"></div>
-                    <p class="text-green-400 mt-4 font-mono text-sm absolute bottom-4">[Keratometry Reflection]</p>
+                    <div class="w-36 h-36 rounded-full border-4 border-dashed border-green-500 animate-[spin_15s_linear_infinite] opacity-50"></div>
+                    <div class="w-28 h-28 rounded-full border-4 border-green-400 absolute shadow-[0_0_25px_#39ff14]"></div>
+                    <p class="text-green-400 mt-6 font-mono text-sm absolute bottom-4 tracking-widest">[CORNEAL REFLECTION ANALYSIS]</p>
                 </div>`,
-        caption: "أول كيراتوميتر لتقييم الاستجماتيزم.",
-        content: `<div><strong class="text-purple-400 block mb-2">ثورة السطح الأمامي:</strong>أحدث هيرمان فون هيلمهولتز تحولاً جذريًا في عام 1851 باختراع الكيراتوميتر اليدوي، الذي سمح للأطباء بقياس انحناء السطح الأمامي للقرنية بدقة عالية.</div>
-        
-        <div><strong class="text-cyan-400 block mb-2">أهمية هذا الابتكار:</strong>كان هذا القياس (والذي يركز تحديداً في المنطقة المركزية البالغة 3 ملم) حجر الزاوية في تشخيص الاستجماتيزم القرني، وفيما بعد أصبح الأساس الفيزيائي لتجهيز وملاءمة العدسات اللاصقة على العيون البشرية.</div>`
+        caption: "استخدام القرنية كمرآة محدبة لحساب نصف قطر التكور.",
+        content: `
+            <div class="mb-6"><strong class="text-cyan-400 block mb-2 text-xl">التحدي التشريحي:</strong>
+            لم يكن قصر وطول النظر هما المشكلة الوحيدة، بل "الاستجماتيزم" (اللابؤرية). لمعالجته، كان لا بد من إيجاد طريقة لقياس تشوه السطح الأمامي للقرنية (Cornea)، والتي تعتبر أقوى عدسة في العين.</div>
+            
+            <div class="mb-6"><strong class="text-amber-400 block mb-2 text-xl">الحل الفيزيائي:</strong>
+            أدرك هيرمان فون هيلمهولتز أن القرنية تعمل كـ "مرآة محدبة". إذا قمنا بإسقاط أشكال مضيئة بحجم معروف عليها، وقسنا حجم الانعكاس، يمكننا حساب نصف قطر التكور (Radius of Curvature) بدقة بالغة.</div>
+            
+            <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/50 shadow-inner">
+                <strong class="text-purple-400 text-lg block mb-2">تطور المنظومة:</strong>
+                ابتكار هيلمهولتز قفز إلى بُعد جديد في الأجهزة الأوتوماتيكية اليوم باستخدام (حلقات بلاسيدو)، حيث تقوم الخوارزميات بالتقاط آلاف النقاط من الانعكاس لتحليل المنطقة المركزية (3 ملم) بدقة كافية لتجهيز العدسات اللاصقة المعقدة.
+            </div>`
+    },
+    'collins': {
+        year: "YEAR 1937", title: "جيفري كولينز: براءة اختراع المقياس الإلكتروني",
+        media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
+                    <div class="w-full h-full absolute opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                    <div class="flex items-center gap-4 z-10">
+                        <div class="w-8 h-8 bg-red-600 rounded-full animate-ping"></div>
+                        <div class="h-1 w-24 bg-red-500 shadow-[0_0_15px_red]"></div>
+                        <div class="w-16 h-16 border-2 border-red-500 flex items-center justify-center font-mono text-red-500">SENSOR</div>
+                    </div>
+                    <p class="text-red-500 mt-6 font-mono text-sm z-10 tracking-widest">[INFRARED ELECTRO-OPTICS]</p>
+                </div>`,
+        caption: "الانتقال من الميكانيكا البصرية إلى الإلكترونيات.",
+        content: `
+            <div class="mb-6"><strong class="text-cyan-400 block mb-2 text-xl">عصر الإلكترونيات البصرية:</strong>
+            قبل عام 1937، كانت جميع أجهزة قياس النظر يدوية وتعتمد على ملاحظة الطبيب وتفاعل المريض. كانت عملية بطيئة ومعرضة للخطأ البشري بشكل كبير.</div>
+            
+            <div class="mb-6"><strong class="text-amber-400 block mb-2 text-xl">الرؤية المستقبلية:</strong>
+            قدم "جيفري كولينز" براءة اختراع لأول تصور لجهاز قياس انكسار يعتمد على الدوائر الإلكترونية. الأهم من ذلك، اقترح استخدام "الأشعة تحت الحمراء" (Infrared) بدلًا من الضوء المرئي حتى لا ينزعج المريض أو يتقلص بؤبؤ عينه أثناء الفحص.</div>
+            
+            <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/50 shadow-inner">
+                <strong class="text-purple-400 text-lg block mb-2">النقطة المفصلية:</strong>
+                رغم أن التكنولوجيا في الثلاثينيات لم تكن متقدمة بما يكفي لصناعة الجهاز بكفاءة، إلا أن هذه الفكرة هي الأساس الذي بنيت عليه جميع أجهزة (Auto-Refractometer) الحديثة التي تستخدم ثنائيات الـ IR.
+            </div>`
     },
     'nasa': {
-        year: "THE 1960s", title: "أزمة ناسا وقصر النظر الفراغي",
+        year: "THE 1960s", title: "وكالة ناسا: أزمة الطيارين وتطوير الـ Tracking",
         media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden">
                     <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/grid-me.png')]"></div>
-                    <div class="w-40 h-40 border-2 border-green-500 rounded-full flex items-center justify-center relative">
-                        <div class="w-full h-1 bg-green-500 absolute animate-[spin_2s_linear_infinite]"></div>
-                        <div class="w-8 h-8 bg-green-400/50 rounded-full animate-ping"></div>
+                    <div class="w-48 h-48 border-2 border-green-500 rounded-full flex items-center justify-center relative shadow-[0_0_30px_rgba(57,255,20,0.2)]">
+                        <div class="w-full h-1 bg-green-500 absolute animate-[spin_1.5s_linear_infinite]"></div>
+                        <div class="w-12 h-12 bg-green-400/40 rounded-full animate-pulse"></div>
                     </div>
-                    <p class="text-green-500 mt-4 font-mono text-sm z-10">[RADAR: Tracking Eye Movement]</p>
+                    <p class="text-green-500 mt-6 font-mono text-sm z-10 tracking-widest">[DYNAMIC EYE TRACKING SYSTEM]</p>
                 </div>`,
-        caption: "التتبع الآلي والتكيف اللحظي للطيارين.",
-        content: `<div><strong class="text-cyan-400 block mb-2">قصر نظر المجال الفارغ:</strong>خلال الحرب الباردة وبرنامج الفضاء، اكتشفت (NASA) والجيش الأمريكي مشكلة خطيرة تُسمى "Empty Field Myopia". عندما ينظر الطيار في سماء زرقاء فارغة لا تحتوي على تفاصيل، تفقد العين قدرتها على التركيز وتسترخي العضلة وتصاب بقصر نظر مؤقت، مما يمنعهم من رؤية الطائرات المعادية البعيدة!</div>
-        
-        <div><strong class="text-amber-400 block mb-2">الحل التكنولوجي من ناسا:</strong>احتاجت ناسا لطريقة تراقب تركيز عين الطيار آليًا وبشكل مستمر دون أن تسأله. فقامت بتمويل تطوير أوائل أجهزة "الأوبتومتر" (Optometers) التي تستخدم الأشعة تحت الحمراء لقياس الانكسار ديناميكيًا وحركة العين.</div>
-        
-        <div class="bg-purple-900/20 p-5 rounded-lg border border-purple-500/50 mt-6 shadow-inner">
-                <strong class="text-purple-400 text-lg block mb-2">كيف وصلنا لليوم؟</strong>
-                بفضل تطور المعالجات الدقيقة (Microprocessors)، تم ضغط تلك التكنولوجيا العسكرية الفضائية الهائلة إلى شريحة صغيرة توضع داخل جهاز الـ Auto-Refractor المكتبي الذي نراه اليوم في كل عيادة.
-        </div>`
+        caption: "الضرورة العسكرية تخلق تقنيات التتبع المتقدمة.",
+        content: `
+            <div class="mb-6"><strong class="text-cyan-400 block mb-2 text-xl">تهديد قاتل في السماء (Empty Field Myopia):</strong>
+            خلال سباق الفضاء والحرب الباردة، واجهت (NASA) والجيش الأمريكي ظاهرة مرعبة: عندما يطير الطيار في سماء زرقاء فارغة لا تحتوي على تفاصيل للتركيز عليها، ترتخي عدسة العين وتصاب بقصر نظر مؤقت، مما يمنعهم من رؤية الطائرات أو المخاطر البعيدة!</div>
+            
+            <div class="mb-6"><strong class="text-amber-400 block mb-2 text-xl">تمويل الحل العبقري:</strong>
+            احتاجت ناسا لابتكار قادر على قياس تكيف عين الطيار (Accommodation) بشكل مستمر، ديناميكي، وبدون تدخله. فمولت أبحاثًا لابتكار أوائل الـ (Optometers) التي تعمل بالأشعة تحت الحمراء مع أنظمة تتبع حركة العين (Eye-tracking).</div>
+            
+            <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/50 shadow-inner">
+                <strong class="text-purple-400 text-lg block mb-2">ثمرة الفضاء في العيادات:</strong>
+                هذه الأجهزة العسكرية كانت بحجم خزانة! لكن بفضل تصغير الشرائح الإلكترونية (Microprocessors)، انتقلت هذه التقنيات المعقدة للعيادات، لتمنح أجهزتنا الحديثة قدرة التتبع الآلي 3D وتعويض حركة رأس المريض بالملي ثانية.
+            </div>`
     },
     'wavefront': {
-        year: "YEAR 2000+", title: "Shack-Hartmann: ثورة التضاريس",
+        year: "YEAR 2000+", title: "Shack-Hartmann: الانتقال من الأرقام إلى الخرائط",
         media: `<div class="w-full h-full flex flex-col items-center justify-center bg-black relative overflow-hidden perspective-1000">
-                    <div class="grid grid-cols-5 gap-1 transform rotate-x-45 animate-pulse">
-                        ${Array(25).fill('<div class="w-6 h-6 bg-cyan-500/80 rounded-full shadow-[0_0_10px_#00f0ff]"></div>').join('')}
+                    <div class="grid grid-cols-6 gap-2 transform rotate-x-45 animate-pulse">
+                        ${Array(36).fill('<div class="w-4 h-4 bg-cyan-500 rounded-full shadow-[0_0_12px_#00f0ff]"></div>').join('')}
                     </div>
-                    <p class="text-cyan-400 mt-8 font-mono text-sm z-10">[Lenslet Array Matrix]</p>
+                    <p class="text-cyan-400 mt-10 font-mono text-sm z-10 tracking-widest">[MICRO-LENSLET ARRAY MATRIX]</p>
                 </div>`,
-        caption: "مصفوفة العدسات الدقيقة للتشوهات المعقدة.",
-        content: `<div><strong class="text-purple-400 block mb-2">من التلسكوبات إلى العيون:</strong>تقنية (Shack-Hartmann) لم تُخترع للطب، بل صُممت لعلماء الفلك لمراقبة النجوم وإلغاء التشويش الناتج عن الغلاف الجوي الأرضي (Adaptive Optics).</div>
-        
-        <div><strong class="text-cyan-400 block mb-2">نقلة نوعية في القياس:</strong>في أواخر التسعينيات، أدرك مهندسو الطب الحيوي إمكانية استخدام هذه التقنية للعين. بدلاً من قياس "قصر أو طول النظر" فقط، تقوم هذه التقنية بتقسيم الضوء المرتد من الشبكية إلى مئات النقاط عبر مصفوفة من العدسات المجهرية (Lenslets)، مما يسمح برسم خريطة ثلاثية الأبعاد لاكتشاف التشوهات البصرية المعقدة (Higher-Order Aberrations).</div>`
+        caption: "تقسيم جبهة الموجة لاستخراج التشوهات البصرية المتقدمة.",
+        content: `
+            <div class="mb-6"><strong class="text-cyan-400 block mb-2 text-xl">تكنولوجيا الفضاء لطب العيون:</strong>
+            تم ابتكار تقنية (Shack-Hartmann) أصلاً لعلماء الفلك لمراقبة النجوم عبر الغلاف الجوي المضطرب (Adaptive Optics). في العقد الأول من الألفية، قام مهندسو البصريات الطبية بتوجيه هذه التكنولوجيا الدقيقة نحو العين البشرية.</div>
+            
+            <div class="mb-6"><strong class="text-amber-400 block mb-2 text-xl">نقلة نوعية في القياس:</strong>
+            القياسات القديمة كانت تخرج برقمين فقط (قصر/طول، واستجماتيزم). أما هذه التقنية فتستخدم مصفوفة من العدسات المجهرية (Lenslets) لتقسيم الضوء المرتد من الشبكية إلى مئات النقاط الفردية، وحساب انزياح كل نقطة لإنشاء خريطة ثلاثية الأبعاد للتشوهات.</div>
+            
+            <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/50 shadow-inner">
+                <strong class="text-purple-400 text-lg block mb-2">عهد ما قبل عمليات الليزك:</strong>
+                بفضل هذا الابتكار، لم يعد جهاز Auto-Refractor أداة فحص أولية فقط، بل أصبح الجهاز الذي يوفر "البصمة البصرية" للعين، والتي تُغذي لاحقًا روبوتات الليزر لإجراء عمليات (Custom LASIK) فائقة الدقة لعلاج الانحرافات المعقدة.
+            </div>`
     }
 };
