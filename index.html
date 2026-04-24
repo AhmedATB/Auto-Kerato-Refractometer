@@ -13,68 +13,68 @@
 
     <style>
         :root {
-            --bg-main: #020617; /* slate-950 */
-            --bg-panel: #0f172a; /* slate-900 */
-            --accent-cyan: #06b6d4;
-            --accent-amber: #f59e0b;
-            --accent-green: #10b981;
+            --bg-main: #020617; 
+            --bg-panel: #0f172a; 
+            --accent-cyan: #00f0ff; /* Cyberpunk Cyan */
+            --accent-amber: #ffaa00;
+            --accent-green: #39ff14; /* Neon Green */
+            --accent-purple: #9d00ff; /* Void/Lunar Deep Purple */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
 
         body { font-family: 'Changa', sans-serif; background-color: var(--bg-main); color: var(--text-main); overflow: hidden; margin: 0; padding: 0; }
        
-        /* Custom Scrollbars */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
 
-        /* Typography & Layout */
         h1, h2, h3, h4 { letter-spacing: -0.02em; }
-        .glass-box { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.6); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        .glass-box { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
        
-        /* Animations */
         .fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
        
         .pulse-glow { animation: pulseGlow 2s infinite alternate; }
-        @keyframes pulseGlow { from { box-shadow: 0 0 5px rgba(6, 182, 212, 0.2); } to { box-shadow: 0 0 20px rgba(6, 182, 212, 0.8); } }
+        @keyframes pulseGlow { from { box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); } to { box-shadow: 0 0 30px rgba(157, 0, 255, 0.5); border-color: rgba(157,0,255,0.8); } }
 
-        /* Simulators Containers */
         .sim-container { position: relative; width: 100%; background: #000; border-radius: 12px; border: 2px solid #1e293b; overflow: hidden; }
-        canvas { display: block; width: 100%; }
+        canvas { display: block; width: 100%; image-rendering: high-quality; }
 
-        /* Navigation */
         .nav-btn { transition: all 0.3s ease; position: relative; overflow: hidden; }
-        .nav-btn::before { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--accent-cyan); transform: scaleY(0); transition: transform 0.3s ease; }
+        .nav-btn::before { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--accent-purple); transform: scaleY(0); transition: transform 0.3s ease; }
         .nav-btn.active::before { transform: scaleY(1); }
-        .nav-btn.active { background: linear-gradient(90deg, rgba(6, 182, 212, 0.15) 0%, transparent 100%); color: var(--accent-cyan); font-weight: 700; }
+        .nav-btn.active { background: linear-gradient(90deg, rgba(157, 0, 255, 0.15) 0%, transparent 100%); color: #fff; text-shadow: 0 0 8px var(--accent-purple); font-weight: 700; }
         .nav-btn:hover:not(.active) { background: rgba(255, 255, 255, 0.05); }
 
-        /* Term Link for Professor Mode */
         .term { color: var(--accent-amber); cursor: help; border-bottom: 1px dashed var(--accent-amber); transition: all 0.2s; font-weight: 600; }
-        .term:hover { background: rgba(245, 158, 11, 0.2); text-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+        .term:hover { background: rgba(245, 158, 11, 0.2); text-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
 
-        /* Professor Modal */
         #prof-modal { transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform: translateY(150%) scale(0.8); opacity: 0; }
         #prof-modal.show { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
        
-        /* Receipt */
         .receipt-bg { background-color: #fdfbf7; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; color: #1e293b; font-family: monospace; border-top: 2px dashed #94a3b8; border-bottom: 2px dashed #94a3b8; }
         .receipt-row { cursor: pointer; transition: background 0.2s; border-bottom: 1px dotted #cbd5e1; }
         .receipt-row:hover { background-color: #fef3c7; }
+
+        /* HUD OVERLAYS */
+        .scanline {
+            width: 100%; height: 100%; position: absolute; pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px; z-index: 10; opacity: 0.3;
+        }
     </style>
 </head>
 <body class="flex flex-col md:flex-row h-screen text-base">
 
     <nav class="w-full md:w-80 bg-slate-900 border-l border-slate-800 flex flex-col z-40 shadow-2xl h-auto md:h-full flex-shrink-0">
         <div class="p-6 border-b border-slate-800 relative bg-slate-950">
-            <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500"></div>
-            <h1 class="text-3xl font-black text-white mb-2 tracking-tight">AR/AK <span class="text-cyan-400">Mastery</span></h1>
+            <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-600"></div>
+            <h1 class="text-3xl font-black text-white mb-2 tracking-tight">AR/AK <span class="text-purple-500">Mastery</span></h1>
             <p class="text-xs text-slate-400 leading-relaxed">المرجع الهندسي والطبي الشامل | أكثر من مجرد آلة، إنها منظومة متكاملة.</p>
             <div class="mt-4 flex items-center text-xs font-mono text-green-400 bg-green-900/20 p-2 rounded border border-green-500/30">
-                <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full ml-2"></span> النظام متصل ومستعد للتحليل
+                <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full ml-2" style="box-shadow: 0 0 8px #39ff14;"></span> النظام متصل ومستعد للتحليل
             </div>
         </div>
        
@@ -124,23 +124,23 @@
                             <h3 class="text-amber-400 font-bold text-2xl mb-4 flex items-center"><span class="text-3xl ml-2">📜</span> التسلسل التاريخي العبقري</h3>
                             <div class="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-500 before:to-transparent">
                                 <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-cyan-500 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs">1619</div>
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1619</div>
                                     <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700">
-                                        <div class="font-bold text-cyan-400">مبدأ شاينر</div>
+                                        <div class="font-bold text-purple-400">مبدأ شاينر</div>
                                         <div class="text-xs text-slate-400 mt-1">اكتشاف الفتحة المزدوجة لاختبار التركيز البؤري.</div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-cyan-500 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs">1960s</div>
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1960s</div>
                                     <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700">
-                                        <div class="font-bold text-cyan-400">تدخل وكالة ناسا</div>
+                                        <div class="font-bold text-purple-400">تدخل وكالة ناسا</div>
                                         <div class="text-xs text-slate-400 mt-1">ناسا تطور أجهزة تتبع العين لحل مشكلة قصر نظر الطيارين في السماء الفارغة.</div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-cyan-500 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs">2000s</div>
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">2000s</div>
                                     <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700">
-                                        <div class="font-bold text-cyan-400">ثورة Wavefront</div>
+                                        <div class="font-bold text-purple-400">ثورة Wavefront</div>
                                         <div class="text-xs text-slate-400 mt-1">استخدام المصفوفات المجهرية لرسم خريطة للتشوهات البصرية بدقة متناهية.</div>
                                     </div>
                                 </div>
@@ -172,23 +172,24 @@
 
             <section id="sec-sim-light" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: كيف يسافر الضوء؟</h2>
-                    <p class="text-slate-300 text-lg mb-6">هذا المحاكي المبرمج بالـ Canvas يوضح المسار البصري المخفي. راقب كيف ينطلق ضوء الـ Infrared وكيف يتم التضبيب (Fogging) لخداع دماغ المريض.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: مسار الضوء وجزيئات الأشعة (Particle System)</h2>
+                    <p class="text-slate-300 text-lg mb-6">محاكي فيزيائي متطور يوضح تدفق فوتونات الـ IR داخل النظام البصري المعقد للجهاز.</p>
 
-                    <div class="sim-container h-[450px] mb-6 border border-cyan-900/50 pulse-glow">
+                    <div class="sim-container h-[450px] mb-6 border border-purple-900/50 pulse-glow relative">
+                        <div class="scanline"></div>
                         <canvas id="lightPathCanvas"></canvas>
-                        <div class="absolute top-4 right-4 bg-black/80 p-4 rounded border border-slate-700 text-sm">
-                            <h4 class="font-bold text-cyan-400 mb-2 border-b border-cyan-900 pb-1">لوحة التحكم الهندسية</h4>
+                        <div class="absolute top-4 right-4 bg-black/90 p-4 rounded border border-purple-700 text-sm backdrop-blur-md" style="box-shadow: 0 0 20px rgba(157,0,255,0.2);">
+                            <h4 class="font-bold text-purple-400 mb-2 border-b border-purple-900 pb-1">لوحة التحكم الهندسية (HUD)</h4>
                             <div class="flex flex-col gap-2">
-                                <button onclick="simLight.toggleFogging()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-right flex justify-between">
-                                    <span>نظام التضبيب (Fogging):</span> <span id="btn-fogging" class="text-red-400">مغلق</span>
+                                <button onclick="simLight.toggleFogging()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-right flex justify-between border border-slate-600">
+                                    <span>نظام التضبيب (Fogging):</span> <span id="btn-fogging" class="text-red-400 font-bold">مغلق</span>
                                 </button>
-                                <button onclick="simLight.fireLaser()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-right flex justify-between">
-                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400">▶</span>
+                                <button onclick="simLight.fireLaser()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-right flex justify-between border border-slate-600">
+                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400 font-bold">▶ إطلاق</span>
                                 </button>
                             </div>
                             <div id="sim-light-log" class="mt-4 text-xs font-mono text-green-400 h-16 overflow-hidden">
-                                [نظام التشغيل]: جاهز لبدء الفحص...
+                                > SYSTEM INITIALIZED<br>> STANDBY FOR DIAGNOSTIC...
                             </div>
                         </div>
                     </div>
@@ -197,27 +198,29 @@
 
             <section id="sec-sim-optics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الفيزياء: انكسار الضوء داخل العين</h2>
-                    <p class="text-slate-300 text-lg mb-6">كيف يرى المريض؟ وكيف يقرأ الجهاز هذا الخطأ؟ تلاعب بحجم العين لترى أين يسقط الضوء.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الفيزياء: انكسار الضوء وتتبع الأشعة (Ray Tracing)</h2>
+                    <p class="text-slate-300 text-lg mb-6">محاكاة حقيقية لكيفية انحناء الضوء وتكوين دوائر التشويش (Blur Discs) على الشبكية عند وجود خطأ انكساري.</p>
 
                     <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="lg:w-2/3 sim-container h-[350px]">
+                        <div class="lg:w-2/3 sim-container h-[400px] border border-cyan-900/50">
+                            <div class="scanline"></div>
                             <canvas id="opticsCanvas"></canvas>
                         </div>
-                        <div class="lg:w-1/3 bg-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col">
-                            <label class="block text-white font-bold mb-4">الخطأ الانكساري (طول العين):</label>
-                            <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer mb-6">
+                        <div class="lg:w-1/3 bg-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                            <label class="block text-white font-bold mb-4">الخطأ الانكساري (طول محوري):</label>
+                            <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer mb-6" style="box-shadow: 0 0 10px #00f0ff;">
                            
-                            <div class="flex justify-between text-xs text-slate-400 mb-6 px-1">
-                                <span>قصر نظر (طويلة)</span>
-                                <span>طبيعي</span>
-                                <span>طول نظر (قصيرة)</span>
+                            <div class="flex justify-between text-xs text-cyan-300 mb-6 px-1 font-bold">
+                                <span>قصر نظر (-D)</span>
+                                <span>مثالي (0D)</span>
+                                <span>طول نظر (+D)</span>
                             </div>
 
-                            <div class="bg-slate-950 p-4 rounded border border-slate-800 flex-grow">
-                                <h4 class="text-sm text-slate-500 mb-1">الجهاز سيطبع النتيجة التالية:</h4>
-                                <div id="optics-result" class="text-3xl font-mono text-cyan-400 font-bold mb-2">SPH: 0.00 D</div>
-                                <p id="optics-desc" class="text-sm text-slate-300 leading-relaxed">العين مثالية. الضوء يقع تمامًا على الشبكية.</p>
+                            <div class="bg-black p-4 rounded border border-slate-800 flex-grow relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-cyan-900/20"></div>
+                                <h4 class="text-sm text-slate-500 mb-1 relative z-10">تحليل معالج الإشارة (DSP):</h4>
+                                <div id="optics-result" class="text-4xl font-mono text-green-400 font-bold mb-2 relative z-10 text-shadow">SPH: 0.00 D</div>
+                                <p id="optics-desc" class="text-sm text-slate-300 leading-relaxed relative z-10">العين مثالية. البؤرة تقع بدقة متناهية على مركز الشبكية (Fovea). حجم بقعة التشتت = 0.</p>
                             </div>
                         </div>
                     </div>
@@ -226,38 +229,40 @@
 
             <section id="sec-sim-kerato" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي القرنية: نظام حلقات بلاسيدو (Placido Mires)</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي القرنية ثلاثي الأبعاد: تشويه الحلقات (Trigonometric Mires)</h2>
                    
                     <div class="flex flex-col md:flex-row gap-8">
                         <div class="md:w-1/2">
                             <p class="text-slate-300 mb-4 leading-relaxed">
-                                القرنية ليست عدسة مسطحة، بل هي قبة. الجهاز يسقط حلقات ضوئية دائرية عليها، ويلتقط صورة بالكاميرا (CCD). إذا كانت القرنية مشوهة (استجماتيزم)، فإن الحلقات المنعكسة تظهر مشوهة! المعالج يحلل هذا التشوه لمعرفة رقم الاستجماتيزم.
+                                يتم إسقاط حلقات بلاسيدو المضيئة، وتستخدم الخوارزمية الإحداثيات القطبية لقياس المسافة بين الحلقات في 360 درجة لاستنتاج التضاريس.
                             </p>
                             
-                            <div class="bg-black/50 p-4 rounded-xl mb-6 border border-slate-700 font-mono text-center overflow-x-auto shadow-inner" dir="ltr">
-                                <span class="text-sm text-amber-400 mb-2 block font-sans font-bold">المعادلة الهندسية لحساب قوة القرنية</span>
-                                $$ P (Diopters) = \frac{n' - n}{r} \approx \frac{337.5}{r (mm)} $$
-                                <span class="text-xs text-slate-500 mt-2 block font-sans">حيث (r) هو نصف قطر التكور بالمليمتر، و (n) هو معامل الانكسار.</span>
+                            <div class="bg-black/80 p-4 rounded-xl mb-6 border border-purple-700/50 font-mono text-center overflow-x-auto shadow-[0_0_15px_rgba(157,0,255,0.2)]" dir="ltr">
+                                <span class="text-sm text-purple-400 mb-2 block font-sans font-bold tracking-wider">CORNEAL POWER EQUATION (PARAXIAL)</span>
+                                $$P (Diopters) = \frac{n' - n}{r} \approx \frac{337.5}{r (mm)}$$
                             </div>
 
-                            <div class="bg-slate-800 p-4 rounded-xl mb-6">
-                                <label class="block text-white font-bold mb-2">اختر شكل قرنية المريض:</label>
-                                <select id="corneaSelect" class="w-full bg-slate-950 text-white border border-slate-600 rounded p-2 focus:border-cyan-500 outline-none" onchange="simMires.update()">
-                                    <option value="normal">قرنية طبيعية (كروية تمامًا)</option>
-                                    <option value="astig_with">استجماتيزم مع القاعدة (بيضاوية أفقيًا)</option>
-                                    <option value="astig_against">استجماتيزم ضد القاعدة (بيضاوية عموديًا)</option>
-                                    <option value="keratoconus">قرنية مخروطية (تشوه معقد جدًا)</option>
-                                    <option value="dry_eye">جفاف عين شديد (تكسر الحلقات)</option>
+                            <div class="bg-slate-800/80 p-4 rounded-xl mb-6 border border-slate-600">
+                                <label class="block text-white font-bold mb-2">اختر طوبوغرافيا القرنية (Topography):</label>
+                                <select id="corneaSelect" class="w-full bg-black text-cyan-400 font-bold border border-cyan-800 rounded p-3 focus:border-cyan-400 outline-none shadow-inner" onchange="simMires.update()">
+                                    <option value="normal">قرنية كروية مثالية (Normal)</option>
+                                    <option value="astig_with">استجماتيزم مع القاعدة (WTR Astigmatism)</option>
+                                    <option value="astig_against">استجماتيزم ضد القاعدة (ATR Astigmatism)</option>
+                                    <option value="keratoconus">قرنية مخروطية (Keratoconus - Advanced)</option>
+                                    <option value="dry_eye">تكسر طبقة الدموع (Tear Film Breakup)</option>
                                 </select>
                             </div>
-                            <div id="mire-analysis" class="bg-slate-900 p-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24">
+                            <div id="mire-analysis" class="bg-black p-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24 shadow-inner font-mono">
                                 </div>
                         </div>
                         <div class="md:w-1/2">
-                            <div class="sim-container h-[300px] flex items-center justify-center bg-slate-950">
-                                <canvas id="miresCanvas" width="300" height="300"></canvas>
+                            <div class="sim-container h-[350px] flex items-center justify-center bg-black border-cyan-900/50 shadow-[0_0_30px_rgba(0,240,255,0.15)] relative">
+                                <div class="scanline"></div>
+                                <canvas id="miresCanvas" width="350" height="350"></canvas>
+                                <div class="absolute inset-0 pointer-events-none border-[1px] border-cyan-500/30 rounded-full scale-90"></div>
+                                <div class="absolute inset-0 pointer-events-none flex items-center justify-center text-cyan-500/20 text-[200px] font-black">+</div>
                             </div>
-                            <p class="text-center text-xs text-slate-500 mt-2">ما يراه مستشعر الجهاز (CCD) فعليًا</p>
+                            <p class="text-center text-xs text-cyan-500 mt-3 font-mono tracking-widest">LIVE CCD SENSOR FEED [Placido Reflection]</p>
                         </div>
                     </div>
                 </div>
@@ -265,29 +270,32 @@
 
             <section id="sec-sim-ai" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الخوارزميات: كيف يفكر الذكاء الاصطناعي؟</h2>
-                    <p class="text-slate-300 text-lg mb-6">الجهاز لا يفهم معنى "عين". هو يستقبل مصفوفة من البيكسلات (صورة). هنا نحاكي خوارزمية "اكتشاف الحواف" (Edge Detection) التي يستخدمها الجهاز للعثور على بؤبؤ العين وسط التشويش.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي الخوارزميات: الذكاء الاصطناعي والرؤية الحاسوبية (Computer Vision)</h2>
+                    <p class="text-slate-300 text-lg mb-6">شاهد الخوارزمية وهي تفكك التشويش (Perlin Noise) وتستخلص مركز بؤبؤ العين باستخدام تقنيات Hough Transform عسكريّة الدقة.</p>
 
                     <div class="flex flex-col lg:flex-row gap-6">
                         <div class="lg:w-1/2 flex flex-col gap-4">
-                            <div class="bg-slate-800 p-4 rounded border border-slate-700 text-center relative overflow-hidden">
-                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
-                                <h4 class="font-bold text-white mb-2 relative z-10">الصورة الخام (Raw CCD Image)</h4>
-                                <canvas id="aiRawCanvas" class="w-full h-[200px] bg-black rounded border border-slate-600 relative z-10"></canvas>
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center relative overflow-hidden shadow-inner">
+                                <h4 class="font-bold text-slate-400 mb-2 relative z-10 font-mono text-sm tracking-widest">RAW IR CAMERA FEED</h4>
+                                <div class="sim-container h-[250px] border-none rounded-none">
+                                    <div class="scanline"></div>
+                                    <canvas id="aiRawCanvas"></canvas>
+                                </div>
                             </div>
-                            <button onclick="simAI.process()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 rounded-lg shadow-lg transition transform active:scale-95">
-                                تشغيل معالج الصور (Image Processing) ⬇
+                            <button onclick="simAI.process()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-black font-black text-lg py-4 rounded-lg shadow-[0_0_20px_rgba(0,240,255,0.4)] transition transform active:scale-95 uppercase tracking-widest">
+                                تشغيل معالج الصور (Execute DSP) ⬇
                             </button>
                         </div>
                        
                         <div class="lg:w-1/2 flex flex-col gap-4">
-                            <div class="bg-slate-900 p-4 rounded border border-cyan-800 text-center relative overflow-hidden">
-                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/matrix.png')] opacity-10"></div>
-                                <h4 class="font-bold text-cyan-400 mb-2 relative z-10">خوارزمية استخراج الملامح (Feature Extraction)</h4>
-                                <canvas id="aiProcessedCanvas" class="w-full h-[200px] bg-black rounded border border-cyan-900 relative z-10"></canvas>
+                            <div class="bg-black p-4 rounded border border-cyan-800 text-center relative overflow-hidden shadow-[0_0_20px_rgba(0,240,255,0.1)]">
+                                <h4 class="font-bold text-cyan-400 mb-2 relative z-10 font-mono text-sm tracking-widest">FEATURE EXTRACTION & LOCK</h4>
+                                <div class="sim-container h-[250px] border-none rounded-none">
+                                    <canvas id="aiProcessedCanvas"></canvas>
+                                </div>
                             </div>
-                            <div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 rounded h-12 flex items-center border border-slate-800">
-                                بانتظار أمر التشغيل...
+                            <div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 rounded h-16 flex items-center border border-slate-800 shadow-inner overflow-hidden">
+                                > AWAITING EXECUTION COMMAND...<br>_
                             </div>
                         </div>
                     </div>
@@ -301,7 +309,7 @@
 
                     <div class="flex flex-col md:flex-row gap-8">
                         <div class="md:w-1/3 flex justify-center">
-                            <div class="receipt-bg w-full max-w-[300px] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+                            <div class="receipt-bg w-full max-w-[300px] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transform hover:scale-105 transition duration-300">
                                 <div class="text-center font-bold text-xl mb-4 border-b-2 border-slate-800 pb-2">AUTO REF/KERATO</div>
                                 <div class="text-xs mb-4 text-center">DATE: 24/04/2026<br>VD: 12.0mm</div>
                                
@@ -328,10 +336,10 @@
                             </div>
                         </div>
 
-                        <div class="md:w-2/3 bg-slate-900 rounded-xl p-8 border border-slate-700 flex flex-col justify-center min-h-[300px]">
+                        <div class="md:w-2/3 bg-slate-900/80 rounded-xl p-8 border border-slate-700 flex flex-col justify-center min-h-[300px] shadow-2xl backdrop-blur-md">
                             <div id="receipt-explainer" class="text-center">
-                                <span class="text-7xl block mb-6 animate-bounce">👆</span>
-                                <h3 class="text-3xl font-bold text-amber-400 mb-2">انقر على الورقة المطبوعة</h3>
+                                <span class="text-7xl block mb-6 animate-bounce" style="text-shadow: 0 0 20px rgba(0,240,255,0.5);">👆</span>
+                                <h3 class="text-3xl font-bold text-cyan-400 mb-2">انقر على الورقة المطبوعة</h3>
                                 <p class="text-slate-400 text-lg">ليقوم النظام بفك شفرة الأرقام والمصطلحات.</p>
                             </div>
                         </div>
@@ -353,26 +361,23 @@
     </main>
 
     <div id="prof-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeProf()"></div>
-        <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl w-full max-w-lg shadow-[0_0_50px_rgba(245,158,11,0.3)] relative z-10 flex flex-col overflow-hidden">
-            <div class="bg-amber-500 p-4 text-slate-900 flex justify-between items-center font-bold">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeProf()"></div>
+        <div class="bg-slate-950 border-[3px] border-amber-500 rounded-2xl w-full max-w-lg shadow-[0_0_50px_rgba(245,158,11,0.4)] relative z-10 flex flex-col overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-600 to-amber-500 p-4 text-slate-950 flex justify-between items-center font-bold">
                 <div class="flex items-center gap-2">
-                    <span class="text-2xl">👨‍🏫</span> <span class="text-xl">توضيح أكاديمي</span>
+                    <span class="text-2xl">👨‍🏫</span> <span class="text-xl">توضيح أكاديمي عميق</span>
                 </div>
-                <button onclick="closeProf()" class="text-slate-900 hover:text-white text-3xl leading-none">&times;</button>
+                <button onclick="closeProf()" class="text-slate-950 hover:text-white text-3xl leading-none transition">&times;</button>
             </div>
             <div class="p-6">
-                <h3 id="prof-title" class="text-2xl font-black text-white mb-4 border-b border-slate-700 pb-2"></h3>
+                <h3 id="prof-title" class="text-2xl font-black text-amber-400 mb-4 border-b border-slate-700 pb-2"></h3>
                 <p id="prof-text" class="text-slate-300 text-lg leading-relaxed"></p>
-                <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-amber-500 font-mono">مصدر المعلومات: قاعدة البيانات الهندسية المدمجة</div>
+                <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-amber-600 font-mono tracking-widest uppercase">Source: Embedded Engineering Database</div>
             </div>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // 1. Navigation & State Management
-        // ==========================================
         function nav(secId) {
             document.querySelectorAll('.content-sec').forEach(el => el.classList.add('hidden'));
             document.getElementById(secId).classList.remove('hidden');
@@ -384,25 +389,18 @@
             event.currentTarget.classList.add('active');
             event.currentTarget.classList.remove('text-slate-300');
 
-            // Trigger specific simulator initializations based on section
             if(secId === 'sec-sim-light' && !simLight.initialized) simLight.init();
             if(secId === 'sec-sim-optics' && !simOptics.initialized) simOptics.init();
             if(secId === 'sec-sim-kerato' && !simMires.initialized) simMires.init();
             if(secId === 'sec-sim-ai' && !simAI.initialized) simAI.init();
         }
 
-        // ==========================================
-        // 2. Professor Data & Logic (Massive DB)
-        // ==========================================
         const profDB = {
             'optics': { t: "البصريات الفيزيائية (Physical Optics)", d: "فرع من الفيزياء يدرس سلوك وخصائص الضوء وتفاعله مع المادة. في جهازنا، يدرس كيفية انكسار ضوء الأشعة تحت الحمراء عند مروره عبر قرنية وعدسة المريض." },
             'mechatronics': { t: "الميكاترونكس (Mechatronics)", d: "هندسة تجمع بين الميكانيكا، الإلكترونيات، وبرمجة الحاسب. الجهاز يتحرك ميكانيكيًا لضبط محاذاة العين، ويقرأ إلكترونيًا بالكاميرا، ويحلل برمجيًا بالخوارزميات. هذا هو جوهر الميكاترونكس!" },
             'objective_ref': { t: "الانكسار الموضوعي (Objective Refraction)", d: "هو قياس الضعف البصري دون الحاجة لأي إجابة من المريض. الجهاز يطلق الضوء، يقرأ الانعكاس، ويعطي الرقم. على النقيض من 'الانكسار الذاتي' حيث يسأل الطبيب: هل ترى هذا الحرف بوضوح؟" },
             'auto': { t: "الأتمتة (Automation)", d: "قدرة الجهاز على أداء مهامه <span class='text-amber-400 font-bold'>تلقائيًا</span> دون تدخل بشري. الجهاز الحديث يجد بؤبؤ العين، يقترب منه، يأخذ القياس، وينتقل للعين الأخرى بضغطة زر واحدة." },
-            'totally': { t: "الإلغاء التام للجهد", d: "كان فحص الشبكية اليدوي (Retinoscopy) يتطلب طبيبًا بمهارة استثنائية وجو غرفة مظلم، ويستغرق وقتًا طويلًا. الجهاز ألغى كل هذا <span class='text-amber-400 font-bold'>تمامًا</span>، ليصبح الفحص متاحًا في أي وقت وبدقة قياسية." },
-            'ccd': { t: "مستشعر الصور (CCD/CMOS)", d: "الكاميرا الرقمية المصغرة داخل الجهاز. تحول الضوء المنعكس من شبكية عينك إلى إشارات كهربائية رقمية يفهمها معالج الكمبيوتر." },
-            'sld': { t: "الصمام الثنائي فائق الإضاءة (SLD)", d: "Super Luminescent Diode. مصدر الضوء داخل الجهاز. يعطي ضوءًا أقوى من الـ LED العادي وأقل تشتتًا من الليزر، ويكون بطول موجي (Infrared) لا تراه العين حتى لا يزعج المريض." },
-            'fogging': { t: "التضبيب (Auto-Fogging)", d: "حيلة ذكية لارتخاء عضلات العين. الجهاز يعرض صورة واضحة، ثم يجعلها ضبابية عمدًا. الدماغ ييأس من توضيحها فيرخي العضلات، وهو الوقت المثالي لأخذ قراءة دقيقة لضعف البصر الحقيقي." }
+            'totally': { t: "الإلغاء التام للجهد", d: "كان فحص الشبكية اليدوي (Retinoscopy) يتطلب طبيبًا بمهارة استثنائية وجو غرفة مظلم، ويستغرق وقتًا طويلًا. الجهاز ألغى كل هذا <span class='text-amber-400 font-bold'>تمامًا</span>، ليصبح الفحص متاحًا في أي وقت وبدقة قياسية." }
         };
 
         function openProf(key) {
@@ -415,14 +413,11 @@
         }
         function closeProf() { document.getElementById('prof-modal').classList.remove('show'); }
 
-        // ==========================================
-        // 3. Components Data Builder (مع دمج معادلات MathJax)
-        // ==========================================
         const components = [
             { id: 'sld', name: '1. مصدر الأشعة (SLD Source)', desc: 'يطلق حزمة من الأشعة تحت الحمراء (حوالي 840nm). ميزة هذه الأشعة أن العين البشرية لا تراها، وبالتالي يبقى بؤبؤ المريض متسعًا ومسترخيًا، ولا يحدث له أي انزعاج أو انقباض مفاجئ.', icon: '💡' },
             { id: 'mirror', name: '2. مقسم الأشعة (Beam Splitter)', desc: 'مرآة ذكية جدًا (نصف شفافة). تسمح للضوء الصادر بالمرور عبرها نحو عين المريض، لكن عندما يرتد الضوء من الشبكية، تقوم هذه المرآة بعكسه بزاوية 90 درجة لتوجهه نحو مستشعر الكاميرا.', icon: '🪞' },
             { id: 'fog', name: '3. عدسات التضبيب (Fogging Lenses)', desc: 'محرك دقيق يحرك عدسات داخلية لجعل صورة الهدف (مثل المنطاد) ضبابية. الهدف هو خداع الدماغ لإيقاف "التكيف البصري" (Accommodation) الذي قد يعطي قراءات خاطئة.', icon: '🌫️' },
-            { id: 'ccd', name: '4. مستشعر الصور (CCD & Shack-Hartmann)', desc: 'العين الإلكترونية للجهاز. في الأجهزة الحديثة يوضع أمام المستشعر مصفوفة عدسات دقيقة تقيس انحراف جبهة الموجة رياضياً:<div class="my-4 p-3 bg-black rounded shadow-inner text-center overflow-x-auto" dir="ltr">$$ \\Delta W(x,y) = \\frac{\\partial W}{\\partial x}\\Delta x + \\frac{\\partial W}{\\partial y}\\Delta y $$</div> هذه المعادلة تحدد التشوه البصري بدقة متناهية من خلال تحليل إزاحة البقع الضوئية.', icon: '📸' },
+            { id: 'ccd', name: '4. مستشعر الصور (CCD & Shack-Hartmann)', desc: 'العين الإلكترونية للجهاز. في الأجهزة الحديثة يوضع أمام المستشعر مصفوفة عدسات دقيقة تقيس انحراف جبهة الموجة رياضياً:<div class="my-4 p-3 bg-black rounded shadow-inner text-center overflow-x-auto border border-cyan-800" dir="ltr">$$\\Delta W(x,y) = \\frac{\\partial W}{\\partial x}\\Delta x + \\frac{\\partial W}{\\partial y}\\Delta y$$</div> هذه المعادلة تحدد التشوه البصري بدقة متناهية من خلال تحليل إزاحة البقع الضوئية.', icon: '📸' },
             { id: 'joy', name: '5. عصا التحكم (Joystick)', desc: 'واجهة المستخدم الميكانيكية للطبيب. تتحرك في 3 اتجاهات (X, Y, Z). في الأجهزة الحديثة، تم تزويدها بزر إطلاق، أو تم استبدالها كليًا بشاشة لمس تدير محركات التتبع الآلي.', icon: '🕹️' }
         ];
 
@@ -431,153 +426,155 @@
        
         components.forEach(comp => {
             const div = document.createElement('div');
-            div.className = "bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-cyan-500 cursor-pointer transition transform hover:-translate-x-2";
-            div.innerHTML = `<h4 class="font-bold text-white flex items-center"><span class="mr-2 text-xl">${comp.icon}</span> ${comp.name}</h4>`;
+            div.className = "bg-slate-800/80 p-4 rounded-xl border border-slate-700 hover:border-purple-500 cursor-pointer transition transform hover:-translate-x-2 backdrop-blur-sm";
+            div.innerHTML = `<h4 class="font-bold text-white flex items-center"><span class="mr-2 text-xl drop-shadow-[0_0_8px_rgba(157,0,255,0.8)]">${comp.icon}</span> ${comp.name}</h4>`;
             div.onclick = () => {
-                Array.from(compList.children).forEach(child => child.classList.replace('border-cyan-500', 'border-slate-700'));
-                div.classList.replace('border-slate-700', 'border-cyan-500');
+                Array.from(compList.children).forEach(child => child.classList.replace('border-purple-500', 'border-slate-700'));
+                div.classList.replace('border-slate-700', 'border-purple-500');
                
                 compDisplay.innerHTML = `
-                    <div class="text-7xl mb-4 animate-bounce">${comp.icon}</div>
+                    <div class="text-7xl mb-4 animate-pulse drop-shadow-[0_0_20px_rgba(0,240,255,0.8)]">${comp.icon}</div>
                     <h3 class="text-3xl font-black text-cyan-400 mb-4 border-b border-cyan-900 pb-2 inline-block">${comp.name}</h3>
-                    <p class="text-slate-300 text-lg leading-relaxed max-w-lg mx-auto bg-slate-900/50 p-6 rounded-xl border border-slate-800 shadow-inner">${comp.desc}</p>
-                    <div class="mt-6 text-sm text-amber-500 font-mono bg-amber-900/10 p-2 rounded w-fit mx-auto border border-amber-500/20">وحدة متكاملة لا يمكن للجهاز العمل بدونها.</div>
+                    <p class="text-slate-300 text-lg leading-relaxed max-w-lg mx-auto bg-black/60 p-6 rounded-xl border border-slate-800 shadow-inner">${comp.desc}</p>
+                    <div class="mt-6 text-sm text-cyan-500 font-mono bg-cyan-900/10 p-2 rounded w-fit mx-auto border border-cyan-500/30">MODULE STATUS: ACTIVE & CALIBRATED</div>
                 `;
-                // أمر برمجي لإعادة قراءة المعادلات المكتوبة بلغة MathJax بعد تغيير المحتوى
                 if (window.MathJax) { MathJax.typesetPromise([compDisplay]); }
             };
             compList.appendChild(div);
         });
 
         // ==========================================
-        // 4. Simulator: Internal Light Path (Canvas)
+        // 4. Simulator: Internal Light Path (UPGRADED PARTICLE SYSTEM)
         // ==========================================
+        class Particle {
+            constructor(x, y, vx, vy, color, glow) {
+                this.x = x; this.y = y; this.vx = vx; this.vy = vy; 
+                this.color = color; this.glow = glow; this.life = 1.0;
+            }
+            update() { this.x += this.vx; this.y += this.vy; this.life -= 0.01; }
+            draw(c) {
+                if(this.life <= 0) return;
+                c.globalAlpha = this.life;
+                c.shadowBlur = this.glow; c.shadowColor = this.color;
+                c.fillStyle = this.color;
+                c.beginPath(); c.arc(this.x, this.y, 2.5, 0, Math.PI*2); c.fill();
+                c.globalAlpha = 1.0; c.shadowBlur = 0;
+            }
+        }
+
         const simLight = {
-            initialized: false,
-            canvas: document.getElementById('lightPathCanvas'),
-            ctx: null,
-            time: 0,
-            animId: null,
-            foggingOn: false,
-            firing: false,
-            pulsePos: 0,
+            initialized: false, canvas: document.getElementById('lightPathCanvas'), ctx: null,
+            time: 0, animId: null, foggingOn: false, firing: false,
+            particles: [],
 
             init() {
                 this.ctx = this.canvas.getContext('2d');
                 this.resize();
                 window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-light').classList.contains('hidden')) this.resize(); });
-                this.initialized = true;
-                this.animate();
+                this.initialized = true; this.animate();
             },
-            resize() {
-                this.canvas.width = this.canvas.parentElement.clientWidth;
-                this.canvas.height = this.canvas.parentElement.clientHeight;
-            },
+            resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; },
             toggleFogging() {
                 this.foggingOn = !this.foggingOn;
                 document.getElementById('btn-fogging').innerText = this.foggingOn ? "مفعّل (يتحرك)" : "مغلق";
-                document.getElementById('btn-fogging').className = this.foggingOn ? "text-green-400" : "text-red-400";
-                document.getElementById('sim-light-log').innerText = this.foggingOn ? "[ميكانيكا]: تحريك عدسة التضبيب لتشويش الرؤية وإرخاء العضلات..." : "[ميكانيكا]: إرجاع العدسة للوضع الطبيعي.";
+                document.getElementById('btn-fogging').className = this.foggingOn ? "text-green-400 font-bold" : "text-red-400 font-bold";
+                document.getElementById('sim-light-log').innerHTML = this.foggingOn ? "> ENGAGING AUTO-FOGGING MOTOR...<br>> LENS DISPLACED BY 2.5mm." : "> FOGGING MOTOR RETRACTED.<br>> LENS AT BASE POSITION.";
             },
             fireLaser() {
                 if(this.firing) return;
                 this.firing = true;
-                this.pulsePos = 0;
-                document.getElementById('sim-light-log').innerText = "[بصريات]: إطلاق نبضة تحت حمراء عالية السرعة للقياس...";
-                setTimeout(() => { this.firing = false; document.getElementById('sim-light-log').innerText = "[معالج]: تم استلام الصورة بنجاح من الـ CCD."; }, 2000);
+                document.getElementById('sim-light-log').innerHTML = "> EXECUTING IR PULSE SEQUENCE...<br>> TRACKING WAVEFRONT...";
+                
+                // Burst of particles
+                let sldY = this.canvas.height/2;
+                for(let i=0; i<30; i++) {
+                    setTimeout(() => {
+                        this.particles.push(new Particle(80, sldY + (Math.random()*10-5), 18, 0, '#ff003c', 20)); // Red IR out
+                    }, i * 30);
+                }
+                setTimeout(() => { 
+                    this.firing = false; 
+                    document.getElementById('sim-light-log').innerHTML = "> CCD BUFFER FULL.<br>> DSP ANALYSIS COMPLETE."; 
+                }, 2000);
             },
             animate() {
-                const c = this.ctx;
-                const w = this.canvas.width;
-                const h = this.canvas.height;
+                const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
                 this.time += 0.05;
+                c.fillStyle = 'rgba(0, 0, 0, 0.4)'; c.fillRect(0, 0, w, h); // Trail effect
 
-                c.clearRect(0, 0, w, h);
-               
-                // Draw Grid background
-                c.strokeStyle = '#0f172a'; c.lineWidth = 1;
-                for(let i=0; i<w; i+=40) { c.beginPath(); c.moveTo(i,0); c.lineTo(i,h); c.stroke(); }
-                for(let i=0; i<h; i+=40) { c.beginPath(); c.moveTo(0,i); c.lineTo(w,i); c.stroke(); }
+                // Draw Tech Blueprint background
+                c.strokeStyle = '#1e293b'; c.lineWidth = 1;
+                c.beginPath();
+                for(let i=0; i<w; i+=40) { c.moveTo(i,0); c.lineTo(i,h); }
+                for(let i=0; i<h; i+=40) { c.moveTo(0,i); c.lineTo(w,i); }
+                c.stroke();
 
-                // Positions
-                const sld = {x: 100, y: h/2};
-                const mirror = {x: 300, y: h/2};
-                const ccd = {x: 300, y: h-50};
-                const eye = {x: w-150, y: h/2};
-               
-                // Fogging Lens position (animates if on)
-                const fogOffset = this.foggingOn ? Math.sin(this.time)*20 : 0;
-                const fogLens = {x: 450 + fogOffset, y: h/2};
+                const cx = w/2; const cy = h/2;
+                const mirrorX = 250; const eyeX = w - 100;
 
-                // Connectors (Optical Path)
-                c.setLineDash([5, 5]); c.strokeStyle = '#334155'; c.lineWidth = 2;
-                c.beginPath(); c.moveTo(sld.x, sld.y); c.lineTo(eye.x, eye.y); c.stroke();
-                c.beginPath(); c.moveTo(mirror.x, mirror.y); c.lineTo(ccd.x, ccd.y); c.stroke();
-                c.setLineDash([]);
+                // Physics update for particles
+                for(let i = this.particles.length - 1; i >= 0; i--) {
+                    let p = this.particles[i];
+                    p.update();
+                    
+                    // Collision with eye -> bounce back green
+                    if(p.vx > 0 && p.x >= eyeX - 40) {
+                        p.vx = -15; // Bounce back
+                        p.color = '#39ff14'; // Green reflection
+                        p.glow = 15;
+                    }
+                    // Collision with mirror on way back -> deflect down to CCD
+                    if(p.vx < 0 && p.x <= mirrorX + 10 && p.y < cy + 20) {
+                        p.vx = 0; p.vy = 15;
+                    }
+                    
+                    p.draw(c);
+                    if(p.life <= 0 || p.y > h) this.particles.splice(i, 1);
+                }
 
-                // Draw Components
-                // SLD
-                c.fillStyle = '#10b981'; c.fillRect(sld.x-20, sld.y-20, 40, 40);
-                c.fillStyle = '#fff'; c.font = '14px Changa'; c.fillText('SLD', sld.x-15, sld.y+35);
+                // Draw Hardware
+                // SLD Emitter
+                c.shadowBlur = 15; c.shadowColor = '#9d00ff';
+                c.fillStyle = '#111'; c.strokeStyle = '#9d00ff'; c.lineWidth = 3;
+                c.fillRect(40, cy-30, 40, 60); c.strokeRect(40, cy-30, 40, 60);
+                c.fillStyle = '#fff'; c.font = '12px monospace'; c.fillText('SLD', 50, cy+45);
                
                 // Beam Splitter
-                c.fillStyle = 'rgba(6, 182, 212, 0.4)'; c.beginPath(); c.moveTo(mirror.x-30, mirror.y-30); c.lineTo(mirror.x+30, mirror.y+30); c.lineTo(mirror.x+30, mirror.y+20); c.lineTo(mirror.x-20, mirror.y-30); c.fill();
-                c.fillStyle = '#fff'; c.fillText('Mirror', mirror.x+10, mirror.y-20);
+                c.shadowColor = '#00f0ff'; c.strokeStyle = '#00f0ff';
+                c.beginPath(); c.moveTo(mirrorX-40, cy-40); c.lineTo(mirrorX+40, cy+40); c.stroke();
+                c.fillStyle = 'rgba(0, 240, 255, 0.1)';
+                c.beginPath(); c.moveTo(mirrorX-40, cy-40); c.lineTo(mirrorX+40, cy+40); c.lineTo(mirrorX+40, cy+20); c.lineTo(mirrorX-20, cy-40); c.fill();
                
                 // Fogging Lens
-                c.fillStyle = 'rgba(255, 255, 255, 0.2)'; c.strokeStyle = '#94a3b8'; c.lineWidth = 2;
-                c.beginPath(); c.ellipse(fogLens.x, fogLens.y, 10, 40, 0, 0, Math.PI*2); c.fill(); c.stroke();
-                c.fillStyle = '#fff'; c.fillText('Fog Lens', fogLens.x-25, fogLens.y+60);
+                const fogOffset = this.foggingOn ? Math.sin(this.time)*30 : 0;
+                c.shadowColor = '#fff'; c.shadowBlur = 5;
+                c.fillStyle = 'rgba(255, 255, 255, 0.15)'; c.strokeStyle = '#fff';
+                c.beginPath(); c.ellipse(450 + fogOffset, cy, 10, 45, 0, 0, Math.PI*2); c.fill(); c.stroke();
 
-                // CCD
-                c.fillStyle = '#f59e0b'; c.fillRect(ccd.x-40, ccd.y-15, 80, 30);
-                c.fillStyle = '#fff'; c.fillText('CCD Sensor', ccd.x-35, ccd.y+30);
+                // CCD Sensor
+                c.shadowColor = '#ffaa00'; c.shadowBlur = 15;
+                c.fillStyle = '#222'; c.strokeStyle = '#ffaa00';
+                c.fillRect(mirrorX-50, h-40, 100, 30); c.strokeRect(mirrorX-50, h-40, 100, 30);
+                c.fillStyle = '#ffaa00'; c.font = 'bold 12px monospace'; c.fillText('CCD SENSOR', mirrorX-35, h-20);
 
-                // Eye
-                c.fillStyle = '#1e293b'; c.strokeStyle = '#fff'; c.beginPath(); c.arc(eye.x, eye.y, 50, 0, Math.PI*2); c.fill(); c.stroke();
-                c.fillStyle = '#06b6d4'; c.beginPath(); c.arc(eye.x-50, eye.y, 20, Math.PI*-0.3, Math.PI*0.3, false); c.stroke(); // Cornea
-                c.fillStyle = '#fff'; c.fillText('Patient Eye', eye.x-30, eye.y+70);
-
-                // Fire Pulse Animation
-                if(this.firing) {
-                    this.pulsePos += 15; // speed
-                   
-                    // Outward to eye
-                    if(this.pulsePos < (eye.x - sld.x)) {
-                        c.fillStyle = '#ef4444'; // Red IR representation
-                        c.beginPath(); c.arc(sld.x + this.pulsePos, sld.y, 8, 0, Math.PI*2); c.fill();
-                        c.shadowBlur = 20; c.shadowColor = 'red'; c.fill(); c.shadowBlur = 0;
-                    }
-                    // Reflection to CCD
-                    else if (this.pulsePos < (eye.x - sld.x) + (eye.x - mirror.x) + (ccd.y - mirror.y)) {
-                        let path2Pos = this.pulsePos - (eye.x - sld.x);
-                        let x = eye.x - path2Pos;
-                        let y = eye.y;
-                       
-                        // Turn corner at mirror
-                        if(x < mirror.x) {
-                            let diff = mirror.x - x;
-                            x = mirror.x;
-                            y = mirror.y + diff;
-                        }
-                       
-                        c.fillStyle = '#10b981'; // Green for reflected data
-                        c.beginPath(); c.arc(x, y, 8, 0, Math.PI*2); c.fill();
-                        c.shadowBlur = 20; c.shadowColor = 'green'; c.fill(); c.shadowBlur = 0;
-                    }
-                }
+                // Patient Eye
+                c.shadowBlur = 0;
+                c.fillStyle = '#0f172a'; c.strokeStyle = '#334155'; c.lineWidth = 4;
+                c.beginPath(); c.arc(eyeX, cy, 60, 0, Math.PI*2); c.fill(); c.stroke();
+                // Cornea
+                c.shadowBlur = 10; c.shadowColor = '#00f0ff';
+                c.strokeStyle = '#00f0ff'; c.lineWidth = 4;
+                c.beginPath(); c.arc(eyeX-60, cy, 25, Math.PI*-0.4, Math.PI*0.4, false); c.stroke();
 
                 this.animId = requestAnimationFrame(this.animate.bind(this));
             }
         };
 
         // ==========================================
-        // 5. Simulator: Optics (Refraction)
+        // 5. Simulator: Optics (UPGRADED RAY TRACING)
         // ==========================================
         const simOptics = {
-            initialized: false,
-            canvas: document.getElementById('opticsCanvas'),
-            ctx: null,
+            initialized: false, canvas: document.getElementById('opticsCanvas'), ctx: null,
             slider: document.getElementById('refractSlider'),
 
             init() {
@@ -585,147 +582,154 @@
                 this.resize();
                 window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-optics').classList.contains('hidden')) this.resize(); });
                 this.slider.addEventListener('input', this.draw.bind(this));
-                this.initialized = true;
-                this.draw();
+                this.initialized = true; this.draw();
             },
-            resize() {
-                this.canvas.width = this.canvas.parentElement.clientWidth;
-                this.canvas.height = this.canvas.parentElement.clientHeight;
-                this.draw();
-            },
+            resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; this.draw(); },
             draw() {
-                const c = this.ctx;
-                const w = this.canvas.width;
-                const h = this.canvas.height;
-                const val = parseFloat(this.slider.value); // -8 to 8
+                const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
+                const val = parseFloat(this.slider.value); 
                
-                c.clearRect(0, 0, w, h);
-                const cx = w/2; const cy = h/2;
+                c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+                const cx = w/2 + 50; const cy = h/2;
 
                 // Update UI text
                 const resEl = document.getElementById('optics-result');
                 const descEl = document.getElementById('optics-desc');
-                if(val === 0) { resEl.innerText = "SPH: 0.00 D"; resEl.className="text-3xl font-mono text-green-400 font-bold mb-2"; descEl.innerText="العين مثالية. الضوء يقع تمامًا على الشبكية."; }
-                else if(val < 0) { resEl.innerText = `SPH: ${val.toFixed(2)} D`; resEl.className="text-3xl font-mono text-red-400 font-bold mb-2"; descEl.innerText=`قصر نظر (Myopia). الضوء يتجمع أمام الشبكية بمسافة. نحتاج عدسة مقعرة بقوة ${val} لتصحيح المسار.`; }
-                else { resEl.innerText = `SPH: +${val.toFixed(2)} D`; resEl.className="text-3xl font-mono text-blue-400 font-bold mb-2"; descEl.innerText=`طول نظر (Hyperopia). الضوء يتجمع نظريًا خلف الشبكية. نحتاج عدسة محدبة بقوة +${val} للمساعدة.`; }
+                if(val === 0) { resEl.innerText = "SPH: 0.00 D"; resEl.className="text-4xl font-mono text-green-400 font-bold mb-2 relative z-10 text-shadow drop-shadow-[0_0_10px_#39ff14]"; descEl.innerText="العين مثالية. البؤرة تقع بدقة متناهية على مركز الشبكية (Fovea). حجم بقعة التشتت = 0."; }
+                else if(val < 0) { resEl.innerText = `SPH: ${val.toFixed(2)} D`; resEl.className="text-4xl font-mono text-red-500 font-bold mb-2 relative z-10 text-shadow drop-shadow-[0_0_10px_#ff003c]"; descEl.innerText=`قصر نظر (Myopia). الأشعة تتقاطع وتتشتت قبل الوصول للشبكية مسببة ضبابية شديدة. الوصفة: عدسة مقعرة ${val}D.`; }
+                else { resEl.innerText = `SPH: +${val.toFixed(2)} D`; resEl.className="text-4xl font-mono text-cyan-400 font-bold mb-2 relative z-10 text-shadow drop-shadow-[0_0_10px_#00f0ff]"; descEl.innerText=`طول نظر (Hyperopia). الأشعة تصطدم بالشبكية قبل أن تتبأر. الدماغ يستلم صورة غير مكتملة. الوصفة: عدسة محدبة +${val}D.`; }
 
                 // Draw Eye Base
-                c.lineWidth = 3; c.fillStyle = '#0f172a'; c.strokeStyle = '#475569';
-                c.beginPath(); c.ellipse(cx, cy, 120, 100, 0, 0, Math.PI*2); c.fill(); c.stroke();
+                c.lineWidth = 3; c.fillStyle = '#050a15'; c.strokeStyle = '#1e293b';
+                c.beginPath(); c.ellipse(cx, cy, 140, 110, 0, 0, Math.PI*2); c.fill(); c.stroke();
                
-                // Draw Cornea
-                c.strokeStyle = '#06b6d4'; c.lineWidth = 6;
-                c.beginPath(); c.arc(cx - 120, cy, 50, Math.PI*-0.35, Math.PI*0.35, false); c.stroke();
-               
-                // Draw Lens
-                c.fillStyle = 'rgba(255,255,255,0.15)'; c.strokeStyle = '#94a3b8'; c.lineWidth = 2;
-                c.beginPath(); c.ellipse(cx - 80, cy, 12, 35, 0, 0, Math.PI*2); c.fill(); c.stroke();
+                // Retina Glow
+                c.shadowBlur = 20; c.shadowColor = '#ff003c';
+                c.strokeStyle = '#ef4444'; c.lineWidth = 4;
+                c.beginPath(); c.arc(cx, cy, 140, Math.PI*-0.15, Math.PI*0.15, false); c.stroke();
+                c.shadowBlur = 0;
 
-                // Calculate Focal Point based on slider (Myopia focuses early, Hyperopia focuses late)
-                // Base retina is at cx + 120.
-                const focalX = (cx + 120) + (val * 10);
+                // Cornea & Lens
+                c.strokeStyle = '#00f0ff'; c.lineWidth = 5; c.shadowBlur = 10; c.shadowColor = '#00f0ff';
+                c.beginPath(); c.arc(cx - 140, cy, 55, Math.PI*-0.35, Math.PI*0.35, false); c.stroke();
+                c.shadowBlur = 0;
+                c.fillStyle = 'rgba(255,255,255,0.1)'; c.strokeStyle = '#64748b'; c.lineWidth = 2;
+                c.beginPath(); c.ellipse(cx - 90, cy, 15, 45, 0, 0, Math.PI*2); c.fill(); c.stroke();
 
-                // Draw Light Rays
-                c.strokeStyle = '#fcd34d'; c.lineWidth = 2;
-                // Top Ray
-                c.beginPath(); c.moveTo(20, cy - 35); c.lineTo(cx - 80, cy - 35); c.lineTo(focalX, cy); c.stroke();
-                // Bottom Ray
-                c.beginPath(); c.moveTo(20, cy + 35); c.lineTo(cx - 80, cy + 35); c.lineTo(focalX, cy); c.stroke();
-                // Center Ray
-                c.beginPath(); c.moveTo(20, cy); c.lineTo(focalX, cy); c.stroke();
+                // Calculate Optics
+                const retinaX = cx + 140;
+                const focalX = retinaX + (val * 15); // Adjust focus distance multiplier
+                const lensX = cx - 90;
+                const beamHeight = 40;
 
-                // Draw Focal Dot
-                c.fillStyle = '#ef4444'; c.beginPath(); c.arc(focalX, cy, 6, 0, Math.PI*2); c.fill();
+                // Ray Tracing Logic
+                c.lineWidth = 2;
+                const drawRay = (startY) => {
+                    c.beginPath(); c.moveTo(0, cy + startY); c.lineTo(lensX, cy + startY); // Incoming
+                    // If focusing before retina (Myopia), we need to draw divergence
+                    if(focalX < retinaX) {
+                        c.lineTo(focalX, cy); // To focus
+                        // Diverge to retina
+                        let slope = (cy - (cy + startY)) / (focalX - lensX);
+                        let extY = cy + slope * (retinaX - focalX);
+                        c.lineTo(retinaX, extY);
+                    } else {
+                        // Focus is at or behind retina
+                        c.lineTo(focalX, cy); 
+                    }
+                    c.stroke();
+                };
 
-                // Highlight Retina error area
+                // Rays Glow
+                c.shadowBlur = 10; c.shadowColor = '#00f0ff'; c.strokeStyle = 'rgba(0, 240, 255, 0.8)';
+                drawRay(-beamHeight);
+                drawRay(beamHeight);
+                drawRay(0);
+
+                // Draw Focal Point
+                c.shadowBlur = 20; c.shadowColor = '#fff';
+                c.fillStyle = '#fff'; c.beginPath(); c.arc(focalX, cy, 5, 0, Math.PI*2); c.fill();
+
+                // Draw Blur Disc on Retina if out of focus
                 if(val !== 0) {
-                    c.strokeStyle = 'rgba(239, 68, 68, 0.4)'; c.lineWidth = 12;
-                    c.beginPath(); c.arc(cx, cy, 120, Math.PI*-0.1, Math.PI*0.1, false); c.stroke();
+                    let blurRadius = Math.abs(retinaX - focalX) * 0.4;
+                    c.fillStyle = 'rgba(255, 0, 60, 0.5)';
+                    c.shadowBlur = 15; c.shadowColor = '#ff003c';
+                    c.beginPath(); c.ellipse(retinaX, cy, 8, Math.min(blurRadius, 60), 0, 0, Math.PI*2); c.fill();
                 }
+                c.shadowBlur = 0;
             }
         };
 
         // ==========================================
-        // 6. Simulator: Keratometry Mires
+        // 6. Simulator: Keratometry Mires (UPGRADED POLAR TRIGONOMETRY)
         // ==========================================
         const simMires = {
-            initialized: false,
-            canvas: document.getElementById('miresCanvas'),
-            ctx: null,
-            time: 0,
-            animId: null,
+            initialized: false, canvas: document.getElementById('miresCanvas'), ctx: null,
+            time: 0, animId: null,
 
             init() {
                 this.ctx = this.canvas.getContext('2d');
-                this.initialized = true;
-                this.update(); // Set initial text
-                this.animate();
+                this.initialized = true; this.update(); this.animate();
             },
             update() {
                 const type = document.getElementById('corneaSelect').value;
                 const log = document.getElementById('mire-analysis');
-                if(type === 'normal') log.innerHTML = "<strong>التحليل الآلي:</strong> حلقات دائرية مثالية. المسافة بين الحلقات متساوية في كل الاتجاهات. القرنية سليمة كرويًا. (Astigmatism = 0).";
-                if(type === 'astig_with') log.innerHTML = "<strong>التحليل الآلي:</strong> حلقات بيضاوية. القطر الأفقي أطول من العمودي. هذا 'استجماتيزم مع القاعدة'. المحور سيكون قريبًا من 180 درجة.";
-                if(type === 'astig_against') log.innerHTML = "<strong>التحليل الآلي:</strong> حلقات بيضاوية. القطر العمودي أطول. هذا 'استجماتيزم ضد القاعدة'. المحور سيكون قريبًا من 90 درجة.";
-                if(type === 'keratoconus') log.innerHTML = "<strong>التحليل الآلي (تحذير):</strong> <span class='text-red-400'>حلقات مشوهة غير منتظمة (Distorted).</span> تقوس سفلي شديد. اشتباه قوي بقرنية مخروطية! الجهاز قد يعطي (ERROR).";
-                if(type === 'dry_eye') log.innerHTML = "<strong>التحليل الآلي (خطأ):</strong> <span class='text-amber-400'>تكسر وتقطع في الحلقات.</span> سطح القرنية غير أملس بسبب نقص الدموع. يرجى تقطير المريض وإعادة الفحص.";
+                if(type === 'normal') log.innerHTML = "STATUS: <span class='text-green-400'>OPTIMAL.</span><br>التحليل: حلقات دائرية مثالية. المسافة متساوية. (Astigmatism = 0.00D).";
+                if(type === 'astig_with') log.innerHTML = "STATUS: <span class='text-amber-400'>WTR ASTIGMATISM DETECTED.</span><br>التحليل: المحور العمودي أكثر انحداراً من الأفقي. شكل بيضوي عرضي. Axis ≈ 180°.";
+                if(type === 'astig_against') log.innerHTML = "STATUS: <span class='text-amber-400'>ATR ASTIGMATISM DETECTED.</span><br>التحليل: المحور الأفقي أكثر انحداراً. شكل بيضوي طولي. Axis ≈ 90°.";
+                if(type === 'keratoconus') log.innerHTML = "STATUS: <span class='text-red-500 font-bold'>CRITICAL DEFORMATION!</span><br>التحليل: انحدار سفلي حاد غير متماثل. اشتباه قرنية مخروطية. يرجى تحويل المريض للتصوير الطبوغرافي.";
+                if(type === 'dry_eye') log.innerHTML = "STATUS: <span class='text-amber-500'>SIGNAL INTERRUPTED.</span><br>التحليل: تكسر في الانعكاس السطحي (TFBUT منخفض). يرجى تقطير دموع اصطناعية وإعادة الفحص.";
             },
             animate() {
-                const c = this.ctx;
-                const w = this.canvas.width; const h = this.canvas.height;
+                const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
                 const cx = w/2; const cy = h/2;
                 const type = document.getElementById('corneaSelect').value;
                
                 this.time += 0.05;
-                c.clearRect(0, 0, w, h);
+                c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
 
-                // Draw Base Eye background
-                c.fillStyle = '#0f172a'; c.fillRect(0,0,w,h);
-                c.fillStyle = '#1e293b'; c.beginPath(); c.arc(cx, cy, 140, 0, Math.PI*2); c.fill(); // Iris base
-                c.fillStyle = '#000'; c.beginPath(); c.arc(cx, cy, 30, 0, Math.PI*2); c.fill(); // Pupil
+                // Base Eye
+                c.fillStyle = '#050a15'; c.beginPath(); c.arc(cx, cy, 160, 0, Math.PI*2); c.fill();
+                c.fillStyle = '#02040a'; c.beginPath(); c.arc(cx, cy, 35, 0, Math.PI*2); c.fill(); // Pupil
 
-                // Draw Mires based on type
-                c.lineWidth = 3;
+                // Draw Mires mathematically
+                c.lineWidth = 3; c.shadowBlur = 10;
                
-                for(let i=1; i<=4; i++) {
-                    let radiusX = i * 25;
-                    let radiusY = i * 25;
-                    let centerX = cx;
-                    let centerY = cy;
-                   
-                    c.strokeStyle = `rgba(16, 185, 129, ${1 - (i*0.15)})`; // Green glowing rings
+                for(let i=1; i<=5; i++) {
+                    let baseRadius = i * 28;
+                    c.strokeStyle = `rgba(0, 240, 255, ${1 - (i*0.15)})`; // Neon cyan
+                    c.shadowColor = '#00f0ff';
+                    
                     c.beginPath();
+                    for(let a=0; a<=Math.PI*2; a+=0.05) {
+                        let r = baseRadius;
+                        let centerX = cx; let centerY = cy;
 
-                    if(type === 'normal') {
-                        // Perfect circles
-                        c.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI*2);
-                        c.stroke();
+                        if(type === 'astig_with') {
+                            r += (i*3) * Math.cos(2*a); // Stretch horizontal
+                        }
+                        else if(type === 'astig_against') {
+                            r += (i*3) * Math.sin(2*a); // Stretch vertical
+                        }
+                        else if(type === 'keratoconus') {
+                            // Complex distortion: shift center down, pinch bottom
+                            centerY += i * 8;
+                            if (a > 0 && a < Math.PI) { r *= 1 + 0.1 * Math.sin(a); } // Bulge bottom
+                            r += Math.sin(a*3 + this.time)*2; // Micro wobble
+                        }
+
+                        let x = centerX + r * Math.cos(a);
+                        let y = centerY + r * Math.sin(a);
+                        
+                        // Dry eye logic (skip drawing some segments)
+                        if(type === 'dry_eye' && Math.random() < 0.1) {
+                            c.moveTo(x, y); continue;
+                        }
+
+                        if(a===0) c.moveTo(x,y); else c.lineTo(x,y);
                     }
-                    else if(type === 'astig_with') {
-                        // Horizontal oval
-                        c.ellipse(centerX, centerY, radiusX * 1.3, radiusY, 0, 0, Math.PI*2);
-                        c.stroke();
-                    }
-                    else if(type === 'astig_against') {
-                        // Vertical oval
-                        c.ellipse(centerX, centerY, radiusX, radiusY * 1.3, 0, 0, Math.PI*2);
-                        c.stroke();
-                    }
-                    else if(type === 'keratoconus') {
-                        // Distorted drops shape (shifting center downwards)
-                        centerY += i * 5;
-                        radiusY *= 1.4;
-                        // Add some wobble
-                        c.ellipse(centerX + Math.sin(i)*5, centerY, radiusX, radiusY, Math.PI/12, 0, Math.PI*2);
-                        c.stroke();
-                    }
-                    else if(type === 'dry_eye') {
-                        // Broken circles (dashed lines)
-                        c.setLineDash([10, 15]);
-                        c.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI*2);
-                        c.stroke();
-                        c.setLineDash([]); // reset
-                    }
+                    c.closePath(); c.stroke();
                 }
                
                 this.animId = requestAnimationFrame(this.animate.bind(this));
@@ -733,58 +737,46 @@
         };
 
         // ==========================================
-        // 7. Simulator: AI Edge Detection
+        // 7. Simulator: AI Edge Detection (UPGRADED CYBERPUNK HUD)
         // ==========================================
         const simAI = {
-            initialized: false,
-            rawCanvas: document.getElementById('aiRawCanvas'),
-            procCanvas: document.getElementById('aiProcessedCanvas'),
-            rawCtx: null, procCtx: null,
-            time: 0,
-            animId: null,
-            processing: false,
+            initialized: false, rawCanvas: document.getElementById('aiRawCanvas'), procCanvas: document.getElementById('aiProcessedCanvas'),
+            rawCtx: null, procCtx: null, time: 0, animId: null, processing: false,
 
             init() {
-                this.rawCtx = this.rawCanvas.getContext('2d');
-                this.procCtx = this.procCanvas.getContext('2d');
+                this.rawCtx = this.rawCanvas.getContext('2d'); this.procCtx = this.procCanvas.getContext('2d');
                 this.resize();
                 window.addEventListener('resize', () => { if(!document.getElementById('sec-sim-ai').classList.contains('hidden')) this.resize(); });
-                this.initialized = true;
-                this.drawRaw(); // Static noisy eye
-                this.procCtx.clearRect(0,0,this.procCanvas.width, this.procCanvas.height); // Empty proc
+                this.initialized = true; this.drawRaw();
+                this.procCtx.fillStyle = '#000'; this.procCtx.fillRect(0,0,this.procCanvas.width, this.procCanvas.height);
             },
             resize() {
-                this.rawCanvas.width = this.rawCanvas.parentElement.clientWidth; this.rawCanvas.height = 200;
-                this.procCanvas.width = this.procCanvas.parentElement.clientWidth; this.procCanvas.height = 200;
+                this.rawCanvas.width = this.rawCanvas.parentElement.clientWidth; this.rawCanvas.height = 250;
+                this.procCanvas.width = this.procCanvas.parentElement.clientWidth; this.procCanvas.height = 250;
             },
             drawRaw() {
                 const c = this.rawCtx; const w = this.rawCanvas.width; const h = this.rawCanvas.height;
                 const cx = w/2; const cy = h/2;
                
-                c.fillStyle = '#111'; c.fillRect(0,0,w,h);
-                // Blurry Iris
-                const grd = c.createRadialGradient(cx, cy, 10, cx, cy, 80);
-                grd.addColorStop(0, '#000'); grd.addColorStop(0.3, '#222'); grd.addColorStop(1, '#111');
-                c.fillStyle = grd; c.beginPath(); c.arc(cx, cy, 80, 0, Math.PI*2); c.fill();
+                c.fillStyle = '#050505'; c.fillRect(0,0,w,h);
+                // Iris
+                const grd = c.createRadialGradient(cx, cy, 10, cx, cy, 100);
+                grd.addColorStop(0, '#000'); grd.addColorStop(0.2, '#111'); grd.addColorStop(1, '#050505');
+                c.fillStyle = grd; c.beginPath(); c.arc(cx, cy, 100, 0, Math.PI*2); c.fill();
                
-                // Faint Mire rings
-                c.strokeStyle = 'rgba(255,255,255,0.1)'; c.lineWidth = 4;
-                c.beginPath(); c.arc(cx, cy, 30, 0, Math.PI*2); c.stroke();
-                c.beginPath(); c.arc(cx, cy, 50, 0, Math.PI*2); c.stroke();
-
-                // Add Noise (Static)
-                for(let i=0; i<1000; i++) {
-                    c.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.1)';
-                    c.fillRect(Math.random()*w, Math.random()*h, 2, 2);
+                // Perlin-style noise overlay
+                const imgData = c.getImageData(0, 0, w, h);
+                const data = imgData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    let noise = Math.random() * 30;
+                    data[i] += noise; data[i+1] += noise; data[i+2] += noise;
                 }
+                c.putImageData(imgData, 0, 0);
             },
             process() {
                 if(this.processing) return;
-                this.processing = true;
-                this.time = 0;
-                const log = document.getElementById('ai-log');
-                log.innerText = "[AI]: تطبيق فلتر إزالة الضوضاء (Gaussian Blur)...";
-               
+                this.processing = true; this.time = 0;
+                document.getElementById('ai-log').innerHTML = "> INIT CANNY EDGE DETECTOR...<br>> APPLYING GAUSSIAN FILTER...";
                 this.animId = requestAnimationFrame(this.animateProcess.bind(this));
             },
             animateProcess() {
@@ -793,48 +785,68 @@
                 const log = document.getElementById('ai-log');
                
                 this.time++;
-                c.fillStyle = 'rgba(0,0,0,0.1)'; c.fillRect(0,0,w,h); // Fade effect
+                // Trail
+                c.fillStyle = 'rgba(0,0,0,0.15)'; c.fillRect(0,0,w,h); 
 
-                // Scanline effect
-                c.fillStyle = 'rgba(6, 182, 212, 0.5)';
-                const scanY = (this.time * 5) % h;
-                c.fillRect(0, scanY, w, 2);
+                // Radar sweep
+                c.fillStyle = 'rgba(157, 0, 255, 0.4)';
+                const scanY = (this.time * 8) % h;
+                c.fillRect(0, scanY, w, 4);
 
-                if(this.time > 40 && this.time < 80) {
-                    log.innerText = "[AI]: تشغيل خوارزمية Canny Edge Detection لاكتشاف الحواف...";
-                    // Draw raw edges
-                    c.strokeStyle = '#06b6d4'; c.lineWidth = 1;
-                    if(Math.random() > 0.5) { c.beginPath(); c.arc(cx, cy, 30, 0, Math.PI*2); c.stroke(); }
+                c.shadowBlur = 10; c.shadowColor = '#00f0ff';
+
+                if(this.time > 30 && this.time < 70) {
+                    log.innerHTML = "> COMPUTING IMAGE GRADIENTS...<br>> SUPPRESSING NON-MAXIMUMS...";
+                    // Draw fractured edges
+                    c.strokeStyle = '#00f0ff'; c.lineWidth = 1;
+                    for(let i=0; i<10; i++) {
+                        c.beginPath(); 
+                        c.arc(cx, cy, 35 + (Math.random()*2), Math.random()*Math.PI*2, Math.random()*Math.PI*2); 
+                        c.stroke();
+                    }
                 }
-                else if (this.time >= 80 && this.time < 120) {
-                    log.innerText = "[AI]: تطبيق Hough Transform لإيجاد المراكز الهندسية...";
-                    c.strokeStyle = '#10b981'; c.lineWidth = 2;
-                    c.beginPath(); c.arc(cx, cy, 30, 0, Math.PI*2); c.stroke();
-                    c.beginPath(); c.arc(cx, cy, 50, 0, Math.PI*2); c.stroke();
-                    c.fillStyle = '#ef4444'; c.fillRect(cx-2, cy-2, 4, 4); // Center found
+                else if (this.time >= 70 && this.time < 120) {
+                    log.innerHTML = "> EXECUTING HOUGH CIRCLE TRANSFORM...<br>> VOTING SPACE OPTIMIZATION...";
+                    c.strokeStyle = '#39ff14'; c.lineWidth = 2; c.shadowColor = '#39ff14';
+                    c.beginPath(); c.arc(cx, cy, 35, 0, Math.PI*2); c.stroke(); // Pupil found
+                    
+                    // Rotating HUD elements
+                    c.save(); c.translate(cx, cy); c.rotate(this.time * 0.1);
+                    c.strokeStyle = 'rgba(57, 255, 20, 0.5)';
+                    c.strokeRect(-50, -50, 100, 100);
+                    c.restore();
                 }
                 else if (this.time >= 120) {
-                    log.innerText = "[AI]: تمت العملية بنجاح! تم تحديد الإحداثيات وإرسالها للمعالج الرياضي.";
-                    c.strokeStyle = '#10b981'; c.lineWidth = 2;
-                    c.beginPath(); c.arc(cx, cy, 30, 0, Math.PI*2); c.stroke();
-                    c.beginPath(); c.arc(cx, cy, 50, 0, Math.PI*2); c.stroke();
-                    // Draw bounding box
-                    c.strokeStyle = '#f59e0b'; c.setLineDash([5,5]);
-                    c.strokeRect(cx-60, cy-60, 120, 120); c.setLineDash([]);
-                    this.processing = false;
-                    return; // Stop animation
-                }
+                    log.innerHTML = "> TARGET LOCKED. PUPIL CENTER ACQUIRED.<br>> DISPATCHING COORDINATES TO DSP.";
+                    c.strokeStyle = '#39ff14'; c.lineWidth = 3; c.shadowColor = '#39ff14';
+                    c.beginPath(); c.arc(cx, cy, 35, 0, Math.PI*2); c.stroke();
+                    
+                    // Solid Lock HUD
+                    c.fillStyle = '#ff003c'; c.shadowBlur=0;
+                    c.fillRect(cx-2, cy-2, 4, 4); // Center dot
+                    c.strokeStyle = '#ff003c'; c.lineWidth = 2;
+                    c.beginPath(); c.moveTo(cx-15, cy); c.lineTo(cx+15, cy); c.stroke(); // Crosshair
+                    c.beginPath(); c.moveTo(cx, cy-15); c.lineTo(cx, cy+15); c.stroke();
 
+                    // Bounding brackets
+                    c.strokeStyle = '#00f0ff'; c.lineWidth = 4;
+                    const b = 60; const l = 15;
+                    c.beginPath(); c.moveTo(cx-b, cy-b+l); c.lineTo(cx-b, cy-b); c.lineTo(cx-b+l, cy-b); c.stroke(); // TL
+                    c.beginPath(); c.moveTo(cx+b, cy-b+l); c.lineTo(cx+b, cy-b); c.lineTo(cx+b-l, cy-b); c.stroke(); // TR
+                    c.beginPath(); c.moveTo(cx-b, cy+b-l); c.lineTo(cx-b, cy+b); c.lineTo(cx-b+l, cy+b); c.stroke(); // BL
+                    c.beginPath(); c.moveTo(cx+b, cy+b-l); c.lineTo(cx+b, cy+b); c.lineTo(cx+b-l, cy+b); c.stroke(); // BR
+
+                    this.processing = false;
+                    return; 
+                }
+                c.shadowBlur = 0;
                 this.animId = requestAnimationFrame(this.animateProcess.bind(this));
             }
         };
 
-        // ==========================================
-        // 8. Printout Logic
-        // ==========================================
         const receiptData = {
             'meas': { t: "القياسات الفردية (Measurements)", d: "يقوم الجهاز بأخذ 3 قراءات سريعة جدًا للعين الواحدة. لماذا؟ لأن العين البشرية تتحرك بشكل مجهري دائمًا (Micro-saccades)، وقد يتغير التركيز أو ترمش العين. أخذ عدة قراءات يضمن دقة إحصائية." },
-            'meas_err': { t: "قراءة مع نسبة خطأ", d: "لاحظ كيف أن هذه القراءة تختلف قليلًا عن البقية، وتم تظليلها أو تجاهلها. الجهاز ذكي بما يكفي لمعرفة أن המريض رمش أو تحرك خلال هذا الجزء من الثانية، فقام بتخفيض وزن هذه القراءة (Reliability Index)." },
+            'meas_err': { t: "قراءة مع نسبة خطأ", d: "لاحظ كيف أن هذه القراءة تختلف قليلًا عن البقية، وتم تظليلها أو تجاهلها. الجهاز ذكي بما يكفي لمعرفة أن المريض رمش أو تحرك خلال هذا الجزء من الثانية، فقام بتخفيض وزن هذه القراءة (Reliability Index)." },
             'avg': { t: "المتوسط الحسابي (Average - AVG)", d: "هذا هو السطر الأهم للطبيب! يقوم المعالج الدقيق بجمع القراءات الصالحة وقسمتها رياضيًا لاستخراج الرقم الأكثر استقرارًا وموثوقية الذي سيبنى عليه التشخيص الفعلي." },
             'se': { t: "المكافئ الكروي (Spherical Equivalent)", d: "معادلة رياضية بسيطة: SPH + (CYL/2). تُستخدم لتبسيط الوصفة إذا أراد المريض ارتداء عدسات لاصقة كروية عادية لا تصحح الاستجماتيزم، أو تُستخدم في الأبحاث لتقييم الضعف العام." },
             'k1': { t: "انحناء القرنية (R1 / Flat K)", d: "القياس المسطح لمنحنى القرنية (مثل سطح الملعقة من الخلف). الرقم 7.80mm يمثل نصف قطر الانحناء. كلما صغر الرقم بالمليمتر، زادت قوة تحدب القرنية (يعبر عنه بالديوبتر 43.25D)." },
@@ -847,18 +859,15 @@
             const exp = document.getElementById('receipt-explainer');
             const data = receiptData[key];
             exp.innerHTML = `
-                <div class="text-5xl mb-4 text-cyan-400">📊</div>
+                <div class="text-5xl mb-4 text-cyan-400 drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">📊</div>
                 <h3 class="text-3xl font-bold text-white mb-4 border-b border-slate-700 pb-2">${data.t}</h3>
                 <p class="text-slate-300 text-lg leading-relaxed">${data.d}</p>
-                <div class="mt-6 bg-slate-950 p-4 rounded text-sm text-amber-500 font-mono border border-slate-800 border-r-4 border-r-amber-500">
-                    [تحليل أوتوماتيكي متقدم]: الجهاز قام بهذه الحسابات في أقل من 0.1 ثانية باستخدام معالج دقيق (DSP).
+                <div class="mt-6 bg-black p-4 rounded text-sm text-cyan-500 font-mono border border-cyan-900 border-l-4 border-l-cyan-500 shadow-inner">
+                    [DSP CORE ENGAGED]: MATRIX CALCULATION COMPLETED IN < 0.08ms.
                 </div>
             `;
         }
 
-        // ==========================================
-        // 9. Scenarios Lab (Dynamic Massive Content)
-        // ==========================================
         const scenarios = [
             { icon: "👵", title: "مريض يعاني من المياه البيضاء (Cataract)", desc: "العدسة الداخلية للعين معتمة كالزجاج المصنفر. الضوء تحت الأحمر الخاص بالجهاز لا يستطيع اختراقها بسهولة ليرتد من الشبكية. <strong>تصرف الجهاز:</strong> الأجهزة القديمة تفشل. الحديثة تستخدم SLD قوي جدًا لاختراق العتامة، أو تنبه الطبيب (Cataract Mode) وتعرض صورة العتامة." },
             { icon: "👶", title: "طفل رضيع يبكي ويتحرك", desc: "لا يمكن للطفل تثبيت ذقنه أو النظر للبالون. <strong>تصرف الجهاز:</strong> لا يمكن استخدام الأجهزة المكتبية. تم اختراع (Handheld Autorefractors) أجهزة محمولة باليد بحجم الكاميرا تصور عيني الطفل معًا من مسافة متر واحد في جزء من الثانية بالاعتماد على ذكاء اصطناعي يقتنص اللحظة المناسبة للقياس." },
@@ -871,10 +880,10 @@
         const scContainer = document.getElementById('scenarios-container');
         scenarios.forEach(sc => {
             scContainer.innerHTML += `
-                <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-amber-500 transition duration-300 group">
+                <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300 group backdrop-blur-sm">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="text-4xl bg-slate-900 w-16 h-16 flex items-center justify-center rounded-full border border-slate-700 group-hover:scale-110 transition">${sc.icon}</div>
-                        <h3 class="text-xl font-bold text-white">${sc.title}</h3>
+                        <div class="text-4xl bg-black w-16 h-16 flex items-center justify-center rounded-full border border-cyan-900 group-hover:scale-110 group-hover:border-cyan-400 transition shadow-inner">${sc.icon}</div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition">${sc.title}</h3>
                     </div>
                     <p class="text-slate-300 text-sm leading-relaxed border-t border-slate-700 pt-4">${sc.desc}</p>
                 </div>
