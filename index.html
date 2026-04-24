@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Kerato-Refractometer - Seminar</title>
+    <style>
+        /* إعدادات المتغيرات اللونية - طابع ليلي وبنفسجي فخم */
+        :root {
+            --bg-dark: #07070a;
+            --bg-panel: #121018;
+            --primary-purple: #4a148c;
+            --accent-glow: #9c27b0;
+            --text-main: #f5f5f7;
+            --text-muted: #8e8e93;
+            --border-subtle: rgba(156, 39, 176, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            /* تفعيل خاصية التمرير كشرائح العرض */
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* تنسيق الشريحة الواحدة */
+        .slide {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* تأثيرات الخلفية */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(74, 20, 140, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* حاوية المحتوى داخل الشريحة */
+        .content-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            background: var(--bg-panel);
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #b39ddb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #b39ddb;
+            border-bottom: 2px solid var(--primary-purple);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* تنسيق شريط التنقل الجانبي (مؤشر الشرائح) */
+        .slide-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .slide-nav a {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--text-muted);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .slide-nav a:hover, .slide-nav a.active {
+            background-color: var(--accent-glow);
+            opacity: 1;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transform: scale(1.3);
+        }
+
+        /* شبكة المحاكي */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .placeholder-box {
+            width: 100%;
+            height: 250px;
+            border: 2px dashed var(--primary-purple);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-purple);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-nav">
+        <a href="#slide1" title="المقدمة"></a>
+        <a href="#slide2" title="الأساس العلمي"></a>
+        <a href="#slide3" title="المحاكي"></a>
+        <a href="#slide4" title="الخوارزمية والنتائج"></a>
+    </div>
+
+    <section class="slide" id="slide1">
+        <div class="content-wrapper" style="text-align: center;">
+            <p style="color: var(--accent-glow); font-weight: bold; letter-spacing: 2px;">SEMINAR PRESENTATION</p>
+            <h1>Auto Kerato-Refractometer</h1>
+            <p>تحليل انكسار العين وتحدب القرنية: من المعالجة الإشارية إلى التشخيص الآلي</p>
+            
+            <div style="margin-top: 50px;">
+                <div style="width: 150px; height: 150px; background: #fff; margin: 0 auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #000;">
+                    [QR Code Here]
+                </div>
+                <p style="margin-top: 15px; font-size: 1rem;">امسح الرمز لتجربة المحاكي الحيوي</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" id="slide2">
+        <div class="content-wrapper">
+            <h2>الأساس البصري والهندسي</h2>
+            <div class="grid-layout">
+                <div>
+                    <p>يعتمد الجهاز على إسقاط حزمة من الأشعة تحت الحمراء (Infrared) لتجنب تفاعل بؤبؤ العين (Pupil Constriction).</p>
+                    <p>يقوم الحساس بالتقاط الإشارة المرتدة من الشبكية وتحليل تغير الطور (Phase shift) وانحراف الحزمة الضوئية.</p>
+                </div>
+                <div class="panel">
+                    <div class="placeholder-box">
+                        [مساحة مخصصة للرسم التوضيحي لمسار الأشعة]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" id="slide3">
+        <div class="content-wrapper">
+            <h2>محاكاة الفحص الآلي (Simulator)</h2>
+            <div class="grid-layout">
+                <div class="panel">
+                    <h3 style="margin-bottom: 20px;">المدخلات الفسيولوجية</h3>
+                    <div class="placeholder-box" style="height: 150px;">
+                        [أدوات التحكم بالقرنية والطول المحوري]
+                    </div>
+                </div>
+                <div class="panel">
+                    <h3 style="margin-bottom: 20px;">المخرجات (RX)</h3>
+                    <div class="placeholder-box" style="height: 150px; border-color: var(--accent-glow);">
+                        [نتائج SPH, CYL, AXIS]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" id="slide4">
+        <div class="content-wrapper">
+            <h2>الخوارزمية ومعالجة البيانات</h2>
+            <div class="grid-layout">
+                <div class="panel">
+                    <p>كيف يتم تحويل القراءات الفيزيائية إلى ديوبتر؟ سنستعرض هنا المعادلات الرياضية المعتمدة.</p>
+                    <div class="placeholder-box">
+                        [المعادلات الرياضية]
+                    </div>
+                </div>
+                <div>
+                    <p>يتم فلترة الإشارة من التشويش (Noise) وتمريرها عبر خوارزمية Fast Fourier Transform للحصول على الترددات الدقيقة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // سكريبت بسيط لتفعيل زر التنقل الجانبي ليعكس الشريحة الحالية
+        const slides = document.querySelectorAll('.slide');
+        const navLinks = document.querySelectorAll('.slide-nav a');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(slide => observer.observe(slide));
+    </script>
+</body>
+</html>
