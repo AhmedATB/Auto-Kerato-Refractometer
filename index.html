@@ -488,7 +488,7 @@
                 this.initialized = true; this.animate();
             },
             resize() { this.canvas.width = this.canvas.parentElement.clientWidth; this.canvas.height = this.canvas.parentElement.clientHeight; },
-            toggleFogging() {
+           toggleFogging() {
                 this.foggingOn = !this.foggingOn;
                 
                 // تحديث الأزرار
@@ -501,12 +501,14 @@
                 
                 if(this.foggingOn) {
                     physioBox.className = "mt-6 p-4 border-2 border-green-500/30 rounded-lg bg-green-950/20 flex-grow transition-all duration-500";
-                    physioText.innerHTML = "<span class='text-green-400 font-bold'>عضلة العين مسترخية تماماً (Relaxed).</span><br><br>العدسة ابتعدت، المنطاد أصبح ضبابياً. الدماغ يئس من محاولة توضيح الصورة فأرخى عضلات العين. <br><strong>هذا هو الوقت المثالي لأخذ قياس دقيق!</strong>";
-                    document.getElementById('sim-light-log').innerHTML = "> FOGGING LENS MOVED OUTWARD.<br>> TARGET BLURRED. READY TO FIRE.";
+                    // تصحيح النص: العدسة تبتعد
+                    physioText.innerHTML = "<span class='text-green-400 font-bold'>عضلة العين مسترخية تماماً (Relaxed).</span><br><br>العدسة ابتعدت عن العين، المنطاد أصبح ضبابياً. الدماغ يئس من محاولة توضيح الصورة فأرخى عضلات العين. <br><strong>هذا هو الوقت المثالي لأخذ قياس دقيق!</strong>";
+                    document.getElementById('sim-light-log').innerHTML = "> FOGGING LENS MOVED AWAY.<br>> TARGET BLURRED. READY TO FIRE.";
                 } else {
                     physioBox.className = "mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20 flex-grow transition-all duration-500";
-                    physioText.innerHTML = "<span class='text-red-400 font-bold'>عضلة العين متشنجة (Accommodation Active).</span><br><br>المريض يرى المنطاد بوضوح، مما يجبر عينه على التركيز. إذا قسنا الآن، سيعطي الجهاز قراءة (قصر نظر) أسوأ من الحقيقة!";
-                    document.getElementById('sim-light-log').innerHTML = "> FOGGING LENS RETRACTED.<br>> WARNING: ACCOMMODATION POSSIBLE.";
+                    // تصحيح النص: العدسة تقترب
+                    physioText.innerHTML = "<span class='text-red-400 font-bold'>عضلة العين متشنجة (Accommodation Active).</span><br><br>العدسة اقتربت، المريض يرى المنطاد بوضوح، مما يجبر عينه على التركيز. إذا قسنا الآن، سيعطي الجهاز قراءة (قصر نظر) أسوأ من الحقيقة!";
+                    document.getElementById('sim-light-log').innerHTML = "> FOGGING LENS MOVED CLOSER.<br>> WARNING: ACCOMMODATION POSSIBLE.";
                 }
             },
             fireLaser() {
@@ -547,8 +549,10 @@
                 const eyeX = w * 0.85;
                 const ccdY = h * 0.85;
 
-                // حركة العدسة أصبحت أطول لتبدو واضحة
-                const targetLensX = this.foggingOn ? w * 0.65 : w * 0.45;
+               // تصحيح الحركة: 
+                // w * 0.45 (مبتعدة عن العين = تفعيل الضبابية)
+                // w * 0.65 (قريبة من العين = رؤية واضحة)
+                const targetLensX = this.foggingOn ? w * 0.45 : w * 0.65;
                 if(this.lensCurrentX === 0) this.lensCurrentX = targetLensX;
                 this.lensCurrentX += (targetLensX - this.lensCurrentX) * 0.05;
 
