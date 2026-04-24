@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Kerato-Refractometer | Advanced Simulator</title>
+    <title>Auto Kerato-Refractometer | Advanced Engineering Simulator</title>
    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -25,20 +26,26 @@
         </div>
        
         <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-3 space-y-0 md:space-y-1 space-x-2 md:space-x-0 rtl:space-x-reverse" id="nav-container">
-            <button onclick="nav('sec-intro', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🏛️</span> الملخص والأصول التاريخية</button>
+            <button onclick="nav('sec-intro', event)" class="nav-btn active w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap"><span class="text-xl ml-3">🏛️</span> الملخص والأصول التاريخية</button>
             <button onclick="nav('sec-mechanics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚙️</span> الميكانيكا والتحكم (Control)</button>
             <button onclick="nav('sec-components', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔬</span> المكونات والتغلب على الصعوبات</button>
+            <button onclick="nav('sec-operation', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">📋</span> دليل التشغيل والبرمجيات</button>
             <button onclick="nav('sec-limitations', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚠️</span> المشاكل الواقعية (Limitations)</button>
             <button onclick="nav('sec-sim-light', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔦</span> محاكي: مسار الضوء والتضبيب</button>
             <button onclick="nav('sec-sim-optics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🧪</span> محاكي: الخطأ الفيزيائي (Error Mode)</button>
             <button onclick="nav('sec-sim-kerato', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">👁️</span> محاكي: تضاريس القرنية</button>
             <button onclick="nav('sec-sim-ai', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🤖</span> محاكي: التتبع الآلي (AI Tracker)</button>
+            <button onclick="nav('sec-multi', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🌌</span> الاندماج الوظيفي (5 في 1)</button>
             <button onclick="nav('sec-printout', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🧾</span> تحليل البيانات المطبوعة</button>
+            <button onclick="nav('sec-market', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">📊</span> السوق والتحليل التجاري</button>
+            <button onclick="nav('sec-future', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🌍</span> البصريات 3.0 والواقع الإقليمي</button>
+            <button onclick="nav('sec-maintenance', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔧</span> بروتوكولات الصيانة والهندسة</button>
+            <button onclick="nav('sec-scenarios', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔬</span> مختبر الحالات السريرية المعقدة</button>
         </div>
     </nav>
 
     <main class="flex-grow overflow-y-auto relative p-4 md:p-8 scroll-smooth" id="main-content">
-        <div id="loading-overlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div id="loading-overlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-500">
             <div class="text-cyan-400 font-mono text-xl animate-pulse">> INITIALIZING SYSTEM...</div>
         </div>
 
@@ -46,11 +53,75 @@
 
             <section id="sec-intro" class="content-sec block fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الملخص التنفيذي والتاريخي</h2>
-                    <p class="text-slate-300 text-lg leading-relaxed mb-6">يجمع جهاز القياس الأوتوماتيكي بين علم <span class="term" onclick="openProf('optics')">البصريات الفيزيائية</span> والميكاترونكس لتوفير قياسات <span class="term" onclick="openProf('objective_ref')">موضوعية</span>.</p>
-                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                        <h3 class="text-amber-400 font-bold text-2xl mb-4">كيف يرى الجهاز العين فعلياً؟</h3>
-                        <div class="bg-black p-4 rounded text-center font-mono text-cyan-400 border border-cyan-900" dir="ltr">$$ V (Vergence) = \frac{1}{d (distance)} $$</div>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الملخص التنفيذي والأصول التاريخية</h2>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                        يجمع جهاز القياس الأوتوماتيكي (Auto Kerato-Refractometer) بين علم <span class="term" onclick="openProf('optics')">البصريات الفيزيائية</span>، و<span class="term" onclick="openProf('mechatronics')">الميكاترونكس</span> لتوفير قياسات دقيقة. تاريخياً، فشلت الطرق اليدوية (Retinoscopy) بسبب الأخطاء البشرية، وفشلت أجهزة (Early Optometers) بسبب بطئها الشديد وتفاعلها المعقد مع المريض. الحل الحقيقي بدأ عندما قررت وكالة ناسا (1960s) تطوير تتبع آلي بالأشعة تحت الحمراء، مما مهد الطريق لظهور الأجهزة التي تقيس الخطأ الانكساري <span class="term" onclick="openProf('auto')">آليًا</span> دون خداع العين.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                            <h3 class="text-amber-400 font-bold text-2xl mb-4">كيف يرى الجهاز العين فعلياً؟ (Vergence)</h3>
+                            <p class="text-slate-300 mb-4">الجهاز لا يرى "صورة"، بل يطلق حزمة تحت حمراء (لأن المريض لا يراها ولا يتفاعل بؤبؤه معها)، ويحلل الضوء العائد (Reflection from Retina). المعادلة الأساسية هي:</p>
+                            <div class="bg-black p-4 rounded text-center font-mono text-cyan-400 border border-cyan-900" dir="ltr">
+                                $$ V (Vergence) = \frac{1}{d (distance)} $$
+                            </div>
+                            <p class="text-slate-300 mt-4">حيث يحسب الجهاز الفرق (Phase Shift) بين حزمة الضوء الخارجة (Outgoing) والمنعكسة (Incoming) لتحديد قوة العدسة المطلوبة.</p>
+                        </div>
+
+                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                            <h3 class="text-amber-400 font-bold text-2xl mb-4 flex items-center"><span class="text-3xl ml-2">📜</span> التسلسل التاريخي العبقري</h3>
+                           <div class="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-500 before:to-transparent">
+                                
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('scheiner')">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1619</div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
+                                        <div class="font-bold text-purple-400">مبدأ شاينر (Scheiner)</div>
+                                        <div class="text-xs text-slate-400 mt-1">اكتشاف الفتحة المزدوجة وتشتت الضوء. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('porterfield')">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1759</div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
+                                        <div class="font-bold text-purple-400">أبتوميتر بادال (Badal)</div>
+                                        <div class="text-xs text-slate-400 mt-1">أساسيات نظام التضبيب (Fogging). <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('helmholtz')">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1851</div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
+                                        <div class="font-bold text-purple-400">هيلمهولتز (Keratometer)</div>
+                                        <div class="text-xs text-slate-400 mt-1">قياس تضاريس السطح الأمامي للقرنية. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('collins')">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1937</div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
+                                        <div class="font-bold text-purple-400">أول مقياس إلكتروني</div>
+                                        <div class="text-xs text-slate-400 mt-1">براءة اختراع "جيفري كولينز" للأشعة تحت الحمراء. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('nasa')">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1960s</div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
+                                        <div class="font-bold text-purple-400">أزمة الفضاء (NASA)</div>
+                                        <div class="text-xs text-slate-400 mt-1">ابتكار أجهزة التتبع الآلي والديناميكي. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('wavefront')">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">2000s</div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
+                                        <div class="font-bold text-purple-400">ثورة Wavefront</div>
+                                        <div class="text-xs text-slate-400 mt-1">خرائط التشوهات الدقيقة عبر مصفوفة العدسات. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -58,14 +129,15 @@
             <section id="sec-mechanics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الميكانيكية والتحكم (Control Systems)</h2>
+                    <p class="text-slate-300 text-lg mb-6">بعيداً عن واجهة المستخدم، يعتمد الجهاز على بنية ميكانيكية حيوية (Robotic Architecture) للعمل بدقة المايكرون.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-slate-900 p-6 rounded-xl border-l-4 border-purple-500">
                             <h3 class="text-xl font-bold text-purple-400 mb-3">1. محركات الخطوة (Stepper Motors)</h3>
-                            <p class="text-slate-400">التحكم في محاور (X,Y,Z) بدقة المايكرون.</p>
+                            <p class="text-slate-400">يتم التحكم في محاور (X,Y,Z) بدقة المايكرون. عصا التحكم (Joystick) تحول حركة يد الطبيب إلى إشارات كهربائية ترسل للوحة التحكم (Motor Driver).</p>
                         </div>
                         <div class="bg-slate-900 p-6 rounded-xl border-l-4 border-cyan-500">
-                            <h3 class="text-xl font-bold text-cyan-400 mb-3">2. نظام التحكم المغلق (Closed-Loop)</h3>
-                            <p class="text-slate-400">تغذية راجعة سريعة لمعالجة إحداثيات المستشعر وتعديل وضع المحرك.</p>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-3">2. نظام التحكم المغلق (Closed-Loop Control)</h3>
+                            <p class="text-slate-400">تغذية راجعة سريعة جداً لمعالجة إحداثيات المستشعر وتعديل وضع المحرك. <br>Sensor -> Controller -> Motor -> Repeat.</p>
                         </div>
                     </div>
                 </div>
@@ -75,9 +147,44 @@
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">المكونات والتغلب على الصعوبات</h2>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-1 space-y-4" id="component-list"></div>
+                        <div class="lg:col-span-1 space-y-4" id="component-list">
+                            </div>
                         <div class="lg:col-span-2 bg-slate-950 rounded-xl p-6 border border-slate-700 flex flex-col justify-center min-h-[400px]">
-                            <div id="component-display" class="text-center"><h3 class="text-slate-400">اختر مكوّنًا</h3></div>
+                            <div id="component-display" class="text-center">
+                                <div class="text-6xl mb-6">🔍</div>
+                                <h3 class="text-2xl font-bold text-slate-400">اختر مكوّنًا من القائمة الجانبية</h3>
+                                <p class="text-slate-500 mt-2">لنعرض لك وظيفته الفيزيائية وكيف يتغلب على مشاكل مثل "العتامة" و"التكيف البصري".</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-operation" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">دليل التشغيل السريري والبرمجيات</h2>
+                    <p class="text-slate-300 text-lg mb-8">تتميز الأجهزة الحديثة بواجهة مستخدم رسومية (UI) متطورة وتكامل مع السجلات الطبية. إليك التسلسل الأوتوماتيكي لخطوات الفحص السريري:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-cyan-500 shadow-lg relative">
+                            <div class="absolute -top-4 right-4 bg-cyan-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">1</div>
+                            <h3 class="text-lg font-bold text-white mt-2 mb-2">تحضير المريض</h3>
+                            <p class="text-sm text-slate-400">يجلس المريض ويثبت الذقن والجبهة. يتم ضبط المسندات عموديًا بمحركات دقيقة ليناسب ارتفاع المريض تمامًا.</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-purple-500 shadow-lg relative">
+                            <div class="absolute -top-4 right-4 bg-purple-500 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center">2</div>
+                            <h3 class="text-lg font-bold text-white mt-2 mb-2">المحاذاة والتمركز</h3>
+                            <p class="text-sm text-slate-400">يوجّه المريض نظره نحو الهدف (بالون). يحرك الفاحص عصا التحكم للتأكد من تمركز بؤبؤ العين، وتتدخل أنظمة التتبع الآلي للضبط الدقيق.</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-amber-500 shadow-lg relative">
+                            <div class="absolute -top-4 right-4 bg-amber-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">3</div>
+                            <h3 class="text-lg font-bold text-white mt-2 mb-2">التصوير والمعالجة</h3>
+                            <p class="text-sm text-slate-400">عند ثبات التركيز، يبدأ القياس تلقائيًا (Auto-Shoot). تُضاء الحلقات ويحلل المستشعر الانعكاسات. إذا كان المريض زارعاً لعدسة، يُفعل <span class="term" onclick="openProf('iol_mode')">IOL Mode</span>.</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-green-500 shadow-lg relative">
+                            <div class="absolute -top-4 right-4 bg-green-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">4</div>
+                            <h3 class="text-lg font-bold text-white mt-2 mb-2">النتائج والتصدير</h3>
+                            <p class="text-sm text-slate-400">تظهر النتائج (SPH/CYL/AXIS) آنياً. تُطبع عبر طابعة حرارية مدمجة، وتُصدّر بصيغة XML/PDF عبر منافذ USB أو Ethernet لنظام السجلات الطبية (EMR).</p>
                         </div>
                     </div>
                 </div>
@@ -86,23 +193,54 @@
             <section id="sec-limitations" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
+                    <p class="text-slate-300 text-lg mb-6">الجانب المظلم الذي يميز المهندس الفاهم عن غيره. متى يفشل الجهاز أو يعطي قراءات كارثية؟</p>
                     <div class="space-y-4">
-                        <div class="bg-red-950/20 p-5 rounded-xl border border-red-900/50"><h4 class="text-red-400 font-bold mb-2">1. مشكلة التكيف الآلي</h4><p class="text-slate-300">الجهاز يقرأ التشنج على أنه قصر نظر كاذب.</p></div>
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700"><h4 class="text-amber-400 font-bold mb-2">2. المياه البيضاء (Cataract)</h4><p class="text-slate-300">يشتت الضوء ويحتاج مصادر SLD قوية لاختراقه.</p></div>
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700"><h4 class="text-purple-400 font-bold mb-2">3. جفاف العين</h4><p class="text-slate-300">تكسر طبقة الدموع يشوه حلقات القياس (Mires).</p></div>
+                        <div class="bg-red-950/20 p-5 rounded-xl border border-red-900/50">
+                            <h4 class="text-red-400 font-bold mb-2">1. مشكلة التكيف الآلي (Instrument Myopia)</h4>
+                            <p class="text-slate-300">المريض لا إرادياً يركز على الجهاز القريب، فتتشنج العضلة. الجهاز سيقرأ هذا التشنج على أنه "قصر نظر" كاذب. (الحل: Fogging، وقد يتطلب قطرات Cycloplegic).</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                            <h4 class="text-amber-400 font-bold mb-2">2. المياه البيضاء (Cataract)</h4>
+                            <p class="text-slate-300">العدسة البلورية داخل العين تصبح غائمة وتشتت ضوء الـ IR. يحل عبر مصادر SLD قوية لاختراقه.</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                            <h4 class="text-cyan-400 font-bold mb-2">3. حجم البؤبؤ (Pupil Size Problem)</h4>
+                            <p class="text-slate-300">البؤبؤ الصغير (< 2mm): لا يسمح بمرور ضوء كافٍ. البؤبؤ الكبير جداً: يسمح بمرور الأشعة من أطراف القرنية المشوهة (Spherical Aberrations).</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                            <h4 class="text-purple-400 font-bold mb-2">4. جفاف العين (Dry Eye Syndrome)</h4>
+                            <p class="text-slate-300">تكسر طبقة الدموع يشوه حلقات القياس (Mires) هندسياً، ويعتبر الجهاز هذا التشوه "استجماتيزم قرني" وهمي.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="sec-sim-light" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي مسار الضوء والتضبيب</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: مسار الضوء ونظام التضبيب</h2>
+                    <p class="text-slate-300 text-lg mb-6">حل مشكلة التكيف البصري الناجم عن الجهاز (<span class="term" onclick="openProf('instrument_myopia')">Instrument Myopia</span>) عبر نظام التضبيب الآلي.</p>
                     <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="lg:w-2/3 sim-container h-[450px] border border-purple-900/50 relative"><div class="scanline"></div><canvas id="lightPathCanvas"></canvas></div>
-                        <div class="lg:w-1/3 bg-black p-6 rounded-xl border border-purple-700/50 flex flex-col">
-                            <button onclick="simLight.toggleFogging()" class="bg-slate-900 text-white px-4 py-3 rounded-lg flex justify-between border border-slate-600"><span>التضبيب:</span> <span id="btn-fogging" class="text-red-400">مغلق</span></button>
-                            <button onclick="simLight.fireLaser()" class="bg-cyan-900/50 text-white px-4 py-3 rounded-lg flex justify-between border border-cyan-500 mt-4"><span>إطلاق:</span> <span class="text-cyan-400">▶</span></button>
-                            <div class="mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20" id="fogging-explanation"><div id="physio-status" class="text-slate-300 text-sm">عضلة العين متشنجة (Accommodation).</div></div>
+                        <div class="lg:w-2/3 sim-container h-[450px] border border-purple-900/50 relative">
+                            <div class="scanline"></div>
+                            <canvas id="lightPathCanvas"></canvas>
+                        </div>
+                        <div class="lg:w-1/3 bg-black p-6 rounded-xl border border-purple-700/50 flex flex-col shadow-[0_0_20px_rgba(157,0,255,0.2)]">
+                            <h4 class="font-bold text-purple-400 mb-4 border-b border-purple-900 pb-2">لوحة التحكم (HUD)</h4>
+                            <div class="flex flex-col gap-4">
+                                <button onclick="simLight.toggleFogging()" class="bg-slate-900 text-white px-4 py-3 rounded-lg flex justify-between border border-slate-600 hover:bg-slate-800 transition">
+                                    <span>نظام التضبيب (Fogging):</span> <span id="btn-fogging" class="text-red-400 font-bold">مغلق (الهدف واضح)</span>
+                                </button>
+                                <button onclick="simLight.fireLaser()" class="bg-cyan-900/50 text-white px-4 py-3 rounded-lg flex justify-between border border-cyan-500 hover:bg-cyan-800 transition shadow-[0_0_10px_rgba(0,240,255,0.2)]">
+                                    <span>إطلاق نبضة القياس:</span> <span class="text-cyan-400 font-bold text-lg">▶ إطلاق</span>
+                                </button>
+                            </div>
+                            <div class="mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20 transition-all duration-500" id="fogging-explanation">
+                                <h5 class="text-sm text-amber-400 mb-2 font-bold flex items-center"><span class="text-xl ml-2">🧠</span> التأثير الفسيولوجي:</h5>
+                                <div id="physio-status" class="text-sm text-slate-300">
+                                    <span class='text-red-400 font-bold'>عضلة العين متشنجة (Accommodation).</span><br><br>
+                                    العدسة اقتربت، المريض يرى المنطاد بوضوح، مما يجبر عينه على التركيز. <br><span class='text-xs text-amber-300 font-mono'>*لاحظ انتفاخ عدسة العين الداخلية*</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,13 +249,29 @@
             <section id="sec-sim-optics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">محاكي الأخطاء الفيزيائية (Error Mode)</h2>
+                    <p class="text-slate-300 text-lg mb-6">جرب تعمد تخريب القياس عبر تفعيل حالات سريرية سيئة لترى كيف يتشوه انكسار الضوء وتتأثر قراءة الحساس (بسبب الـ Noise).</p>
+
                     <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="lg:w-2/3 sim-container h-[400px] border border-cyan-900/50"><div class="scanline"></div><canvas id="opticsCanvas"></canvas></div>
-                        <div class="lg:w-1/3 bg-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col">
-                            <label class="block text-white font-bold mb-2">الطول المحوري:</label><input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg mb-6">
+                        <div class="lg:w-2/3 sim-container h-[400px] border border-cyan-900/50">
+                            <div class="scanline"></div>
+                            <canvas id="opticsCanvas"></canvas>
+                        </div>
+                        <div class="lg:w-1/3 bg-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                            <label class="block text-white font-bold mb-2">الطول المحوري (الخطأ الأساسي):</label>
+                            <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg mb-6 outline-none">
+                            
                             <label class="block text-red-400 font-bold mb-2">حالة المريض (Error Mode):</label>
-                            <select id="patientCondition" class="w-full bg-black text-white border border-red-900 rounded p-2 mb-6 outline-none"><option value="normal">مريض مثالي</option><option value="cataract">مياه بيضاء (Cataract)</option><option value="shake">عدم استقرار (Shake)</option></select>
-                            <div class="bg-black p-4 rounded border border-slate-800 flex-grow"><div id="optics-result" class="text-3xl font-mono text-green-400 font-bold">SPH: 0.00 D</div><p id="optics-desc" class="text-xs text-slate-400">إشارة نقية.</p></div>
+                            <select id="patientCondition" class="w-full bg-black text-white border border-red-900 rounded p-2 mb-6 outline-none focus:border-red-500">
+                                <option value="normal">مريض مثالي (ثابت، عدسة نقية)</option>
+                                <option value="cataract">مياه بيضاء (Cataract - تشتت الضوء)</option>
+                                <option value="shake">عدم استقرار (Patient Shaking - ضوضاء CCD)</option>
+                            </select>
+
+                            <div class="bg-black p-4 rounded border border-slate-800 flex-grow">
+                                <h4 class="text-sm text-slate-500 mb-1">النتيجة المسجلة (مع Sensor Drift):</h4>
+                                <div id="optics-result" class="text-4xl font-mono text-green-400 font-bold mb-2 drop-shadow-[0_0_10px_#39ff14]">SPH: 0.00 D</div>
+                                <p id="optics-desc" class="text-xs text-slate-400">إشارة نقية. دقة عالية.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,34 +279,256 @@
 
             <section id="sec-sim-kerato" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي تضاريس القرنية</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي تضاريس القرنية (Trigonometric Mires)</h2>
+                    <p class="text-slate-300 text-lg mb-6">محاكاة لكيفية إسقاط الجهاز لحلقات بلاسيدو على القرنية واكتشاف المحاور وحساب قوة التحدب.</p>
+
                     <div class="flex flex-col md:flex-row gap-8">
                         <div class="md:w-1/2">
-                            <select id="corneaSelect" class="w-full bg-black text-cyan-400 font-bold border border-cyan-800 rounded p-3 outline-none" onchange="simMires.update()"><option value="normal">مثالية</option><option value="astig_with">WTR</option><option value="astig_against">ATR</option><option value="keratoconus">Keratoconus</option><option value="dry_eye">Dry Eye</option></select>
-                            <div id="mire-analysis" class="bg-black p-4 mt-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24 font-mono"></div>
+                            <div class="bg-black/80 p-4 rounded-xl mb-6 border border-purple-700/50 font-mono text-center shadow-[0_0_15px_rgba(157,0,255,0.2)]" dir="ltr">
+                                <span class="text-sm text-purple-400 mb-2 block font-sans font-bold tracking-wider">CORNEAL POWER EQUATION</span>
+                                $$P (Diopters) = \frac{n' - n}{r} \approx \frac{337.5}{r (mm)}$$
+                            </div>
+                            <div class="bg-slate-800/80 p-4 rounded-xl mb-6 border border-slate-600">
+                                <label class="block text-white font-bold mb-2">اختر طوبوغرافيا القرنية (Topography):</label>
+                                <select id="corneaSelect" class="w-full bg-black text-cyan-400 font-bold border border-cyan-800 rounded p-3 outline-none" onchange="simMires.update()">
+                                    <option value="normal">قرنية كروية مثالية (Normal)</option>
+                                    <option value="astig_with">استجماتيزم مع القاعدة (WTR Astigmatism)</option>
+                                    <option value="astig_against">استجماتيزم ضد القاعدة (ATR Astigmatism)</option>
+                                    <option value="keratoconus">قرنية مخروطية (Keratoconus)</option>
+                                    <option value="dry_eye">جفاف عين (Tear Film Breakup) - Error</option>
+                                </select>
+                            </div>
+                            <div id="mire-analysis" class="bg-black p-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24 font-mono shadow-inner">
+                                STATUS: <span class='text-green-400'>OPTIMAL.</span><br>التحليل: حلقات دائرية مثالية. المسافة متساوية. (Astigmatism = 0.00D).
+                            </div>
                         </div>
-                        <div class="md:w-1/2"><div class="sim-container h-[350px] bg-black border-cyan-900/50"><div class="scanline"></div><canvas id="miresCanvas"></canvas></div></div>
+                        <div class="md:w-1/2">
+                            <div class="sim-container h-[350px] bg-black border-cyan-900/50 relative shadow-[0_0_30px_rgba(0,240,255,0.15)]">
+                                <div class="scanline"></div>
+                                <canvas id="miresCanvas"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="sec-sim-ai" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي التتبع الآلي (AI Tracker)</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي التتبع الآلي 3D (AI Auto-Tracking)</h2>
+                    <p class="text-slate-300 text-lg mb-6">خوارزميات الـ Computer Vision تتعامل مع الاهتزاز المجهري للعين (Micro-saccades) وتوجه المحركات لضبط الإغلاق (Lock-on).</p>
+                    
                     <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="lg:w-1/2"><div class="sim-container h-[250px]"><canvas id="aiRawCanvas"></canvas></div><button onclick="simAI.process()" class="w-full bg-cyan-600 font-black py-4 mt-4 rounded-lg">ENGAGE</button></div>
-                        <div class="lg:w-1/2"><div class="sim-container h-[250px]"><canvas id="aiProcessedCanvas"></canvas></div><div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 mt-4 rounded">> STANDBY...</div></div>
+                        <div class="lg:w-1/2 flex flex-col gap-4">
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center relative overflow-hidden shadow-inner">
+                                <h4 class="font-bold text-slate-400 mb-2 relative z-10 font-mono text-sm tracking-widest">RAW IR CAMERA FEED</h4>
+                                <div class="sim-container h-[250px] border-none rounded-none"><div class="scanline"></div><canvas id="aiRawCanvas"></canvas></div>
+                            </div>
+                            <button onclick="simAI.process()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-black font-black text-lg py-4 rounded-lg transition transform active:scale-95 uppercase tracking-widest shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                                تفعيل نظام التتبع الآلي (ENGAGE)
+                            </button>
+                        </div>
+                        <div class="lg:w-1/2 flex flex-col gap-4">
+                            <div class="bg-black p-4 rounded border border-cyan-800 text-center relative overflow-hidden shadow-[0_0_20px_rgba(0,240,255,0.1)]">
+                                <h4 class="font-bold text-cyan-400 mb-2 relative z-10 font-mono text-sm tracking-widest">AI TRACKING & MOTOR ALIGNMENT</h4>
+                                <div class="sim-container h-[250px] border-none rounded-none"><canvas id="aiProcessedCanvas"></canvas></div>
+                            </div>
+                            <div id="ai-log" class="bg-black text-green-500 font-mono text-xs p-3 rounded h-16 flex items-center border border-slate-800 shadow-inner">
+                                > SYSTEM STANDBY. PRESS ENGAGE...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-multi" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">ثورة الاندماج الوظيفي: أجهزة 5 في 1</h2>
+                    <p class="text-slate-300 text-lg mb-8">في العقدين الأخيرين، لم يعد الجهاز مقتصراً على وظيفتين فقط، بل تحول إلى محطة فحص شاملة (Multi-functional Units) مثل Nidek Tonoref III و Topcon KR-800S لتقليل وقت الانتظار وتوفير مساحة العيادة.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
+                            <div class="text-4xl mb-4">💨</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">1. قياس ضغط العين (Non-contact Tonometry)</h3>
+                            <p class="text-slate-400">باستخدام نفخة هواء لطيفة (Air Puff) لقياس الضغط الداخلي للعين دون تلامس، للكشف المبكر عن الجلوكوما.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
+                            <div class="text-4xl mb-4">📏</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">2. قياس سماكة القرنية (Pachymetry)</h3>
+                            <p class="text-slate-400">أمر ضروري لتصحيح قراءات ضغط العين الحقيقية وتقييم أهلية المريض لجراحات تصحيح النظر مثل الليزك.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
+                            <div class="text-4xl mb-4">🔦</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">3. تصوير القسم الأمامي (Retro-illumination)</h3>
+                            <p class="text-slate-400">استخدام الإضاءة الخلفية لاكتشاف وجود عتامات في العدسة (المياه البيضاء - Cataract) أو عتامة في القرنية.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
+                            <div class="text-4xl mb-4">🗺️</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">4. خرائط تضاريس القرنية (Corneal Mapping)</h3>
+                            <p class="text-slate-400">توفير تحليل طبوغرافي دقيق لسطح العين الأمامي وتحديد مناطق الانحدار العالي والشذوذ الهيكلي.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="sec-printout" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">البيانات المطبوعة</h2>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">تحليل البيانات المطبوعة (The Printout)</h2>
+                    <p class="text-slate-300 mb-6">الورقة التي يطبعها الجهاز هي لغة تواصله المعيارية مع الطبيب وصانع النظارات. انقر على الأسطر لفهم معانيها السريرية.</p>
+                    
                     <div class="flex flex-col md:flex-row gap-8">
-                        <div class="md:w-1/3"><div class="receipt-bg w-full p-6 shadow-xl"><div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('meas')"><span>1</span><span>-2.25</span><span>-1.00</span><span>180</span></div><div class="flex justify-between receipt-row py-1 text-slate-500" onclick="showReceiptDesc('meas_err')"><span>2</span><span>-2.00</span><span>-1.00</span><span>175</span></div><div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('avg')"><span>AVG</span><span>-2.12</span><span>-1.08</span><span>178</span></div></div></div>
-                        <div class="md:w-2/3 bg-slate-900 rounded-xl p-8"><div id="receipt-explainer" class="text-center"><h3 class="text-2xl text-cyan-400">انقر للتحليل</h3></div></div>
+                        <div class="md:w-1/3 flex justify-center">
+                            <div class="receipt-bg w-full max-w-[300px] p-6 shadow-xl transform hover:scale-105 transition">
+                                <div class="text-center font-bold text-xl mb-4 border-b-2 border-slate-800 pb-2">AUTO REF/KERATO</div>
+                                <div class="text-xs mb-4 text-center">DATE: 24/04/2026<br>VD: 12.0mm</div>
+                                
+                                <div class="font-bold mb-1">&lt;RIGHT [R]&gt;</div>
+                                <div class="w-full text-sm mb-4 border-b border-slate-300 pb-2">
+                                    <div class="flex justify-between font-bold border-b border-slate-300 mb-1"><span></span><span>SPH</span><span>CYL</span><span>AX</span></div>
+                                    <div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('meas')"><span>1</span><span>-2.25</span><span>-1.00</span><span>180</span></div>
+                                    <div class="flex justify-between receipt-row py-1 text-slate-500" onclick="showReceiptDesc('meas_err')"><span>2</span><span>-2.00</span><span>-1.00</span><span>175</span></div>
+                                    <div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('meas')"><span>3</span><span>-2.25</span><span>-1.25</span><span>178</span></div>
+                                    <div class="flex justify-between receipt-row py-1 font-bold mt-1 border-t border-slate-400" onclick="showReceiptDesc('avg')"><span>AVG</span><span>-2.12</span><span>-1.08</span><span>178</span></div>
+                                    <div class="flex justify-start receipt-row py-1 font-bold mt-1" onclick="showReceiptDesc('se')"><span>S.E. : -2.66</span></div>
+                                </div>
+                                
+                                <div class="font-bold mb-1">&lt;KERATOMETRY&gt;</div>
+                                <div class="w-full text-sm mb-4 border-b border-slate-300 pb-2">
+                                    <div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('k1')"><span>R1</span><span>7.80mm</span><span>43.25D</span></div>
+                                    <div class="flex justify-between receipt-row py-1" onclick="showReceiptDesc('k2')"><span>R2</span><span>7.60mm</span><span>44.50D</span></div>
+                                    <div class="flex justify-between receipt-row py-1 font-bold mt-1 border-t border-slate-400" onclick="showReceiptDesc('cylk')"><span>CYL</span><span></span><span>-1.25D</span></div>
+                                </div>
+                                
+                                <div class="flex justify-between font-bold text-lg receipt-row py-2" onclick="showReceiptDesc('pd')">
+                                    <span>PD:</span><span>64 mm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3 bg-slate-900 rounded-xl p-8 border border-slate-700 flex flex-col justify-center min-h-[300px]">
+                            <div id="receipt-explainer" class="text-center">
+                                <span class="text-6xl block mb-4 animate-bounce text-cyan-400">👆</span>
+                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">انقر على الورقة المطبوعة للتحليل</h3>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </section>
+
+            <section id="sec-market" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">التحليل التجاري وصناعة الأجهزة (Market Insights)</h2>
+                    <p class="text-slate-300 text-lg mb-6">سوق الأجهزة يخضع لاحتكار تكنولوجي ياباني وألماني. الأجهزة الرخيصة (المقلدة) تعطي نتائج "تقريبية" لأنها تفتقر لخوارزميات تصحيح الضوضاء والـ Aberrations.</p>
+
+                    <div class="overflow-x-auto rounded-xl border border-cyan-800 bg-slate-900 mb-6">
+                        <table>
+                            <thead>
+                                <tr><th>الشركة (الطراز)</th><th>الميزة الهندسية الرئيسية</th><th>السوق والتصنيع</th></tr>
+                            </thead>
+                            <tbody class="text-slate-300">
+                                <tr><td class="font-bold text-white">Topcon (اليابان)</td><td>تقنية المنشور الدوار (Rotary Prism) لتنقية الإشارة.</td><td class="text-amber-400">هيمنة عالمية</td></tr>
+                                <tr><td class="font-bold text-white">Nidek (اليابان)</td><td>Large Pupil Zone Imaging (قياس من 6mm).</td><td class="text-amber-400">منافس رئيسي</td></tr>
+                                <tr><td class="font-bold text-white">Zeiss (ألمانيا)</td><td>بصريات ألمانية خالصة، دمج مع أنظمة الليزك.</td><td class="text-cyan-400">القطاع الفاخر</td></tr>
+                                <tr><td class="font-bold text-white">Huvitz (كوريا)</td><td>أنظمة تتبع ذكية، شاشات متقدمة، قيمة مقابل سعر.</td><td class="text-green-400">نمو متسارع</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-future" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">آفاق المستقبل: البصريات 3.0 والواقع الإقليمي</h2>
+                    <p class="text-slate-300 text-lg mb-8">نحن الآن على أعتاب عصر "البصريات 3.0"، حيث يتجاوز الجهاز دوره التقليدي ليصبح أداة تنبؤية بالاعتماد على البيانات الضخمة، مع تبني إقليمي واسع لهذه التكنولوجيا المتقدمة.</p>
+
+                    <div class="space-y-8">
+                        <div class="flex flex-col md:flex-row gap-6 bg-slate-900 p-6 rounded-xl border border-purple-500/30">
+                            <div class="md:w-1/4 flex items-center justify-center text-7xl">🧠</div>
+                            <div class="md:w-3/4">
+                                <h3 class="text-2xl font-bold text-purple-400 mb-2">الكشف المبكر عن القرنية المخروطية (AI)</h3>
+                                <p class="text-slate-400 leading-relaxed">يتم دمج خوارزميات التعلم العميق (Deep Learning) لتحليل التغيرات المجهرية (Subclinical) في تضاريس القرنية بدقة تصل إلى 99% قبل ظهور الأعراض السريرية، مما ينقذ المرضى من فقدان البصر.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row gap-6 bg-slate-900 p-6 rounded-xl border border-cyan-500/30">
+                            <div class="md:w-1/4 flex items-center justify-center text-7xl">🌍</div>
+                            <div class="md:w-3/4">
+                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">التاريخ والتبني في العالم العربي</h3>
+                                <p class="text-slate-400 leading-relaxed">يرتبط تاريخ البصريات بجذور عميقة تعود لكتاب المناظر لـ "ابن الهيثم". حديثاً، في لبنان، أثبتت أجهزة الرؤية الآلية كفاءة في المسوحات المدرسية. وفي المملكة العربية السعودية، تم دمج أجهزة Auto-Refractor بالكامل مع السجلات الصحية الإلكترونية (EHR) تماشياً مع رؤية 2030 للعيادات الذكية والتشخيص عن بُعد (Tele-optometry).</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row gap-6 bg-slate-900 p-6 rounded-xl border border-red-500/30">
+                            <div class="md:w-1/4 flex items-center justify-center text-7xl">❤️</div>
+                            <div class="md:w-3/4">
+                                <h3 class="text-2xl font-bold text-red-400 mb-2">العين كنافذة على الصحة العامة</h3>
+                                <p class="text-slate-400 leading-relaxed">تشير الأبحاث المتطورة إلى أن تحليل الأوعية الدموية في الشبكية عبر هذه الأجهزة المتقدمة يمكن استخدامه للتنبؤ بمخاطر الإصابة بأمراض القلب، والسكري، وحتى الزهايمر قبل ظهور الأعراض السريرية في باقي أجزاء الجسم.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-maintenance" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">البروتوكولات الهندسية للصيانة والمعايرة</h2>
+                    <p class="text-slate-300 text-lg mb-6">لكي يظل الجهاز ركيزة موثوقة في التشخيص، يجب الالتزام بجدول صيانة هندسي صارم؛ فأدنى انحراف قد يؤدي إلى وصفات طبية كارثية للمرضى.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500">
+                            <h3 class="text-xl font-bold text-white mb-3">العمر التشغيلي (Lifespan)</h3>
+                            <p class="text-slate-300">يتراوح عمر الجهاز في العيادات المزدحمة بين <strong>5 إلى 10 سنوات</strong>. العمر يعتمد كلياً على بيئة التشغيل وتجنب الأتربة.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-red-500">
+                            <h3 class="text-xl font-bold text-white mb-3">نقاط الفشل الشائعة (Points of Failure)</h3>
+                            <ul class="text-slate-300 list-disc list-inside space-y-2">
+                                <li><strong>تدهور مصدر الضوء:</strong> ضعف إضاءة الـ IR LED يقلل دقة اختراق العين.</li>
+                                <li><strong>انحراف الحساس (Sensor Drift):</strong> يتطلب إعادة معايرة (Calibration) باستخدام Model Eye.</li>
+                                <li><strong>تراكم الغبار:</strong> يؤثر على مسار الضوء والمرايا الداخلية (Beam Splitter).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-xl">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نوع الصيانة</th>
+                                    <th>الإجراء الهندسي المطلوب</th>
+                                    <th>التكرار الموصى به</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-300">
+                                <tr>
+                                    <td class="font-bold text-amber-400">وقائية</td>
+                                    <td>تنظيف وتعقيم مساند الذقن والجبهة لسلامة المرضى ومكافحة العدوى.</td>
+                                    <td>بعد كل مريض</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-cyan-400">تقنية</td>
+                                    <td>تنظيف عدسة القياس الخارجية بقطن خاص ومحلول بصري لتجنب تشتت الضوء.</td>
+                                    <td>أسبوعياً</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-purple-400">فنية</td>
+                                    <td>فحص استقرار مصدر الضوء (Infrared LED / SLD) واختبار الفيوزات الكهربائية.</td>
+                                    <td>شهرياً</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-red-400">معايرة (Calibration)</td>
+                                    <td>استخدام "العين النموذجية" (Model Eye) ذات القوة المعروفة مسبقًا لضبط دقة قراءات الحساس.</td>
+                                    <td>سنوياً / بعد أي إصلاح</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-scenarios" class="content-sec hidden fade-in">
+                <div class="glass-box rounded-2xl p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">مختبر الحالات السريرية المعقدة (ماذا لو؟)</h2>
+                    <p class="text-slate-300 text-lg mb-8">الواقع ليس مثاليًا. البشر يتحركون، يمرضون، وتتغير أعينهم. استكشف كيف تتعامل خوارزميات الجهاز مع هذه التحديات الضخمة.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="scenarios-container">
+                        </div>
                 </div>
             </section>
 
@@ -161,9 +537,33 @@
 
     <div id="prof-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4 opacity-0">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeProf()"></div>
-        <div class="bg-slate-950 border-[3px] border-amber-500 rounded-2xl w-full max-w-lg shadow-2xl relative z-10 flex flex-col">
-            <div class="bg-amber-600 p-4 text-slate-950 font-bold flex justify-between"><span>👨‍🏫 توضيح أكاديمي</span><button onclick="closeProf()">&times;</button></div>
-            <div class="p-6"><h3 id="prof-title" class="text-2xl font-black text-amber-400 mb-2"></h3><p id="prof-text" class="text-slate-300 text-lg"></p></div>
+        <div class="bg-slate-950 border-[3px] border-amber-500 rounded-2xl w-full max-w-lg shadow-[0_0_50px_rgba(245,158,11,0.4)] relative z-10 flex flex-col overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-600 to-amber-500 p-4 text-slate-950 flex justify-between items-center font-bold">
+                <div class="flex items-center gap-2"><span class="text-2xl">👨‍🏫</span> <span class="text-xl">توضيح أكاديمي عميق</span></div>
+                <button onclick="closeProf()" class="text-slate-950 hover:text-white text-3xl leading-none transition">&times;</button>
+            </div>
+            <div class="p-6">
+                <h3 id="prof-title" class="text-2xl font-black text-amber-400 mb-4 border-b border-slate-700 pb-2"></h3>
+                <p id="prof-text" class="text-slate-300 text-lg leading-relaxed"></p>
+                <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-amber-600 font-mono tracking-widest uppercase">Source: Embedded Engineering Database</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="history-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4 md:p-10 opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-lg" onclick="closeHistory()"></div>
+        <div class="bg-slate-950 border border-slate-700 rounded-2xl w-full max-w-6xl shadow-[0_0_80px_rgba(157,0,255,0.3)] relative z-10 flex flex-col md:flex-row overflow-hidden max-h-full">
+            <div class="md:w-1/2 bg-black p-6 flex flex-col justify-center items-center border-b md:border-b-0 md:border-l border-slate-800 relative">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"></div>
+                <div id="history-media" class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-inner flex items-center justify-center relative z-10"></div>
+                <p id="history-caption" class="text-xs text-cyan-500 mt-4 font-mono text-center tracking-widest relative z-10 uppercase"></p>
+            </div>
+            <div class="md:w-1/2 p-8 md:p-10 overflow-y-auto" style="scrollbar-width: thin; scrollbar-color: #9d00ff #0f172a;">
+                <button onclick="closeHistory()" class="absolute top-4 right-4 text-slate-500 hover:text-red-500 text-4xl leading-none transition">&times;</button>
+                <div class="inline-block px-4 py-1 bg-purple-900/40 border border-purple-500/50 text-purple-400 rounded-full text-sm font-bold mb-4 font-mono tracking-widest shadow-[0_0_10px_rgba(157,0,255,0.3)]" id="history-year"></div>
+                <h3 id="history-title" class="text-4xl font-black text-white mb-6 border-b border-slate-800 pb-4"></h3>
+                <div id="history-content" class="space-y-6 text-slate-300 text-lg leading-relaxed"></div>
+            </div>
         </div>
     </div>
 
@@ -173,5 +573,6 @@
     <script src="js/sim-mires.js"></script>
     <script src="js/sim-ai.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 </html>
