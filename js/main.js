@@ -72,6 +72,27 @@ function closeHistory() {
         document.getElementById('history-media').innerHTML = ''; 
     }, 300);
 }
+function openComp(key) {
+    const data = componentsDB[key];
+    if(data) {
+        document.getElementById('comp-modal-title').innerText = data.name;
+        document.getElementById('comp-modal-desc').innerHTML = data.desc;
+        document.getElementById('comp-modal-icon').innerText = data.icon;
+        
+        const modal = document.getElementById('comp-modal');
+        modal.classList.remove('pointer-events-none');
+        modal.style.opacity = '1';
+        
+        // إعادة معالجة المعادلات الرياضية (MathJax) إن وجدت
+        if (window.MathJax) { MathJax.typesetPromise([document.getElementById('comp-modal-desc')]); }
+    }
+}
+
+function closeComp() {
+    const modal = document.getElementById('comp-modal');
+    modal.style.opacity = '0';
+    setTimeout(() => { modal.classList.add('pointer-events-none'); }, 300);
+}
 
 // ==========================================
 // PRINTOUT RECEIPT FUNCTION
@@ -90,40 +111,13 @@ function showReceiptDesc(key) {
         `;
     }
 }
-
-// ==========================================
+    
+   // ==========================================
 // INITIALIZATION (On Page Load)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     
-    // 1. توليد المكونات (Components)
-    const compList = document.getElementById('component-list');
-    const compDisplay = document.getElementById('component-display');
-    
-    if(compList && typeof componentsDB !== 'undefined') {
-        componentsDB.forEach(comp => {
-            const div = document.createElement('div');
-            div.className = "bg-slate-800/80 p-4 rounded-xl border border-slate-700 hover:border-purple-500 cursor-pointer transition transform hover:-translate-x-2 backdrop-blur-sm";
-            div.innerHTML = `<h4 class="font-bold text-white flex items-center"><span class="mr-2 text-xl drop-shadow-[0_0_8px_rgba(157,0,255,0.8)]">${comp.icon}</span> ${comp.name}</h4>`;
-            
-            div.onclick = () => {
-                Array.from(compList.children).forEach(child => child.classList.replace('border-purple-500', 'border-slate-700'));
-                div.classList.replace('border-slate-700', 'border-purple-500');
-                
-                compDisplay.innerHTML = `
-                    <div class="text-7xl mb-4 animate-pulse drop-shadow-[0_0_20px_rgba(0,240,255,0.8)]">${comp.icon}</div>
-                    <h3 class="text-3xl font-black text-cyan-400 mb-4 border-b border-cyan-900 pb-2 inline-block">${comp.name}</h3>
-                    <p class="text-slate-300 text-lg leading-relaxed max-w-lg mx-auto bg-black/60 p-6 rounded-xl border border-slate-800 shadow-inner">${comp.desc}</p>
-                    <div class="mt-6 text-sm text-cyan-500 font-mono bg-cyan-900/10 p-2 rounded w-fit mx-auto border border-cyan-500/30">MODULE STATUS: ACTIVE & CALIBRATED</div>
-                `;
-                
-                if (window.MathJax) { MathJax.typesetPromise([compDisplay]); }
-            };
-            compList.appendChild(div);
-        });
-    }
-
-    // 2. توليد الحالات السريرية (Scenarios)
+    // 1. توليد الحالات السريرية (Scenarios)
     const scContainer = document.getElementById('scenarios-container');
     if(scContainer && typeof scenariosDB !== 'undefined') {
         scenariosDB.forEach(sc => {
@@ -139,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. إخفاء شاشة التحميل وبدء القسم الأول
+    // 2. إخفاء شاشة التحميل وبدء القسم الأول
     setTimeout(() => {
         const loader = document.getElementById('loading-overlay');
         if(loader) loader.classList.add('hidden');
