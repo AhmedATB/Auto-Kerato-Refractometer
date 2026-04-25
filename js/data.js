@@ -117,13 +117,13 @@ const historyDB = {
 };
 
 // === COMPONENTS DATABASE ===
-const componentsDB = [
-    { id: 'sld', name: '1. مصدر الأشعة (SLD Source)', desc: 'تستخدم الأجهزة الحديثة ثنائيات فائقة الإضاءة (SLD) لتوفر شعاعًا أكثر حدة واختراقًا للوسائط المعتمة (مثل المياه البيضاء)، وتكون بطول موجي يقارب 840 نانومتر (Infrared) لتجنب انزعاج المريض.', icon: '💡' },
-    { id: 'mirror', name: '2. نظام المنشور الدوار (Rotary Prism)', desc: 'في أجهزة Topcon، يعتمد النظام على "منشور دوار" لمسح منطقة أوسع من الشبكية وتقليل عيوب القاع. بينما تتبنى Nidek نظام Large Pupil Zone Imaging.', icon: '🪞' },
-    { id: 'fog', name: '3. عدسات التضبيب (Auto-Fogging)', desc: 'لحل مشكلة "Instrument Myopia"، يتم عرض هدف تثبيت وتحريكه بصريًا إلى ما وراء نقطة التركيز، مما يجبر عضلات العين الهدبية على الاسترخاء.', icon: '🌫️' },
-    { id: 'ccd', name: '4. مستشعر الصور وحساس التتبع', desc: 'تستخدم أنظمة التتبع حساسات CCD لاكتشاف البؤبؤ في الأبعاد الثلاثة. ويوضع أمام المستشعر مصفوفة عدسات (Shack-Hartmann) لتقييس انحراف جبهة الموجة رياضياً:<div class="my-4 p-3 bg-black rounded shadow-inner text-center overflow-x-auto border border-cyan-800" dir="ltr">$$\\Delta W(x,y) = \\frac{\\partial W}{\\partial x}\\Delta x + \\frac{\\partial W}{\\partial y}\\Delta y$$</div>', icon: '📸' },
-    { id: 'joy', name: '5. عصا التحكم (Joystick)', desc: 'واجهة المستخدم الميكانيكية. تم استبدالها في الأجهزة الحديثة كليًا بشاشات لمس تدير محركات التتبع الآلي بالكامل.', icon: '🕹️' }
-];
+const componentsDB = {
+    'sld': { name: 'مصدر الأشعة (SLD Source)', desc: 'تستخدم الأجهزة الحديثة ثنائيات فائقة الإضاءة (Super Luminescent Diode) لتوفر شعاعًا أكثر حدة واختراقًا للوسائط المعتمة (مثل المياه البيضاء)، وتسمح بالقياس الدقيق من خلال بؤبؤ صغير جداً يصل قطره إلى 2.0 ملم فقط، وتكون بطول موجي يقارب 800-900 نانومتر (Infrared) لتجنب انزعاج المريض.', icon: '💡' },
+    'mirror': { name: 'نظام المنشور الدوار (Rotary Prism)', desc: 'يعمل كمقسم أشعة (Beam Splitter). في أجهزة شركة Topcon، يعتمد النظام على "منشور دوار" يدور لامركزيًا لمسح منطقة أوسع من الشبكية وتقليل العيوب الناتجة عن قاع العين.', icon: '🪞' },
+    'fog': { name: 'عدسات التضبيب (Auto-Fogging)', desc: 'لحل مشكلة "Instrument Myopia"، يتم عرض هدف تثبيت (مثل بالون هواء ساخن أو صورة منزل) ويقوم النظام الميكانيكي بتحريكه بصريًا إلى ما وراء نقطة التركيز، مما يجبر عضلات العين الهدبية على الاسترخاء والوصول لحالة السكون الانكساري قبل أخذ القراءة.', icon: '🌫️' },
+    'ccd': { name: 'مستشعر الصور (CCD/CMOS)', desc: 'العين الإلكترونية للجهاز. تلتقط حلقة الضوء المنعكسة من قاع العين، وتحولها إلى إشارات رقمية. في الأجهزة الحديثة يوضع أمام المستشعر مصفوفة عدسات (Shack-Hartmann) تقيس انحراف جبهة الموجة رياضيًا:<div class="my-4 p-3 bg-black rounded shadow-inner text-center overflow-x-auto border border-cyan-800" dir="ltr">$$\\Delta W(x,y) = \\frac{\\partial W}{\\partial x}\\Delta x + \\frac{\\partial W}{\\partial y}\\Delta y$$</div>', icon: '📸' },
+    'joy': { name: 'وحدة التحكم (Control Unit)', desc: 'واجهة المستخدم الميكانيكية واللوحة الأم. تتحكم في المحركات الدقيقة (Stepper Motors) في 3 اتجاهات (X, Y, Z). في الأجهزة الحديثة جداً، تدير هذه الوحدة محركات التتبع الآلي (Auto-Tracking) بالكامل بالاعتماد على تغذية راجعة من الكاميرا.', icon: '🕹️' }
+};
 
 // === PRINTOUT RECEIPT DATABASE ===
 const receiptDataDB = {
