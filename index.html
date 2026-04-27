@@ -52,80 +52,145 @@
         <div class="max-w-6xl mx-auto pb-32">
 
             <section id="sec-intro" class="content-sec block fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الملخص التنفيذي والأصول التاريخية</h2>
-                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                        يجمع جهاز القياس الأوتوماتيكي (Auto Kerato-Refractometer) بين علم <span class="term" onclick="openProf('optics')">البصريات الفيزيائية</span>، و<span class="term" onclick="openProf('mechatronics')">الميكاترونكس</span> لتوفير قياسات دقيقة. تاريخياً، فشلت الطرق اليدوية (Retinoscopy) بسبب الأخطاء البشرية، وفشلت أجهزة (Early Optometers) بسبب بطئها الشديد وتفاعلها المعقد مع المريض. الحل الحقيقي بدأ عندما قررت وكالة ناسا (1960s) تطوير تتبع آلي بالأشعة تحت الحمراء، مما مهد الطريق لظهور الأجهزة التي تقيس الخطأ الانكساري <span class="term" onclick="openProf('auto')">آليًا</span> دون خداع العين.
-                    </p>
+                <div class="glass-box rounded-2xl p-8 mb-8 relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMzMzQxNTUiLz48L3N2Zz4=')]"></div>
+                    
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4 relative z-10">الملخص التنفيذي والأصول التاريخية</h2>
+                    
+                    <div class="bg-slate-900/60 p-6 rounded-xl border-l-4 border-cyan-500 mb-8 shadow-inner relative z-10 backdrop-blur-sm">
+                        <p class="text-slate-300 text-lg leading-relaxed">
+                            يجمع جهاز القياس الأوتوماتيكي (Auto Kerato-Refractometer) بين علم <span class="term" onclick="openProf('optics')">البصريات الفيزيائية</span>، و<span class="term" onclick="openProf('mechatronics')">الميكاترونكس</span> لتوفير قياسات دقيقة. تاريخياً، فشلت الطرق اليدوية (Retinoscopy) بسبب الأخطاء البشرية، وفشلت أجهزة (Early Optometers) بسبب بطئها الشديد وتفاعلها المعقد مع المريض. الحل الحقيقي بدأ عندما قررت وكالة ناسا (1960s) تطوير تتبع آلي بالأشعة تحت الحمراء، مما مهد الطريق لظهور الأجهزة التي تقيس الخطأ الانكساري <span class="term" onclick="openProf('auto')">آليًا</span> دون خداع العين.
+                        </p>
+                    </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                            <h3 class="text-amber-400 font-bold text-2xl mb-4">كيف يرى الجهاز العين فعلياً؟ (Vergence)</h3>
-                            <p class="text-slate-300 mb-4">الجهاز لا يرى "صورة"، بل يطلق حزمة تحت حمراء (لأن المريض لا يراها ولا يتفاعل بؤبؤه معها)، ويحلل الضوء العائد (Reflection from Retina). المعادلة الأساسية هي:</p>
-                            <div class="bg-black p-4 rounded text-center font-mono text-cyan-400 border border-cyan-900" dir="ltr">
-                                $$ V (Vergence) = \frac{1}{d (distance)} $$
-                            </div>
-                            <p class="text-slate-300 mt-4">حيث يحسب الجهاز الفرق (Phase Shift) بين حزمة الضوء الخارجة (Outgoing) والمنعكسة (Incoming) لتحديد قوة العدسة المطلوبة.</p>
-                        </div>
-
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                            <h3 class="text-amber-400 font-bold text-2xl mb-4 flex items-center"><span class="text-3xl ml-2">📜</span> التسلسل التاريخي العبقري</h3>
-                           <div class="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-500 before:to-transparent">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 relative z-10">
+                        
+                        <div class="lg:col-span-5 flex flex-col gap-6">
+                            <div class="bg-[#0a0f1c] rounded-xl border border-slate-700 shadow-2xl overflow-hidden relative group transition-all duration-300 hover:border-cyan-500/50">
+                                <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-purple-500"></div>
                                 
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('scheiner')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1619</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">مبدأ شاينر (Scheiner)</div>
-                                        <div class="text-xs text-slate-400 mt-1">اكتشاف الفتحة المزدوجة وتشتت الضوء. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
+                                <div class="p-6">
+                                    <h3 class="text-amber-400 font-bold text-xl mb-4 flex items-center tracking-wide">
+                                        <span class="mr-2">👁️</span> كيف يرى الجهاز العين فعلياً؟
+                                    </h3>
+                                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                                        الجهاز لا يرى "صورة"، بل يطلق حزمة تحت حمراء (لأن المريض لا يراها ولا يتفاعل بؤبؤه معها)، ويحلل الضوء العائد (Reflection from Retina) لحساب الـ (Vergence).
+                                    </p>
+                                    
+                                    <div class="bg-black p-5 rounded-lg border border-cyan-900/50 shadow-[0_0_20px_rgba(0,240,255,0.05)] flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_30px_rgba(0,240,255,0.1)] transition-all">
+                                        <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none"></div>
+                                        <div class="text-cyan-400 font-mono text-lg" dir="ltr">
+                                            $$ V (Vergence) = \frac{1}{d (distance)} $$
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-5 p-3 bg-cyan-950/20 rounded border-l-2 border-cyan-500">
+                                        <p class="text-slate-300 text-xs leading-relaxed">
+                                            يحسب الجهاز الفرق (Phase Shift) بين حزمة الضوء الخارجة (Outgoing) والمنعكسة (Incoming) لتحديد قوة العدسة المطلوبة بدقة متناهية.
+                                        </p>
                                     </div>
                                 </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('porterfield')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1759</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">أبتوميتر بادال (Badal)</div>
-                                        <div class="text-xs text-slate-400 mt-1">أساسيات نظام التضبيب (Fogging). <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('helmholtz')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1851</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">هيلمهولتز (Keratometer)</div>
-                                        <div class="text-xs text-slate-400 mt-1">قياس تضاريس السطح الأمامي للقرنية. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('collins')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1937</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">أول مقياس إلكتروني</div>
-                                        <div class="text-xs text-slate-400 mt-1">براءة اختراع "جيفري كولينز" للأشعة تحت الحمراء. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('nasa')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">1960s</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">أزمة الفضاء (NASA)</div>
-                                        <div class="text-xs text-slate-400 mt-1">ابتكار أجهزة التتبع الآلي والديناميكي. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer transform transition duration-300 hover:scale-105" onclick="openHistory('wavefront')">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-800 group-[.is-active]:bg-purple-600 text-slate-100 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-xs" style="box-shadow: 0 0 15px #9d00ff;">2000s</div>
-                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900 p-4 rounded border border-slate-700 group-hover:border-purple-500 transition">
-                                        <div class="font-bold text-purple-400">ثورة Wavefront</div>
-                                        <div class="text-xs text-slate-400 mt-1">خرائط التشوهات الدقيقة عبر مصفوفة العدسات. <span class="text-cyan-400">اضغط للتفاصيل 👆</span></div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
+
+                        <div class="lg:col-span-7">
+                            <h3 class="text-amber-400 font-bold text-2xl mb-6 flex items-center"><span class="text-3xl ml-3">📜</span> التسلسل التاريخي العبقري</h3>
+                            
+                            <div class="relative">
+                                <div class="absolute top-2 bottom-2 right-3 w-0.5 bg-gradient-to-b from-purple-500/50 via-slate-600 to-transparent"></div>
+
+                                <div class="space-y-6">
+                                    <div class="relative pr-10 group cursor-pointer" onclick="openHistory('scheiner')">
+                                        <div class="absolute right-[5px] top-4 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full group-hover:bg-purple-500 group-hover:shadow-[0_0_15px_#9d00ff] transition-all duration-300 z-10"></div>
+                                        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 group-hover:border-purple-500/40 transition-all duration-300 backdrop-blur-sm shadow-lg">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="text-white font-bold text-lg">مبدأ شاينر (Scheiner)</h4>
+                                                <span class="bg-purple-900/40 text-purple-300 font-mono text-xs px-2 py-1 rounded border border-purple-700/50">1619</span>
+                                            </div>
+                                            <p class="text-slate-400 text-sm">اكتشاف الفتحة المزدوجة وتشتت الضوء لإثبات الخطأ الانكساري.</p>
+                                            <div class="text-cyan-400 text-xs mt-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                                <span>🔍 اضغط لتحليل السجل الهندسي</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative pr-10 group cursor-pointer" onclick="openHistory('porterfield')">
+                                        <div class="absolute right-[5px] top-4 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full group-hover:bg-purple-500 group-hover:shadow-[0_0_15px_#9d00ff] transition-all duration-300 z-10"></div>
+                                        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 group-hover:border-purple-500/40 transition-all duration-300 backdrop-blur-sm shadow-lg">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="text-white font-bold text-lg">أبتوميتر بادال (Badal)</h4>
+                                                <span class="bg-purple-900/40 text-purple-300 font-mono text-xs px-2 py-1 rounded border border-purple-700/50">1759</span>
+                                            </div>
+                                            <p class="text-slate-400 text-sm">أساسيات نظام التضبيب (Fogging) عبر تحريك الهدف البصري.</p>
+                                            <div class="text-cyan-400 text-xs mt-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                                <span>🔍 اضغط لتحليل السجل الهندسي</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative pr-10 group cursor-pointer" onclick="openHistory('helmholtz')">
+                                        <div class="absolute right-[5px] top-4 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full group-hover:bg-purple-500 group-hover:shadow-[0_0_15px_#9d00ff] transition-all duration-300 z-10"></div>
+                                        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 group-hover:border-purple-500/40 transition-all duration-300 backdrop-blur-sm shadow-lg">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="text-white font-bold text-lg">هيلمهولتز (Keratometer)</h4>
+                                                <span class="bg-purple-900/40 text-purple-300 font-mono text-xs px-2 py-1 rounded border border-purple-700/50">1851</span>
+                                            </div>
+                                            <p class="text-slate-400 text-sm">استخدام القرنية كمرآة محدبة لقياس تضاريس السطح الأمامي.</p>
+                                            <div class="text-cyan-400 text-xs mt-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                                <span>🔍 اضغط لتحليل السجل الهندسي</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative pr-10 group cursor-pointer" onclick="openHistory('collins')">
+                                        <div class="absolute right-[5px] top-4 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full group-hover:bg-purple-500 group-hover:shadow-[0_0_15px_#9d00ff] transition-all duration-300 z-10"></div>
+                                        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 group-hover:border-purple-500/40 transition-all duration-300 backdrop-blur-sm shadow-lg">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="text-white font-bold text-lg">أول مقياس إلكتروني</h4>
+                                                <span class="bg-purple-900/40 text-purple-300 font-mono text-xs px-2 py-1 rounded border border-purple-700/50">1937</span>
+                                            </div>
+                                            <p class="text-slate-400 text-sm">براءة اختراع "جيفري كولينز" لاستخدام الأشعة تحت الحمراء (IR).</p>
+                                            <div class="text-cyan-400 text-xs mt-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                                <span>🔍 اضغط لتحليل السجل الهندسي</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative pr-10 group cursor-pointer" onclick="openHistory('nasa')">
+                                        <div class="absolute right-[5px] top-4 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full group-hover:bg-purple-500 group-hover:shadow-[0_0_15px_#9d00ff] transition-all duration-300 z-10"></div>
+                                        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 group-hover:border-purple-500/40 transition-all duration-300 backdrop-blur-sm shadow-lg">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="text-white font-bold text-lg">أزمة الفضاء (NASA)</h4>
+                                                <span class="bg-purple-900/40 text-purple-300 font-mono text-xs px-2 py-1 rounded border border-purple-700/50">1960s</span>
+                                            </div>
+                                            <p class="text-slate-400 text-sm">ابتكار أجهزة التتبع الآلي والديناميكي لحل مشكلة قصر النظر الفراغي.</p>
+                                            <div class="text-cyan-400 text-xs mt-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                                <span>🔍 اضغط لتحليل السجل الهندسي</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative pr-10 group cursor-pointer" onclick="openHistory('wavefront')">
+                                        <div class="absolute right-[5px] top-4 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full group-hover:bg-purple-500 group-hover:shadow-[0_0_15px_#9d00ff] transition-all duration-300 z-10"></div>
+                                        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 group-hover:border-purple-500/40 transition-all duration-300 backdrop-blur-sm shadow-lg">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <h4 class="text-white font-bold text-lg">ثورة Wavefront</h4>
+                                                <span class="bg-purple-900/40 text-purple-300 font-mono text-xs px-2 py-1 rounded border border-purple-700/50">2000s</span>
+                                            </div>
+                                            <p class="text-slate-400 text-sm">خرائط التشوهات الدقيقة عبر مصفوفة العدسات (Shack-Hartmann).</p>
+                                            <div class="text-cyan-400 text-xs mt-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                                <span>🔍 اضغط لتحليل السجل الهندسي</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </section>
-
             <section id="sec-mechanics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الميكانيكية والتحكم (Control Systems)</h2>
