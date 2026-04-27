@@ -287,66 +287,53 @@
             </section>
             
             <section id="sec-limitations" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
-                    <p class="text-slate-300 text-lg mb-8">الجانب المظلم الذي يميز المهندس الفاهم عن غيره. متى يفشل الجهاز؟ وكيف نتغلب على هذه التحديات هندسياً وسريرياً؟</p>
+                <div class="glass-box rounded-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-4xl font-black text-white mb-4 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
+                    <p class="text-slate-300 text-xl mb-6">الجانب المظلم الذي يميز المهندس الفاهم. متى يفشل الجهاز؟ وكيف نتغلب على هذه التحديات هندسياً وسريرياً؟</p>
                     
-                    <div class="space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-red-500 transition duration-300 shadow-lg">
-                            <h4 class="text-red-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">1. مشكلة التكيف الآلي (Instrument Myopia)</h4>
-                            <div class="flex flex-col md:flex-row gap-6">
-                                <div class="md:w-2/3 space-y-3">
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> المريض لا إرادياً يركز على الجهاز القريب، فتتشنج العضلة الداخلية للعين. الجهاز سيقرأ هذا التشنج على أنه "قصر نظر" كاذب.</p>
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> هندسياً، نستخدم نظام التضبيب (Auto-Fogging) لإبعاد الهدف وإجبار العين على الاسترخاء. سريرياً (خاصة مع الأطفال)، يضع الطبيب قطرات شالة للعضلة قبل الفحص.</p>
-                                </div>
-                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-red-500 shadow-inner">
-                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
-                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Cycloplegic (قطرات شلل المطابقة):</strong> قطرات طبية توضع في العين لشل العضلة الهدبية مؤقتاً، مما يمنع العين من تغيير تركيزها ويكشف الخطأ الانكساري الحقيقي.</p>
-                                </div>
+                        <div class="bg-slate-800/90 flex flex-col rounded-xl border border-slate-700 hover:border-red-500 transition duration-300 shadow-lg">
+                            <div class="p-5 flex-grow">
+                                <h4 class="text-red-400 font-bold text-2xl mb-4 border-b border-slate-700 pb-2">1. مشكلة التكيف الآلي</h4>
+                                <p class="text-slate-200 text-lg leading-relaxed mb-3"><strong class="text-red-500">❌ المشكلة:</strong> المريض يركز إرادياً على الجهاز القريب، فتتشنج عضلات العين، مما يجعل الجهاز يقرأ "قصر نظر" كاذب.</p>
+                                <p class="text-slate-200 text-lg leading-relaxed"><strong class="text-green-500">✅ الحل:</strong> هندسياً يُفعل التضبيب (Auto-Fogging) لإجبار العين على الاسترخاء. أو تُستخدم قطرات لشل العضلة.</p>
+                            </div>
+                            <div class="bg-black/50 p-4 border-t border-slate-700 rounded-b-xl">
+                                <p class="text-base text-slate-300"><span class="text-amber-400 font-bold font-mono">Cycloplegic:</span> قطرات طبية تُشل العضلة الهدبية مؤقتاً لتكشف الخطأ الانكساري الحقيقي.</p>
                             </div>
                         </div>
 
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-amber-500 transition duration-300 shadow-lg">
-                            <h4 class="text-amber-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">2. المياه البيضاء (Media Opacity / Cataract)</h4>
-                            <div class="flex flex-col md:flex-row gap-6">
-                                <div class="md:w-2/3 space-y-3">
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> العدسة البلورية داخل العين تصبح غائمة وتشتت ضوء الـ IR. الضوء المرتد للحساس (CCD) يكون ضعيفاً جداً وتفشل القراءة.</p>
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> الأجهزة المتطورة تستخدم مصادر ضوء (SLD) قوية لاختراق العتامة، وتُفعل برمجياً وضع (Cataract Mode) الذي يرفع حساسية الكاميرا (Gain) لالتقاط الإشارة الضعيفة.</p>
-                                </div>
-                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-amber-500 shadow-inner">
-                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
-                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Cataract (الساد / المياه البيضاء):</strong> تكتل للبروتينات داخل عدسة العين الطبيعية الشفافة، مما يجعلها معتمة وتشبه الزجاج المصنفر الذي يشتت الضوء.</p>
-                                </div>
+                        <div class="bg-slate-800/90 flex flex-col rounded-xl border border-slate-700 hover:border-amber-500 transition duration-300 shadow-lg">
+                            <div class="p-5 flex-grow">
+                                <h4 class="text-amber-400 font-bold text-2xl mb-4 border-b border-slate-700 pb-2">2. المياه البيضاء (Cataract)</h4>
+                                <p class="text-slate-200 text-lg leading-relaxed mb-3"><strong class="text-red-500">❌ المشكلة:</strong> العدسة البلورية تصبح غائمة وتشتت ضوء الـ IR، فتفشل كاميرا (CCD) في التقاط قراءة واضحة.</p>
+                                <p class="text-slate-200 text-lg leading-relaxed"><strong class="text-green-500">✅ الحل:</strong> استخدام مصادر ضوء (SLD) قوية لاختراق العتامة، وتفعيل (Cataract Mode) لرفع حساسية الحساس.</p>
+                            </div>
+                            <div class="bg-black/50 p-4 border-t border-slate-700 rounded-b-xl">
+                                <p class="text-base text-slate-300"><span class="text-amber-400 font-bold font-mono">Cataract:</span> تكتل للبروتينات داخل عدسة العين الشفافة، مما يجعلها معتمة وتشبه الزجاج المصنفر.</p>
                             </div>
                         </div>
 
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 transition duration-300 shadow-lg">
-                            <h4 class="text-cyan-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">3. حجم البؤبؤ (Pupil Size Problem)</h4>
-                            <div class="flex flex-col md:flex-row gap-6">
-                                <div class="md:w-2/3 space-y-3">
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> البؤبؤ الصغير جداً (< 2mm) يمنع دخول الضوء للحساس. البؤبؤ الكبير جداً يسمح بمرور الأشعة من أطراف القرنية، والتي تكون مشوهة بطبيعتها.</p>
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> خوارزميات تحليل جبهة الموجة (Wavefront) تقوم برسم خريطة لكامل البؤبؤ، وتفصل بين الانكسار المركزي الصافي وبين التشوهات الطرفية لتعطي قراءة دقيقة.</p>
-                                </div>
-                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-cyan-500 shadow-inner">
-                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
-                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Spherical Aberrations (الزيغ الكروي):</strong> عيب بصري يحدث عندما تنكسر أشعة الضوء المارة من أطراف العدسة بقوة أكبر من الأشعة المارة من المركز، مما يخلق غشاوة.</p>
-                                </div>
+                        <div class="bg-slate-800/90 flex flex-col rounded-xl border border-slate-700 hover:border-cyan-500 transition duration-300 shadow-lg">
+                            <div class="p-5 flex-grow">
+                                <h4 class="text-cyan-400 font-bold text-2xl mb-4 border-b border-slate-700 pb-2">3. مشكلة حجم البؤبؤ</h4>
+                                <p class="text-slate-200 text-lg leading-relaxed mb-3"><strong class="text-red-500">❌ المشكلة:</strong> البؤبؤ الصغير جداً يحجب الضوء. والبؤبؤ الكبير يُدخل أشعة من أطراف القرنية التي تكون مشوهة بطبيعتها.</p>
+                                <p class="text-slate-200 text-lg leading-relaxed"><strong class="text-green-500">✅ الحل:</strong> خوارزميات (Wavefront) ترسم خريطة لكامل البؤبؤ، وتفصل الانكسار المركزي الصافي عن التشوهات الطرفية.</p>
+                            </div>
+                            <div class="bg-black/50 p-4 border-t border-slate-700 rounded-b-xl">
+                                <p class="text-base text-slate-300"><span class="text-amber-400 font-bold font-mono">Spherical Aberration:</span> عيب يحدث لتشتت الأشعة المارة من أطراف العدسة بقوة أكبر من المركز.</p>
                             </div>
                         </div>
 
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-purple-500 transition duration-300 shadow-lg">
-                            <h4 class="text-purple-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">4. جفاف العين (Dry Eye Syndrome)</h4>
-                            <div class="flex flex-col md:flex-row gap-6">
-                                <div class="md:w-2/3 space-y-3">
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> طبقة الدموع هي سطح الانعكاس الأول. تكسرها بسبب الجفاف يشوه حلقات القياس (Mires) هندسياً، ويعتبرها الجهاز تشوهاً في القرنية.</p>
-                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> يُطلب من المريض أن يرمش عدة مرات لترميم طبقة الدموع، أو يتدخل الطبيب بوضع قطرات ترطيب اصطناعية قبل أخذ قراءة الـ (Keratometry) للحصول على سطح أملس.</p>
-                                </div>
-                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-purple-500 shadow-inner">
-                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
-                                    <p class="text-xs text-slate-400 leading-relaxed mb-2"><strong class="text-amber-400">Astigmatism (الاستجماتيزم):</strong> حالة تكون فيها القرنية بيضاوية (مثل كرة الرجبي) بدلاً من كروية، مما يسبب تعدد نقاط التركيز.</p>
-                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Mires:</strong> حلقات بلاسيدو المضيئة التي يسقطها الجهاز على العين لقياس التحدب.</p>
-                                </div>
+                        <div class="bg-slate-800/90 flex flex-col rounded-xl border border-slate-700 hover:border-purple-500 transition duration-300 shadow-lg">
+                            <div class="p-5 flex-grow">
+                                <h4 class="text-purple-400 font-bold text-2xl mb-4 border-b border-slate-700 pb-2">4. جفاف العين (Dry Eye)</h4>
+                                <p class="text-slate-200 text-lg leading-relaxed mb-3"><strong class="text-red-500">❌ المشكلة:</strong> تبخر طبقة الدموع يشوه حلقات القياس (Mires) هندسياً، فيقرأ الجهاز "استجماتيزم" كاذب وغير حقيقي.</p>
+                                <p class="text-slate-200 text-lg leading-relaxed"><strong class="text-green-500">✅ الحل:</strong> يطلب من المريض أن يرمش لترميم الدموع، أو يتدخل الطبيب بقطرات ترطيب للحصول على سطح عاكس أملس.</p>
+                            </div>
+                            <div class="bg-black/50 p-4 border-t border-slate-700 rounded-b-xl">
+                                <p class="text-base text-slate-300"><span class="text-amber-400 font-bold font-mono">Astigmatism:</span> حالة تكون فيها القرنية بيضاوية (كالبيضة) بدل أن تكون كروية منتظمة.</p>
                             </div>
                         </div>
 
