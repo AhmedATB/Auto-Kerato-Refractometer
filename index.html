@@ -279,29 +279,45 @@
 
             <section id="sec-sim-optics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">محاكي الأخطاء الفيزيائية (Error Mode)</h2>
-                    <p class="text-slate-300 text-lg mb-6">جرب تعمد تخريب القياس عبر تفعيل حالات سريرية سيئة لترى كيف يتشوه انكسار الضوء وتتأثر قراءة الحساس (بسبب الـ Noise).</p>
+                    <h2 class="text-4xl font-black text-white mb-2 border-b border-red-500 pb-4">مختبر الفيزياء البصرية (Optical Physics Lab)</h2>
+                    <p class="text-slate-300 text-lg mb-6">شاهد التغيير الحقيقي في <strong>الطول المحوري (Axial Length)</strong> لمقلة العين. اختبر كيف تتشتت الأشعة في حالات المرض، واستخدم <strong>العدسات التصحيحية</strong> لمعالجة الانكسار حياً.</p>
 
                     <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="lg:w-2/3 sim-container h-[400px] border border-cyan-900/50">
+                        <div class="lg:w-2/3 sim-container h-[450px] border-2 border-cyan-900/60 shadow-[0_0_30px_rgba(0,240,255,0.15)] relative bg-[#02040a]">
                             <div class="scanline"></div>
-                            <canvas id="opticsCanvas"></canvas>
+                            <div class="absolute top-4 left-4 text-cyan-900/40 font-black text-4xl pointer-events-none z-0">OPTICS-ENGINE v3.0</div>
+                            <canvas id="opticsCanvas" class="relative z-10"></canvas>
                         </div>
-                        <div class="lg:w-1/3 bg-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.1)]">
-                            <label class="block text-white font-bold mb-2">الطول المحوري (الخطأ الأساسي):</label>
-                            <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-700 rounded-lg mb-6 outline-none">
-                            
-                            <label class="block text-red-400 font-bold mb-2">حالة المريض (Error Mode):</label>
-                            <select id="patientCondition" class="w-full bg-black text-white border border-red-900 rounded p-2 mb-6 outline-none focus:border-red-500">
-                                <option value="normal">مريض مثالي (ثابت، عدسة نقية)</option>
-                                <option value="cataract">مياه بيضاء (Cataract - تشتت الضوء)</option>
-                                <option value="shake">عدم استقرار (Patient Shaking - ضوضاء CCD)</option>
-                            </select>
 
-                            <div class="bg-black p-4 rounded border border-slate-800 flex-grow">
-                                <h4 class="text-sm text-slate-500 mb-1">النتيجة المسجلة (مع Sensor Drift):</h4>
-                                <div id="optics-result" class="text-4xl font-mono text-green-400 font-bold mb-2 drop-shadow-[0_0_10px_#39ff14]">SPH: 0.00 D</div>
-                                <p id="optics-desc" class="text-xs text-slate-400">إشارة نقية. دقة عالية.</p>
+                        <div class="lg:w-1/3 bg-[#0a0f1c] p-6 rounded-xl border border-slate-700 flex flex-col shadow-2xl relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent pointer-events-none"></div>
+                            
+                            <div class="relative z-10 flex-grow">
+                                <label class="block text-cyan-400 font-bold mb-2 uppercase tracking-widest text-sm">Axial Length (الطول المحوري):</label>
+                                <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" class="w-full accent-cyan-500 h-2 bg-slate-800 rounded-lg outline-none mb-2 shadow-[0_0_10px_#00f0ff]">
+                                <div class="flex justify-between text-xs text-slate-400 mb-6 font-mono font-bold">
+                                    <span>قصر نظر (عين طويلة)</span>
+                                    <span class="text-cyan-400">مثالي (0D)</span>
+                                    <span>طول نظر (عين قصيرة)</span>
+                                </div>
+                                
+                                <label class="block text-red-400 font-bold mb-2 uppercase tracking-widest text-sm mt-4">Clinical Error Mode:</label>
+                                <select id="patientCondition" class="w-full bg-slate-900 text-white border border-red-900/50 rounded-lg p-3 mb-6 outline-none focus:border-red-500 shadow-inner font-mono text-sm transition">
+                                    <option value="normal">NORMAL : مريض مثالي (عدسة نقية، ثبات)</option>
+                                    <option value="cataract">CATARACT : مياه بيضاء (تشتت بصري شديد)</option>
+                                    <option value="shake">TREMOR : عدم استقرار (تذبذب الإشارة)</option>
+                                </select>
+
+                                <button id="btn-correction" onclick="simOptics.toggleCorrection()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-lg border border-slate-600 transition flex items-center justify-center gap-2 mb-6">
+                                    <span class="text-xl">👓</span> <span>تطبيق عدسة تصحيحية (Correction)</span>
+                                </button>
+                            </div>
+
+                            <div class="bg-black p-5 rounded-lg border border-slate-800 relative overflow-hidden shadow-inner mt-auto">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500" id="dsp-indicator"></div>
+                                <h4 class="text-xs text-slate-500 mb-1 font-mono uppercase tracking-widest ml-2">DSP Telemetry Output:</h4>
+                                <div id="optics-result" class="text-4xl font-mono text-cyan-400 font-black mb-2 ml-2 tracking-tighter drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">SPH: 0.00 D</div>
+                                <p id="optics-desc" class="text-xs text-slate-400 ml-2 font-mono leading-relaxed">SYSTEM NOMINAL. PERFECT RETINAL FOCUS.</p>
                             </div>
                         </div>
                     </div>
