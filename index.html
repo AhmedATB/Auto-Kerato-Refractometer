@@ -289,28 +289,70 @@
             <section id="sec-limitations" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
-                    <p class="text-slate-300 text-lg mb-6">الجانب المظلم الذي يميز المهندس الفاهم عن غيره. متى يفشل الجهاز أو يعطي قراءات كارثية؟</p>
-                    <div class="space-y-4">
-                        <div class="bg-red-950/20 p-5 rounded-xl border border-red-900/50">
-                            <h4 class="text-red-400 font-bold mb-2">1. مشكلة التكيف الآلي (Instrument Myopia)</h4>
-                            <p class="text-slate-300">المريض لا إرادياً يركز على الجهاز القريب، فتتشنج العضلة. الجهاز سيقرأ هذا التشنج على أنه "قصر نظر" كاذب. (الحل: Fogging، وقد يتطلب قطرات Cycloplegic).</p>
+                    <p class="text-slate-300 text-lg mb-8">الجانب المظلم الذي يميز المهندس الفاهم عن غيره. متى يفشل الجهاز؟ وكيف نتغلب على هذه التحديات هندسياً وسريرياً؟</p>
+                    
+                    <div class="space-y-6">
+                        
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-red-500 transition duration-300 shadow-lg">
+                            <h4 class="text-red-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">1. مشكلة التكيف الآلي (Instrument Myopia)</h4>
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="md:w-2/3 space-y-3">
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> المريض لا إرادياً يركز على الجهاز القريب، فتتشنج العضلة الداخلية للعين. الجهاز سيقرأ هذا التشنج على أنه "قصر نظر" كاذب.</p>
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> هندسياً، نستخدم نظام التضبيب (Auto-Fogging) لإبعاد الهدف وإجبار العين على الاسترخاء. سريرياً (خاصة مع الأطفال)، يضع الطبيب قطرات شالة للعضلة قبل الفحص.</p>
+                                </div>
+                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-red-500 shadow-inner">
+                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
+                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Cycloplegic (قطرات شلل المطابقة):</strong> قطرات طبية توضع في العين لشل العضلة الهدبية مؤقتاً، مما يمنع العين من تغيير تركيزها ويكشف الخطأ الانكساري الحقيقي.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
-                            <h4 class="text-amber-400 font-bold mb-2">2. المياه البيضاء (Cataract)</h4>
-                            <p class="text-slate-300">العدسة البلورية داخل العين تصبح غائمة وتشتت ضوء الـ IR. يحل عبر مصادر SLD قوية لاختراقه.</p>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-amber-500 transition duration-300 shadow-lg">
+                            <h4 class="text-amber-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">2. المياه البيضاء (Media Opacity / Cataract)</h4>
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="md:w-2/3 space-y-3">
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> العدسة البلورية داخل العين تصبح غائمة وتشتت ضوء الـ IR. الضوء المرتد للحساس (CCD) يكون ضعيفاً جداً وتفشل القراءة.</p>
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> الأجهزة المتطورة تستخدم مصادر ضوء (SLD) قوية لاختراق العتامة، وتُفعل برمجياً وضع (Cataract Mode) الذي يرفع حساسية الكاميرا (Gain) لالتقاط الإشارة الضعيفة.</p>
+                                </div>
+                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-amber-500 shadow-inner">
+                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
+                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Cataract (الساد / المياه البيضاء):</strong> تكتل للبروتينات داخل عدسة العين الطبيعية الشفافة، مما يجعلها معتمة وتشبه الزجاج المصنفر الذي يشتت الضوء.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
-                            <h4 class="text-cyan-400 font-bold mb-2">3. حجم البؤبؤ (Pupil Size Problem)</h4>
-                            <p class="text-slate-300">البؤبؤ الصغير (< 2mm): لا يسمح بمرور ضوء كافٍ. البؤبؤ الكبير جداً: يسمح بمرور الأشعة من أطراف القرنية المشوهة (Spherical Aberrations).</p>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 transition duration-300 shadow-lg">
+                            <h4 class="text-cyan-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">3. حجم البؤبؤ (Pupil Size Problem)</h4>
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="md:w-2/3 space-y-3">
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> البؤبؤ الصغير جداً (< 2mm) يمنع دخول الضوء للحساس. البؤبؤ الكبير جداً يسمح بمرور الأشعة من أطراف القرنية، والتي تكون مشوهة بطبيعتها.</p>
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> خوارزميات تحليل جبهة الموجة (Wavefront) تقوم برسم خريطة لكامل البؤبؤ، وتفصل بين الانكسار المركزي الصافي وبين التشوهات الطرفية لتعطي قراءة دقيقة.</p>
+                                </div>
+                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-cyan-500 shadow-inner">
+                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
+                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Spherical Aberrations (الزيغ الكروي):</strong> عيب بصري يحدث عندما تنكسر أشعة الضوء المارة من أطراف العدسة بقوة أكبر من الأشعة المارة من المركز، مما يخلق غشاوة.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
-                            <h4 class="text-purple-400 font-bold mb-2">4. جفاف العين (Dry Eye Syndrome)</h4>
-                            <p class="text-slate-300">تكسر طبقة الدموع يشوه حلقات القياس (Mires) هندسياً، ويعتبر الجهاز هذا التشوه "استجماتيزم قرني" وهمي.</p>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700 hover:border-purple-500 transition duration-300 shadow-lg">
+                            <h4 class="text-purple-400 font-bold text-xl mb-4 border-b border-slate-700 pb-2">4. جفاف العين (Dry Eye Syndrome)</h4>
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="md:w-2/3 space-y-3">
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">❌ المشكلة:</strong> طبقة الدموع هي سطح الانعكاس الأول. تكسرها بسبب الجفاف يشوه حلقات القياس (Mires) هندسياً، ويعتبرها الجهاز تشوهاً في القرنية.</p>
+                                    <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-green-400">✅ الحل:</strong> يُطلب من المريض أن يرمش عدة مرات لترميم طبقة الدموع، أو يتدخل الطبيب بوضع قطرات ترطيب اصطناعية قبل أخذ قراءة الـ (Keratometry) للحصول على سطح أملس.</p>
+                                </div>
+                                <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border-l-2 border-purple-500 shadow-inner">
+                                    <span class="text-xs text-slate-500 font-mono uppercase tracking-widest block mb-2">Terminology</span>
+                                    <p class="text-xs text-slate-400 leading-relaxed mb-2"><strong class="text-amber-400">Astigmatism (الاستجماتيزم):</strong> حالة تكون فيها القرنية بيضاوية (مثل كرة الرجبي) بدلاً من كروية، مما يسبب تعدد نقاط التركيز.</p>
+                                    <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-amber-400">Mires:</strong> حلقات بلاسيدو المضيئة التي يسقطها الجهاز على العين لقياس التحدب.</p>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </section>
-
             <section id="sec-sim-light" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي ميكانيكي: مسار الضوء ونظام التضبيب</h2>
@@ -389,41 +431,70 @@
                 </div>
             </section>
 
-            <section id="sec-sim-kerato" class="content-sec hidden fade-in">
+           <section id="sec-sim-kerato" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي تضاريس القرنية (Trigonometric Mires)</h2>
-                    <p class="text-slate-300 text-lg mb-6">محاكاة لكيفية إسقاط الجهاز لحلقات بلاسيدو على القرنية واكتشاف المحاور وحساب قوة التحدب.</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-cyan-500 pb-4">محاكي تضاريس القرنية (Corneal Topography & Mires)</h2>
+                    <p class="text-slate-300 text-lg mb-8">يحاكي هذا النظام كيفية إسقاط الجهاز لحلقات ضوئية (Placido Discs) على القرنية، وقراءة انعكاسها لاكتشاف المحاور وحساب قوة التحدب هندسياً.</p>
 
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <div class="md:w-1/2">
-                            <div class="bg-black/80 p-4 rounded-xl mb-6 border border-purple-700/50 font-mono text-center shadow-[0_0_15px_rgba(157,0,255,0.2)]" dir="ltr">
-                                <span class="text-sm text-purple-400 mb-2 block font-sans font-bold tracking-wider">CORNEAL POWER EQUATION</span>
-                                $$P (Diopters) = \frac{n' - n}{r} \approx \frac{337.5}{r (mm)}$$
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        
+                        <div class="lg:w-1/2 flex flex-col">
+                            <div class="sim-container h-[400px] border-2 border-cyan-900/60 shadow-[0_0_30px_rgba(0,240,255,0.15)] relative bg-[#02040a] rounded-t-xl overflow-hidden">
+                                <div class="scanline"></div>
+                                
+                                <div class="absolute top-4 left-4 z-20 bg-slate-950/80 border-l-2 border-cyan-500 p-3 rounded shadow-lg backdrop-blur-sm min-w-[120px]">
+                                    <div class="text-xs text-cyan-500 font-mono mb-2 tracking-widest border-b border-slate-700 pb-1">LIVE DATA</div>
+                                    <div class="font-mono text-white text-sm mb-1">R1: <span id="hud-r1" class="text-green-400 font-bold">43.00D</span></div>
+                                    <div class="font-mono text-white text-sm mb-1">R2: <span id="hud-r2" class="text-green-400 font-bold">43.00D</span></div>
+                                    <div class="font-mono text-white text-sm">AX: <span id="hud-ax" class="text-amber-400 font-bold">---</span></div>
+                                </div>
+
+                                <div id="hud-warning" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 bg-red-900/80 border border-red-500 text-red-100 px-4 py-2 rounded text-sm font-mono tracking-widest hidden animate-pulse backdrop-blur-sm">
+                                    IRREGULARITY DETECTED
+                                </div>
+
+                                <canvas id="miresCanvas" class="relative z-10 w-full h-full"></canvas>
                             </div>
-                            <div class="bg-slate-800/80 p-4 rounded-xl mb-6 border border-slate-600">
-                                <label class="block text-white font-bold mb-2">اختر طوبوغرافيا القرنية (Topography):</label>
-                                <select id="corneaSelect" class="w-full bg-black text-cyan-400 font-bold border border-cyan-800 rounded p-3 outline-none" onchange="simMires.update()">
+                            
+                            <div class="bg-slate-900 p-4 border border-t-0 border-cyan-900/60 rounded-b-xl flex items-center justify-between">
+                                <label class="text-white font-bold text-sm">طوبوغرافيا القرنية:</label>
+                                <select id="corneaSelect" class="bg-black text-cyan-400 font-bold border border-cyan-800 rounded px-3 py-2 outline-none w-2/3 focus:border-cyan-400 transition" onchange="simMires.update()">
                                     <option value="normal">قرنية كروية مثالية (Normal)</option>
                                     <option value="astig_with">استجماتيزم مع القاعدة (WTR Astigmatism)</option>
                                     <option value="astig_against">استجماتيزم ضد القاعدة (ATR Astigmatism)</option>
                                     <option value="keratoconus">قرنية مخروطية (Keratoconus)</option>
-                                    <option value="dry_eye">جفاف عين (Tear Film Breakup) - Error</option>
+                                    <option value="dry_eye">جفاف عين (Tear Film Breakup)</option>
                                 </select>
                             </div>
-                            <div id="mire-analysis" class="bg-black p-4 rounded border-l-4 border-cyan-500 text-sm text-slate-300 h-24 font-mono shadow-inner">
-                                STATUS: <span class='text-green-400'>OPTIMAL.</span><br>التحليل: حلقات دائرية مثالية. المسافة متساوية. (Astigmatism = 0.00D).
-                            </div>
                         </div>
-                        <div class="md:w-1/2">
-                            <div class="sim-container h-[350px] bg-black border-cyan-900/50 relative shadow-[0_0_30px_rgba(0,240,255,0.15)]">
-                                <div class="scanline"></div>
-                                <canvas id="miresCanvas"></canvas>
+
+                        <div class="lg:w-1/2 flex flex-col gap-6">
+                            
+                            <div class="bg-[#0a0f1c] p-6 rounded-xl border border-slate-700 shadow-xl relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-transparent to-purple-500"></div>
+                                <h3 class="text-purple-400 font-bold text-sm tracking-widest font-mono mb-4">CORNEAL POWER EQUATION</h3>
+                                
+                                <div class="bg-black p-4 rounded text-center text-white font-mono border border-slate-800 shadow-inner text-lg" dir="ltr">
+                                    $$P (Diopters) = \frac{n' - n}{r} \approx \frac{337.5}{r (mm)}$$
+                                </div>
+                                
+                                <div class="mt-4 text-sm text-slate-400 leading-relaxed border-t border-slate-800 pt-4">
+                                    <strong class="text-slate-200">السر الهندسي:</strong> الجهاز يحسب المسافة بين بكسلات الحلقات المنعكسة ($r$). الرقم <span class="text-cyan-400">337.5</span> هو معامل الانكسار القياسي للقرنية ($1.3375$) مطروح منه هواء الغرفة ($1.0$) ومضروب في $1000$. كلما صغرت المسافة ($r$)، زاد التحدب.
+                                </div>
                             </div>
+
+                            <div class="bg-slate-900/80 p-6 rounded-xl border-r-4 border-amber-500 shadow-lg flex-grow flex flex-col">
+                                <h3 class="text-amber-400 font-bold text-lg mb-3 flex items-center gap-2">
+                                    <span>💡</span> التحليل الفيزيائي والسريري
+                                </h3>
+                                <div id="mire-analysis" class="text-slate-300 text-sm leading-relaxed bg-black/50 p-4 rounded-lg border border-slate-700 shadow-inner flex-grow">
+                                    </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </section>
-
             <section id="sec-sim-ai" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">محاكي التتبع الآلي 3D (AI Auto-Tracking)</h2>
