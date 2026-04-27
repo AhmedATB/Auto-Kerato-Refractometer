@@ -27,9 +27,8 @@
        
         <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-3 space-y-0 md:space-y-1 space-x-2 md:space-x-0 rtl:space-x-reverse" id="nav-container">
             <button onclick="nav('sec-intro', event)" class="nav-btn active w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap"><span class="text-xl ml-3">🏛️</span> الملخص والأصول التاريخية</button>
-            <button onclick="nav('sec-mechanics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚙️</span> الميكانيكا والتحكم (Control)</button>
+            <button onclick="nav('sec-mechanics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚙️</span> الميكانيكا ودليل التشغيل</button>
             <button onclick="nav('sec-components', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔬</span> المكونات والتغلب على الصعوبات</button>
-            <button onclick="nav('sec-operation', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">📋</span> دليل التشغيل والبرمجيات</button>
             <button onclick="nav('sec-limitations', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚠️</span> المشاكل الواقعية (Limitations)</button>
             <button onclick="nav('sec-sim-light', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔦</span> محاكي: مسار الضوء والتضبيب</button>
             <button onclick="nav('sec-sim-optics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🧪</span> محاكي: الخطأ الفيزيائي (Error Mode)</button>
@@ -191,22 +190,7 @@
                     </div>
                 </div>
             </section>
-            <section id="sec-mechanics" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الميكانيكية والتحكم (Control Systems)</h2>
-                    <p class="text-slate-300 text-lg mb-6">بعيداً عن واجهة المستخدم، يعتمد الجهاز على بنية ميكانيكية حيوية (Robotic Architecture) للعمل بدقة المايكرون.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-900 p-6 rounded-xl border-l-4 border-purple-500">
-                            <h3 class="text-xl font-bold text-purple-400 mb-3">1. محركات الخطوة (Stepper Motors)</h3>
-                            <p class="text-slate-400">يتم التحكم في محاور (X,Y,Z) بدقة المايكرون. عصا التحكم (Joystick) تحول حركة يد الطبيب إلى إشارات كهربائية ترسل للوحة التحكم (Motor Driver).</p>
-                        </div>
-                        <div class="bg-slate-900 p-6 rounded-xl border-l-4 border-cyan-500">
-                            <h3 class="text-xl font-bold text-cyan-400 mb-3">2. نظام التحكم المغلق (Closed-Loop Control)</h3>
-                            <p class="text-slate-400">تغذية راجعة سريعة جداً لمعالجة إحداثيات المستشعر وتعديل وضع المحرك. <br>Sensor -> Controller -> Motor -> Repeat.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+           
 
            <section id="sec-components" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
@@ -256,36 +240,51 @@
                 </div>
             </section>
 
-            <section id="sec-operation" class="content-sec hidden fade-in">
+            <section id="sec-mechanics" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">دليل التشغيل السريري والبرمجيات</h2>
-                    <p class="text-slate-300 text-lg mb-8">تتميز الأجهزة الحديثة بواجهة مستخدم رسومية (UI) متطورة وتكامل مع السجلات الطبية. إليك التسلسل الأوتوماتيكي لخطوات الفحص السريري:</p>
+                    <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">الميكانيكا ودليل التشغيل السريري</h2>
+                    <p class="text-slate-300 text-lg mb-8">الواجهة الظاهرة للطبيب تعتمد في الخلفية على بنية ميكانيكية دقيقة (Robotic Architecture). إليك كيف يتكامل الهاردوير مع السوفتوير أثناء الفحص:</p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-cyan-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-cyan-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">1</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">تحضير المريض</h3>
-                            <p class="text-sm text-slate-400">يجلس المريض ويثبت الذقن والجبهة. يتم ضبط المسندات عموديًا بمحركات دقيقة ليناسب ارتفاع المريض تمامًا.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                        <div class="bg-slate-900/80 p-6 rounded-xl border-r-4 border-purple-500 shadow-lg relative overflow-hidden group hover:border-purple-400 transition">
+                            <div class="absolute inset-0 bg-gradient-to-l from-purple-900/10 to-transparent pointer-events-none"></div>
+                            <h3 class="text-xl font-bold text-purple-400 mb-3 relative z-10">1. محركات الخطوة (Stepper Motors)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed relative z-10">يتم التحكم في محاور (X,Y,Z) بدقة المايكرون. عصا التحكم (Joystick) تحول حركة يد الطبيب إلى إشارات كهربائية ترسل للوحة التحكم (Motor Driver).</p>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-purple-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-purple-500 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center">2</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">المحاذاة والتمركز</h3>
-                            <p class="text-sm text-slate-400">يوجّه المريض نظره نحو الهدف (بالون). يحرك الفاحص عصا التحكم للتأكد من تمركز بؤبؤ العين، وتتدخل أنظمة التتبع الآلي للضبط الدقيق.</p>
+                        <div class="bg-slate-900/80 p-6 rounded-xl border-r-4 border-cyan-500 shadow-lg relative overflow-hidden group hover:border-cyan-400 transition">
+                            <div class="absolute inset-0 bg-gradient-to-l from-cyan-900/10 to-transparent pointer-events-none"></div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-3 relative z-10">2. نظام التحكم المغلق (Closed-Loop)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed relative z-10">تغذية راجعة سريعة جداً لمعالجة إحداثيات المستشعر وتعديل وضع المحرك. <br><span class="font-mono text-cyan-500/70 text-xs mt-2 inline-block">Sensor -> Controller -> Motor -> Repeat</span></p>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-amber-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-amber-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">3</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">التصوير والمعالجة</h3>
-                            <p class="text-sm text-slate-400">عند ثبات التركيز، يبدأ القياس تلقائيًا (Auto-Shoot). تُضاء الحلقات ويحلل المستشعر الانعكاسات. إذا كان المريض زارعاً لعدسة، يُفعل <span class="term" onclick="openProf('iol_mode')">IOL Mode</span>.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-10"></div>
+
+                    <h3 class="text-2xl font-bold text-white mb-6">التسلسل الأوتوماتيكي للفحص السريري (Workflow):</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                        <div class="bg-slate-800/90 p-5 rounded-xl border-t-4 border-cyan-500 shadow-lg relative hover:-translate-y-1 transition duration-300">
+                            <div class="absolute -top-4 right-4 bg-cyan-500 text-slate-900 font-black w-8 h-8 rounded-full flex items-center justify-center shadow-[0_0_10px_#00f0ff]">1</div>
+                            <h4 class="text-lg font-bold text-white mt-2 mb-3">تحضير المريض</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">يجلس المريض ويثبت الذقن والجبهة. يتم ضبط المسندات عموديًا بمحركات دقيقة ليناسب الارتفاع تمامًا.</p>
                         </div>
-                        <div class="bg-slate-800 p-5 rounded-xl border-t-4 border-green-500 shadow-lg relative">
-                            <div class="absolute -top-4 right-4 bg-green-500 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center">4</div>
-                            <h3 class="text-lg font-bold text-white mt-2 mb-2">النتائج والتصدير</h3>
-                            <p class="text-sm text-slate-400">تظهر النتائج (SPH/CYL/AXIS) آنياً. تُطبع عبر طابعة حرارية مدمجة، وتُصدّر بصيغة XML/PDF عبر منافذ USB أو Ethernet لنظام السجلات الطبية (EMR).</p>
+                        <div class="bg-slate-800/90 p-5 rounded-xl border-t-4 border-purple-500 shadow-lg relative hover:-translate-y-1 transition duration-300">
+                            <div class="absolute -top-4 right-4 bg-purple-500 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shadow-[0_0_10px_#9d00ff]">2</div>
+                            <h4 class="text-lg font-bold text-white mt-2 mb-3">المحاذاة والتمركز</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">يوجّه المريض نظره نحو الهدف (البالون). يتدخل نظام التحكم المغلق والتتبع الآلي للضبط الدقيق.</p>
+                        </div>
+                        <div class="bg-slate-800/90 p-5 rounded-xl border-t-4 border-amber-500 shadow-lg relative hover:-translate-y-1 transition duration-300">
+                            <div class="absolute -top-4 right-4 bg-amber-500 text-slate-900 font-black w-8 h-8 rounded-full flex items-center justify-center shadow-[0_0_10px_#ffaa00]">3</div>
+                            <h4 class="text-lg font-bold text-white mt-2 mb-3">التصوير والمعالجة</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">يبدأ القياس تلقائيًا (Auto-Shoot). تُضاء الحلقات ويحلل المستشعر الانعكاسات عبر خوارزميات الـ DSP.</p>
+                        </div>
+                        <div class="bg-slate-800/90 p-5 rounded-xl border-t-4 border-green-500 shadow-lg relative hover:-translate-y-1 transition duration-300">
+                            <div class="absolute -top-4 right-4 bg-green-500 text-slate-900 font-black w-8 h-8 rounded-full flex items-center justify-center shadow-[0_0_10px_#39ff14]">4</div>
+                            <h4 class="text-lg font-bold text-white mt-2 mb-3">النتائج والتصدير</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">تُطبع النتائج عبر طابعة حرارية مدمجة، وتُصدّر بصيغة XML عبر منافذ الشبكة لنظام السجلات الطبية (EMR).</p>
                         </div>
                     </div>
                 </div>
             </section>
-
             <section id="sec-limitations" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
