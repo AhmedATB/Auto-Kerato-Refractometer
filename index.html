@@ -26,7 +26,6 @@
         </div>
        
         <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-3 space-y-0 md:space-y-1 space-x-2 md:space-x-0 rtl:space-x-reverse" id="nav-container">
-            <button onclick="nav('sec-bme', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 border-l-2 border-transparent hover:border-cyan-500"><span class="text-xl ml-3">👨‍💻</span> البصمة الهندسية (BME Role)</button>
             <button onclick="nav('sec-intro', event)" class="nav-btn active w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap"><span class="text-xl ml-3">🏛️</span> الملخص والأصول التاريخية</button>
             <button onclick="nav('sec-mechanics', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">⚙️</span> الميكانيكا ودليل التشغيل</button>
             <button onclick="nav('sec-components', event)" class="nav-btn w-full text-right p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300"><span class="text-xl ml-3">🔬</span> المكونات والتغلب على الصعوبات</button>
@@ -286,48 +285,7 @@
                     </div>
                 </div>
             </section>
-            <section id="sec-bme" class="content-sec hidden fade-in">
-                <div class="glass-box rounded-2xl p-8 mb-8">
-                    <h2 class="text-4xl font-black text-white mb-6 border-b border-cyan-500 pb-4">المنظور الهندسي: أين تكمن بصمتنا؟ (BME Role)</h2>
-                    <p class="text-slate-300 text-lg mb-8">الطبيب يقرأ النتائج ليعالج المريض، لكن <strong class="text-cyan-400">المهندس الطبي</strong> هو من يكتب الخوارزميات، يصمم دوائر التحكم، ويربط المنظومة. نحن لا نعالج العين، نحن نصنع ونعالج "العقل" الذي يفهمها.</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        <div class="bg-slate-900/80 p-6 rounded-xl border border-slate-700 hover:border-cyan-400 transition duration-300 shadow-lg group">
-                            <div class="text-4xl mb-4 drop-shadow-[0_0_15px_rgba(0,240,255,0.8)]">💻</div>
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition">1. معالجة الإشارة (DSP & Algorithms)</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                الحساس (CCD) يلتقط صورة مشوشة مليئة بالضوضاء (Noise). دوري كمهندس ومبرمج هو كتابة خوارزميات الفلترة (مثل Fast Fourier Transform) لتنقية الإشارة البصرية وتحويل بكسلات الصورة إلى أرقام (Diopters) دقيقة، وتطوير كود الـ Computer Vision لاكتشاف بؤبؤ العين (Pupil Detection).
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-900/80 p-6 rounded-xl border border-slate-700 hover:border-purple-400 transition duration-300 shadow-lg group">
-                            <div class="text-4xl mb-4 drop-shadow-[0_0_15px_rgba(157,0,255,0.8)]">⚙️</div>
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition">2. هندسة التحكم (PID Controllers)</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                حركة الجهاز لتتبع عين المريض لا تحدث عبثاً. المهندس يصمم دوائر التحكم المغلقة (Closed-Loop) ويبرمج وحدات التحكم التناسبي التكاملي التفاضلي (PID) لضمان تحرك محركات الـ Stepper Motors بسلاسة وبدون اهتزاز (Overshoot) عند محاذاة العين.
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-900/80 p-6 rounded-xl border border-slate-700 hover:border-amber-400 transition duration-300 shadow-lg group">
-                            <div class="text-4xl mb-4 drop-shadow-[0_0_15px_rgba(255,170,0,0.8)]">🌐</div>
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition">3. الربط الشبكي (System Integration)</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                الأجهزة الحديثة ليست معزولة. المهندس يبرمج الواجهات البرمجية (APIs) وبروتوكولات نقل البيانات الطبية مثل (DICOM و HL7) لربط الجهاز مباشرة بسيرفرات المستشفى وأنظمة الـ (EMR)، مما يضمن نقل بيانات المريض بأمان وسرعة عبر الشبكة (LAN/Cloud).
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-900/80 p-6 rounded-xl border border-slate-700 hover:border-green-400 transition duration-300 shadow-lg group">
-                            <div class="text-4xl mb-4 drop-shadow-[0_0_15px_rgba(57,255,20,0.8)]">🔧</div>
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition">4. التحليل التقني والمعايرة (Troubleshooting)</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                عندما يفشل الجهاز، الطبيب يرى "خطأ". المهندس يرى "انحرافاً في الحساس (Sensor Drift)" أو "احتراقاً في دايود الـ IR". نحن من يقوم بتفكيك المسار البصري، وإعادة معايرة العدسات باستخدام (Model Eye) لضمان أن الجهاز لم يفقد دقته الهندسية.
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
+            
             <section id="sec-limitations" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-red-500 pb-4">المشاكل الواقعية (Real-World Limitations)</h2>
@@ -494,32 +452,45 @@
                 </div>
             </section>
 
-            <section id="sec-multi" class="content-sec hidden fade-in">
+           <section id="sec-multi" class="content-sec hidden fade-in">
                 <div class="glass-box rounded-2xl p-8 mb-8">
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-slate-700 pb-4">ثورة الاندماج الوظيفي: أجهزة 5 في 1</h2>
-                    <p class="text-slate-300 text-lg mb-8">في العقدين الأخيرين، لم يعد الجهاز مقتصراً على وظيفتين فقط، بل تحول إلى محطة فحص شاملة (Multi-functional Units) مثل Nidek Tonoref III و Topcon KR-800S لتقليل وقت الانتظار وتوفير مساحة العيادة.</p>
+                    <p class="text-slate-300 text-lg mb-8">في العقدين الأخيرين، تطورت الأجهزة لتصبح محطات فحص شاملة (Multi-functional Units) مثل Nidek Tonoref III لتقليل وقت الانتظار وتوفير مساحة العيادة، حيث تم دمج 5 وظائف حيوية في جهاز واحد:</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">💨</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">1. قياس ضغط العين (Non-contact Tonometry)</h3>
-                            <p class="text-slate-400">باستخدام نفخة هواء لطيفة (Air Puff) لقياس الضغط الداخلي للعين دون تلامس، للكشف المبكر عن الجلوكوما.</p>
+                        
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300">
+                            <div class="text-4xl mb-4 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">👁️</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">1. الانكسار وتحدب القرنية (AR/AK)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">الوظيفة الأساسية المدمجة لقياس الخطأ الانكساري (قصر/طول النظر) وانحناء القرنية المركزي في خطوة واحدة وبدقة متناهية.</p>
                         </div>
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">📏</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">2. قياس سماكة القرنية (Pachymetry)</h3>
-                            <p class="text-slate-400">أمر ضروري لتصحيح قراءات ضغط العين الحقيقية وتقييم أهلية المريض لجراحات تصحيح النظر مثل الليزك.</p>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300">
+                            <div class="text-4xl mb-4 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">💨</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">2. قياس ضغط العين (Tonometry)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">باستخدام نفخة هواء لطيفة (Air Puff) لقياس الضغط الداخلي للعين دون أي تلامس، للكشف المبكر عن الجلوكوما.</p>
                         </div>
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">🔦</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">3. تصوير القسم الأمامي (Retro-illumination)</h3>
-                            <p class="text-slate-400">استخدام الإضاءة الخلفية لاكتشاف وجود عتامات في العدسة (المياه البيضاء - Cataract) أو عتامة في القرنية.</p>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300">
+                            <div class="text-4xl mb-4 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">📏</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">3. قياس سماكة القرنية (Pachymetry)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">أمر ضروري لتصحيح قراءات ضغط العين الحقيقية، وتقييم أهلية المريض لجراحات تصحيح النظر مثل الليزك.</p>
                         </div>
-                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 transition">
-                            <div class="text-4xl mb-4">🗺️</div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">4. خرائط تضاريس القرنية (Corneal Mapping)</h3>
-                            <p class="text-slate-400">توفير تحليل طبوغرافي دقيق لسطح العين الأمامي وتحديد مناطق الانحدار العالي والشذوذ الهيكلي.</p>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300">
+                            <div class="text-4xl mb-4 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">🔦</div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">4. تصوير القسم الأمامي (Retro-illumination)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">استخدام الإضاءة الخلفية لاكتشاف وجود عتامات في العدسة (المياه البيضاء - Cataract) أو عتامة في القرنية.</p>
                         </div>
+
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300 md:col-span-2 flex flex-col md:flex-row items-center text-center md:text-right gap-6">
+                            <div class="text-6xl drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]">🗺️</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-400 mb-2">5. خرائط تضاريس القرنية (Corneal Mapping)</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">توفير تحليل طبوغرافي دقيق لسطح العين الأمامي بأكمله (وليس فقط المركز)، لتحديد مناطق الانحدار العالي والشذوذ الهيكلي بدقة عالية.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
