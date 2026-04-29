@@ -1,200 +1,184 @@
+// ==========================================
+// AR/AK CLINICAL SYSTEM - MASTER CONTROLLER
+// BME (Biomedical Engineering) Edition v3.0
+// ==========================================
+
 let currentActiveSim = null;
- 
+
+// ==========================================
+// 1. نظام التنقل الذكي (Smart Navigation & Canvas Fix)
+// ==========================================
 function nav(secId, e) {
-    // 1. إخفاء كل الأقسام
-    document.querySelectorAll('.content-sec').forEach(el => el.classList.add('hidden'));
+    if (e) e.preventDefault();
     
-    // 2. إظهار القسم المطلوب
-    const targetSec = document.getElementById(secId);
-    if(targetSec) targetSec.classList.remove('hidden');
+    // 1. إخفاء كل الأقسام وتصفية الأزرار
+    document.querySelectorAll('.content-sec').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('fade-in');
+    });
     
-    // 3. تحديث تصميم الأزرار الجانبية
     document.querySelectorAll('.nav-btn').forEach(btn => { 
-        btn.classList.remove('active'); 
+        btn.classList.remove('active', 'text-white', 'bg-slate-800/50'); 
         btn.classList.add('text-slate-300'); 
     });
     
+    // 2. إظهار القسم المطلوب مع تأثير انتقال ناعم
+    const targetSec = document.getElementById(secId);
+    if(targetSec) {
+        targetSec.classList.remove('hidden');
+        // خدعة برمجية لإعادة تفعيل الأنيميشن
+        void targetSec.offsetWidth; 
+        targetSec.classList.add('fade-in');
+    }
+    
+    // 3. تفعيل الزر المضغوط (للموبايل واللابتوب)
     if(e && e.currentTarget) {
-        e.currentTarget.classList.add('active'); 
+        e.currentTarget.classList.add('active', 'text-white', 'bg-slate-800/50'); 
         e.currentTarget.classList.remove('text-slate-300');
     }
 
-    // 4. إيقاف المحاكي السابق لتوفير استهلاك المعالج
+    // 4. إدارة الذاكرة: إيقاف المحاكي السابق لتوفير استهلاك المعالج (CPU)
     if(currentActiveSim && currentActiveSim.stop) {
         currentActiveSim.stop();
     }
 
-    // 5. تشغيل المحاكي الجديد المرتبط بالقسم
-    if(secId === 'sec-sim-light' && typeof simLight !== 'undefined') { if(!simLight.initialized) simLight.init(); simLight.start(); currentActiveSim = simLight; }
-    if(secId === 'sec-sim-optics' && typeof simOptics !== 'undefined') { if(!simOptics.initialized) simOptics.init(); simOptics.start(); currentActiveSim = simOptics; }
-    if(secId === 'sec-sim-kerato' && typeof simMires !== 'undefined') { if(!simMires.initialized) simMires.init(); simMires.start(); currentActiveSim = simMires; }
-    if(secId === 'sec-sim-ai' && typeof simAI !== 'undefined') { if(!simAI.initialized) simAI.init(); simAI.start(); currentActiveSim = simAI; }
+    // 5. إيقاظ المحاكي الجديد وتصحيح أبعاده (Canvas 0x0 Bug Fix)
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize')); // إجبار المتصفح على حساب الأبعاد
+        
+        if(secId === 'sec-sim-light' && typeof simLight !== 'undefined') { 
+            if(!simLight.initialized) simLight.init(); 
+            simLight.resize(); simLight.start(); currentActiveSim = simLight; 
+        }
+        if(secId === 'sec-sim-optics' && typeof simOptics !== 'undefined') { 
+            if(!simOptics.initialized) simOptics.init(); 
+            simOptics.resize(); simOptics.start(); currentActiveSim = simOptics; 
+        }
+        if(secId === 'sec-sim-kerato' && typeof simMires !== 'undefined') { 
+            if(!simMires.initialized) simMires.init(); 
+            simMires.resize(); simMires.start(); currentActiveSim = simMires; 
+        }
+        if(secId === 'sec-sim-ai' && typeof simAI !== 'undefined') { 
+            if(!simAI.initialized) simAI.init(); 
+            simAI.resize(); simAI.start(); currentActiveSim = simAI; 
+        }
+    }, 50);
 }
 
 // ==========================================
-// MODAL FUNCTIONS (Professor & History)
+// 2. النوافذ الهندسية المنبثقة (Aura Modals with Typewriter Effect)
 // ==========================================
-function openProf(key) {
-    const data = profDB[key];
-    if(data) {
-        document.getElementById('prof-title').innerText = data.t;
-        document.getElementById('prof-text').innerText = data.d;
-        document.getElementById('prof-modal').style.opacity = '1';
-        document.getElementById('prof-modal').classList.remove('pointer-events-none');
-    }
-}
+let typingInterval;
 
-function closeProf() { 
-    document.getElementById('prof-modal').style.opacity = '0';
-    setTimeout(() => document.getElementById('prof-modal').classList.add('pointer-events-none'), 300);
-}
-
-function openHistory(key) {
-    const data = historyDB[key];
-    if(data) {
-        document.getElementById('history-year').innerText = data.year; 
-        document.getElementById('history-title').innerText = data.title;
-        document.getElementById('history-media').innerHTML = data.media; 
-        document.getElementById('history-caption').innerText = data.caption;
-        document.getElementById('history-content').innerHTML = data.content;
+function openComp(id) {
+    const modal = document.getElementById('comp-modal');
+    const title = document.getElementById('comp-modal-title');
+    const desc = document.getElementById('comp-modal-desc');
+    const icon = document.getElementById('comp-modal-icon');
+    
+    // قاعدة بيانات القطع الهندسية (محدثة بدقة علمية)
+    const data = {
+        'sld': { 
+            t: 'SLD Source (840nm)', 
+            i: '💡', 
+            d: 'مصدر ضوء فائق النقاء (Super Luminescent Diode) يعمل بطول موجي 840nm. يخترق المياه البيضاء (Cataract) بسهولة، ولا يزعج عين المريض لأنه يقع خارج الطيف المرئي.' 
+        },
+        'fog': { 
+            t: 'Auto-Fogging System', 
+            i: '🌫️', 
+            d: 'نظام ميكانيكي دقيق يدفع الهدف البصري (Fixation Target) بعيداً ليرخي العضلة الهدبية للعين، مما يلغي تأثير التكيف (Accommodation) ويمنع قصر النظر الكاذب.' 
+        },
+        'ccd': { 
+            t: 'CCD Sensor Matrix', 
+            i: '📸', 
+            d: 'حساس كاميرا طبي متقدم يقرأ انعكاسات الأشعة تحت الحمراء من الشبكية والقرنية بدقة بكسلية عالية، ويرسلها لخوارزميات الـ DSP لمعالجتها فورياً.' 
+        }
+    };
+    
+    if(data[id]) {
+        title.innerText = data[id].t;
+        icon.innerText = data[id].i;
+        desc.innerHTML = ''; // تصفير النص
         
-        const modal = document.getElementById('history-modal');
-        modal.classList.remove('pointer-events-none');
-        modal.style.opacity = '1';
-    }
-}
-
-function closeHistory() {
-    const modal = document.getElementById('history-modal');
-    modal.style.opacity = '0';
-    setTimeout(() => { 
-        modal.classList.add('pointer-events-none'); 
-        document.getElementById('history-media').innerHTML = ''; 
-    }, 300);
-}
-function openComp(key) {
-    const data = componentsDB[key];
-    if(data) {
-        document.getElementById('comp-modal-title').innerText = data.name;
-        document.getElementById('comp-modal-desc').innerHTML = data.desc;
-        document.getElementById('comp-modal-icon').innerText = data.icon;
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        clearInterval(typingInterval); // إيقاف أي طباعة سابقة
         
-        const modal = document.getElementById('comp-modal');
-        modal.classList.remove('pointer-events-none');
-        modal.style.opacity = '1';
+        // تأثير الطباعة السينمائي (+1000 Aura)
+        let text = data[id].d;
+        let i = 0;
+        desc.innerHTML = '<span class="text-cyan-500 font-mono text-sm">> ANALYZING COMPONENT DATA...</span><br><br><span id="type-cursor" class="text-slate-300"></span>';
         
-        // إعادة معالجة المعادلات الرياضية (MathJax) إن وجدت
-        if (window.MathJax) { MathJax.typesetPromise([document.getElementById('comp-modal-desc')]); }
+        const cursor = document.getElementById('type-cursor');
+        setTimeout(() => {
+            cursor.innerHTML = '';
+            typingInterval = setInterval(() => {
+                cursor.innerHTML += text.charAt(i);
+                i++;
+                if (i >= text.length) clearInterval(typingInterval);
+            }, 20); // سرعة الطباعة
+        }, 600);
     }
 }
 
 function closeComp() {
+    clearInterval(typingInterval);
     const modal = document.getElementById('comp-modal');
-    modal.style.opacity = '0';
-    setTimeout(() => { modal.classList.add('pointer-events-none'); }, 300);
+    modal.classList.add('opacity-0', 'pointer-events-none');
+}
+
+// نافذة المصطلحات الأكاديمية (إن وجدت)
+function openProf(key) {
+    const data = profDB ? profDB[key] : null;
+    if(data) {
+        document.getElementById('prof-title').innerText = data.t;
+        document.getElementById('prof-text').innerText = data.d;
+        const modal = document.getElementById('prof-modal');
+        if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+}
+
+function closeProf() { 
+    const modal = document.getElementById('prof-modal');
+    if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
 }
 
 // ==========================================
-// PRINTOUT RECEIPT FUNCTION
-// ==========================================
-function showReceiptDesc(key) {
-    const data = receiptDataDB[key];
-    const exp = document.getElementById('receipt-explainer');
-    if(data && exp) {
-        exp.innerHTML = `
-            <div class="text-5xl mb-4 text-cyan-400 drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">📊</div>
-            <h3 class="text-3xl font-bold text-white mb-4 border-b border-slate-700 pb-2">${data.t}</h3>
-            <p class="text-slate-300 text-lg leading-relaxed">${data.d}</p>
-            <div class="mt-6 bg-black p-4 rounded text-sm text-cyan-500 font-mono border border-cyan-900 border-l-4 border-l-cyan-500 shadow-inner">
-                [DSP CORE ENGAGED]: MATRIX CALCULATION COMPLETED IN < 0.08ms.
-            </div>
-        `;
-    }
-}
-    
-   // ==========================================
-// INITIALIZATION (On Page Load)
-// ==========================================
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // 1. توليد الحالات السريرية (Scenarios)
-    const scContainer = document.getElementById('scenarios-container');
-    if(scContainer && typeof scenariosDB !== 'undefined') {
-        scenariosDB.forEach(sc => {
-            scContainer.innerHTML += `
-                <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition duration-300 group backdrop-blur-sm">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="text-4xl bg-black w-16 h-16 flex items-center justify-center rounded-full border border-cyan-900 group-hover:scale-110 group-hover:border-cyan-400 transition shadow-inner">${sc.icon}</div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition">${sc.title}</h3>
-                    </div>
-                    <p class="text-slate-300 text-sm leading-relaxed border-t border-slate-700 pt-4">${sc.desc}</p>
-                </div>
-            `;
-        });
-    }
-
-    // 2. إخفاء شاشة التحميل وبدء القسم الأول
-    setTimeout(() => {
-        const loader = document.getElementById('loading-overlay');
-        if(loader) loader.classList.add('hidden');
-        
-        nav('sec-intro', null);
-        
-        // تفعيل لون أول زر يدويًا عند التحميل
-        const firstBtn = document.querySelector('.nav-btn');
-        if(firstBtn) firstBtn.classList.add('active');
-    }, 800);
-});
-// ==========================================
-// KEYBOARD NAVIGATION (Space, ArrowUp, ArrowDown)
+// 3. التحكم بالكيبورد (Presentation Mode)
 // ==========================================
 document.addEventListener('keydown', function(event) {
-    // التأكد من أن المستخدم لا يكتب داخل مربع نص (إذا وجد)
-    if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.tagName === 'SELECT') {
-        return; 
-    }
+    // تجاهل الكيبورد إذا كان الدكتور يكتب في مربع نص أو قائمة منسدلة
+    if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') return; 
 
-    // المفاتيح المستهدفة
-    const keys = ['Space', 'ArrowUp', 'ArrowDown'];
+    const keys = ['Space', 'ArrowDown', 'ArrowUp'];
     
-    // إذا كان المفتاح المضغوط من ضمن المفاتيح المستهدفة
     if (keys.includes(event.code)) {
-        event.preventDefault(); // منع المتصفح من النزول للأسفل افتراضياً
-
-        // جلب كل أزرار القائمة الجانبية
+        event.preventDefault(); // منع نزول الشاشة
         const navBtns = Array.from(document.querySelectorAll('.nav-btn'));
         if (navBtns.length === 0) return;
 
-        // إيجاد الزر المفعل حالياً
         const activeBtn = document.querySelector('.nav-btn.active');
         let currentIndex = navBtns.indexOf(activeBtn);
-        
         let nextIndex = currentIndex;
 
-        // تحديد التاب القادم بناءً على الزر المضغوط
         if (event.code === 'ArrowDown' || event.code === 'Space') {
-            // الانتقال للتالي، وإذا وصلنا للنهاية نرجع للبداية (Loop)
             nextIndex = (currentIndex + 1) % navBtns.length;
         } else if (event.code === 'ArrowUp') {
-            // الرجوع للسابق، وإذا كنا بالبداية نذهب للنهاية
             nextIndex = (currentIndex - 1 + navBtns.length) % navBtns.length;
         }
 
-        // تفعيل التاب الجديد إذا اختلف عن الحالي
         if (nextIndex !== currentIndex) {
             navBtns[nextIndex].click(); // محاكاة ضغطة الماوس
-            
-            // عمل Scroll ناعم للقائمة الجانبية حتى يبقى الزر المفعل ظاهر أمامك
             navBtns[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }
 });
+
 // ==========================================
-// 1. CINEMATIC BOOT SEQUENCE (+1000 Aura)
+// 4. نظام الإقلاع السينمائي (Cinematic Boot)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const bootLines = [
-        "KERNEL LOADED. INITIALIZING BME SECURE BOOT...",
+        "BME KERNEL v3.0 LOADED. SECURE BOOT INITIATED...",
         "MOUNTING OPTICAL SENSORS [CCD: OK, SLD: OK]...",
         "CALIBRATING STEPPER MOTORS (X: 0, Y: 0, Z: 0)...",
         "LOADING PLACIDO RING ALGORITHMS...",
@@ -211,17 +195,30 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function typeLine() {
         if (currentLine < bootLines.length && bootText) {
-            bootText.innerHTML += `<div>> ${bootLines[currentLine]}</div>`;
+            bootText.innerHTML += `<div class="mb-1">> ${bootLines[currentLine]}</div>`;
             bootProgress.style.width = `${((currentLine + 1) / bootLines.length) * 100}%`;
             currentLine++;
-            setTimeout(typeLine, 400 + Math.random() * 400); // تأخير عشوائي لواقعية الآلة
+            setTimeout(typeLine, 300 + Math.random() * 300); // سرعة إقلاع ديناميكية
         } else if (overlay) {
+            // إنهاء الإقلاع وفتح الشاشة الرئيسية
             setTimeout(() => {
                 overlay.style.opacity = '0';
-                setTimeout(() => overlay.remove(), 1000);
-            }, 800);
+                setTimeout(() => {
+                    overlay.remove();
+                    // تفعيل التاب الأول برمجياً بعد الإقلاع
+                    const firstBtn = document.querySelector('.nav-btn');
+                    if(firstBtn) firstBtn.click();
+                }, 1000);
+            }, 600);
         }
     }
     
+    // بدء الإقلاع
     if(overlay) setTimeout(typeLine, 500);
+    
+    // التهيئة الصامتة للمحاكيات في الخلفية
+    if(typeof simOptics !== 'undefined') simOptics.init();
+    if(typeof simLight !== 'undefined') simLight.init();
+    if(typeof simMires !== 'undefined') simMires.init();
+    if(typeof simAI !== 'undefined') simAI.init();
 });
