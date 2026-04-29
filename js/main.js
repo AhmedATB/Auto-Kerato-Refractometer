@@ -66,7 +66,7 @@ function nav(secId, e) {
 }
 
 // ==========================================
-// 2. النوافذ الهندسية المنبثقة (Aura Modals with Typewriter Effect)
+// 2. النوافذ الهندسية المنبثقة (Aura Modals Fixed)
 // ==========================================
 let typingInterval;
 
@@ -76,7 +76,7 @@ function openComp(id) {
     const desc = document.getElementById('comp-modal-desc');
     const icon = document.getElementById('comp-modal-icon');
     
-   // قاعدة بيانات القطع الهندسية (محدثة بالفيزياء الطبية العميقة)
+    // قاعدة بيانات القطع الهندسية (مع الفيزياء الطبية العميقة)
     const data = {
         'sld': { 
             t: 'SLD Source (840nm)', 
@@ -91,7 +91,7 @@ function openComp(id) {
         'ccd': { 
             t: 'CCD Sensor & DSP', 
             i: '📸', 
-            d: '<span class="text-cyan-400 font-bold">الوظيفة:</span> حساس الكاميرا والعقل المدبر للجهاز.<br><br><span class="text-amber-400 font-bold">الآلية الفيزيائية (Vergence Analysis):</span><br>يحلل الضوء المرتد من الشبكية؛ إذا كانت العين طبيعية تخرج الأشعة <span class="text-white">"متوازية"</span>. في قصر النظر تخرج <span class="text-red-400">"متجمعة"</span>، وفي طول النظر تخرج <span class="text-red-400">"متشتتة"</span>. الـ DSP يقيس زاوية الانحراف ويحولها فورياً إلى قيمة ديوبتر (Diopter).' 
+            d: '<span class="text-cyan-400 font-bold">الوظيفة:</span> حساس الكاميرا والعقل المدبر للجهاز.<br><br><span class="text-amber-400 font-bold">الآلية الفيزيائية (Vergence Analysis):</span><br>يحلل الضوء المرتد من الشبكية؛ إذا كانت العين طبيعية تخرج الأشعة <span class="text-white font-bold">"متوازية"</span>. في قصر النظر تخرج <span class="text-red-400 font-bold">"متجمعة"</span>، وفي طول النظر تخرج <span class="text-red-400 font-bold">"متشتتة"</span>. الـ DSP يقيس زاوية الانحراف ويحولها فورياً إلى قيمة ديوبتر (Diopter).' 
         }
     };
     
@@ -103,20 +103,35 @@ function openComp(id) {
         modal.classList.remove('opacity-0', 'pointer-events-none');
         clearInterval(typingInterval); // إيقاف أي طباعة سابقة
         
-        // تأثير الطباعة السينمائي (+1000 Aura)
-        let text = data[id].d;
+        // تجهيز هيكل العرض (الطباعة + الشرح)
+        let terminalText = "> ANALYZING COMPONENT DATA...";
         let i = 0;
-        desc.innerHTML = '<span class="text-cyan-500 font-mono text-sm">> ANALYZING COMPONENT DATA...</span><br><br><span id="type-cursor" class="text-slate-300"></span>';
+        
+        desc.innerHTML = `
+            <div id="type-cursor" class="text-cyan-500 font-mono text-sm tracking-widest mb-4 h-5"></div>
+            <div id="comp-details" class="opacity-0 transition-opacity duration-700 text-slate-300 leading-relaxed border-l-2 border-slate-700 pl-4"></div>
+        `;
         
         const cursor = document.getElementById('type-cursor');
-        setTimeout(() => {
-            cursor.innerHTML = '';
-            typingInterval = setInterval(() => {
-                cursor.innerHTML += text.charAt(i);
-                i++;
-                if (i >= text.length) clearInterval(typingInterval);
-            }, 20); // سرعة الطباعة
-        }, 600);
+        const details = document.getElementById('comp-details');
+        
+        // تأثير الطباعة لجملة التحليل فقط
+        typingInterval = setInterval(() => {
+            cursor.innerHTML += terminalText.charAt(i);
+            i++;
+            if (i >= terminalText.length) {
+                clearInterval(typingInterval);
+                
+                // إضافة وميض بسيط للمؤشر
+                cursor.innerHTML += '<span class="animate-pulse">_</span>';
+                
+                // بعد انتهاء الطباعة، نظهر الشرح العلمي المنسق بتأثير Fade-in
+                details.innerHTML = data[id].d;
+                setTimeout(() => {
+                    details.classList.remove('opacity-0');
+                }, 50);
+            }
+        }, 25); // سرعة الطباعة
     }
 }
 
@@ -125,23 +140,6 @@ function closeComp() {
     const modal = document.getElementById('comp-modal');
     modal.classList.add('opacity-0', 'pointer-events-none');
 }
-
-// نافذة المصطلحات الأكاديمية (إن وجدت)
-function openProf(key) {
-    const data = profDB ? profDB[key] : null;
-    if(data) {
-        document.getElementById('prof-title').innerText = data.t;
-        document.getElementById('prof-text').innerText = data.d;
-        const modal = document.getElementById('prof-modal');
-        if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
-    }
-}
-
-function closeProf() { 
-    const modal = document.getElementById('prof-modal');
-    if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
-}
-
 // ==========================================
 // 3. التحكم بالكيبورد (Presentation Mode)
 // ==========================================
