@@ -50,8 +50,17 @@
 
     <!-- المحتوى الرئيسي -->
     <main class="flex-grow overflow-y-auto relative p-4 md:p-8 scroll-smooth" id="main-content">
-        <div id="loading-overlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-500">
-            <div class="text-cyan-400 font-mono text-xl animate-pulse">> INITIALIZING SYSTEM...</div>
+       <!-- النظام السينمائي للإقلاع (Cinematic Boot) -->
+        <div id="loading-overlay" class="fixed inset-0 bg-[#02040a] z-[100] flex flex-col items-center justify-center transition-opacity duration-1000">
+            <div class="w-full max-w-2xl p-8 rounded border border-cyan-900/50 bg-black/80 shadow-[0_0_50px_rgba(0,240,255,0.1)] relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent animate-pulse"></div>
+                <div class="text-cyan-500 font-mono text-sm md:text-base leading-relaxed tracking-widest" id="boot-text">
+                    <!-- يتم توليد النص بواسطة الجافاسكربت -->
+                </div>
+                <div class="mt-6 h-1 w-full bg-slate-800 rounded overflow-hidden">
+                    <div id="boot-progress" class="h-full bg-cyan-400 w-0 transition-all duration-300"></div>
+                </div>
+            </div>
         </div>
 
         <div class="max-w-6xl mx-auto pb-32">
@@ -262,15 +271,35 @@
                     <h2 class="text-4xl font-black text-white mb-6 border-b border-cyan-500 pb-4">محاكي تضاريس القرنية (Mires)</h2>
                     <div class="flex flex-col lg:flex-row gap-8">
                         <div class="lg:w-1/2 flex flex-col">
-                            <div class="sim-container h-[400px] border-2 border-cyan-900/60 bg-[#02040a] rounded-t-xl overflow-hidden relative">
-                                <div class="absolute top-4 left-4 z-20 bg-slate-950/80 border-l-2 border-cyan-500 p-3 rounded">
-                                    <div class="font-mono text-white text-sm">R1: <span id="hud-r1" class="text-green-400">43.00D</span></div>
-                                    <div class="font-mono text-white text-sm">R2: <span id="hud-r2" class="text-green-400">43.00D</span></div>
-                                    <div class="font-mono text-white text-sm">AX: <span id="hud-ax" class="text-amber-400">---</span></div>
+                            <div class="sim-container h-[400px] border-2 border-cyan-900/60 shadow-[0_0_30px_rgba(0,240,255,0.15)] relative bg-[#02040a] rounded-t-xl overflow-hidden group">
+                                    <div class="scanline"></div>
+                                    
+                                    <!-- شاشة البيانات -->
+                                    <div class="absolute top-4 left-4 z-20 bg-slate-950/80 border-l-2 border-cyan-500 p-3 rounded shadow-lg backdrop-blur-sm min-w-[120px]">
+                                        <div class="text-xs text-cyan-500 font-mono mb-2 tracking-widest border-b border-slate-700 pb-1">LIVE DATA</div>
+                                        <div class="font-mono text-white text-sm mb-1">R1: <span id="hud-r1" class="text-green-400 font-bold">43.00D</span></div>
+                                        <div class="font-mono text-white text-sm mb-1">R2: <span id="hud-r2" class="text-green-400 font-bold">43.00D</span></div>
+                                        <div class="font-mono text-white text-sm">AX: <span id="hud-ax" class="text-amber-400 font-bold">---</span></div>
+                                    </div>
+
+                                    <div id="hud-warning" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 bg-red-900/80 border border-red-500 text-red-100 px-4 py-2 rounded text-sm font-mono tracking-widest hidden animate-pulse backdrop-blur-sm">
+                                        IRREGULARITY DETECTED
+                                    </div>
+
+                                    <!-- مفتاح التحويل بين الحلقات والخريطة اللونية -->
+                                    <div class="absolute top-4 right-4 z-20 flex gap-2">
+                                        <button onclick="simMires.toggleHeatmap(false)" id="btn-rings" class="bg-cyan-600 text-black px-3 py-1 rounded text-xs font-bold font-mono transition shadow-[0_0_10px_rgba(0,240,255,0.4)]">RAW RINGS</button>
+                                        <button onclick="simMires.toggleHeatmap(true)" id="btn-heat" class="bg-slate-800 text-slate-400 px-3 py-1 rounded text-xs font-bold font-mono border border-slate-600 transition hover:text-white">HEATMAP</button>
+                                    </div>
+
+                                    <!-- مسطرة الألوان (Color Scale) -->
+                                    <div id="heat-scale" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 h-48 w-6 rounded border border-slate-700 hidden" style="background: linear-gradient(to top, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000);">
+                                        <span class="absolute -left-8 top-0 text-[10px] text-red-400 font-mono">50D</span>
+                                        <span class="absolute -left-8 bottom-0 text-[10px] text-blue-400 font-mono">35D</span>
+                                    </div>
+
+                                    <canvas id="miresCanvas" class="relative z-10 w-full h-full transition-opacity duration-500"></canvas>
                                 </div>
-                                <div id="hud-warning" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 bg-red-900/80 border border-red-500 text-red-100 px-4 py-2 rounded text-sm hidden">IRREGULARITY DETECTED</div>
-                                <canvas id="miresCanvas" class="relative z-10 w-full h-full"></canvas>
-                            </div>
                             <div class="bg-slate-900 p-4 border border-cyan-900/60 rounded-b-xl flex items-center justify-between">
                                 <select id="corneaSelect" class="bg-black text-cyan-400 font-bold border border-cyan-800 rounded px-3 py-2 w-full outline-none" onchange="simMires.update()">
                                     <option value="normal">قرنية كروية مثالية</option>
