@@ -145,3 +145,47 @@ document.addEventListener("DOMContentLoaded", () => {
         if(firstBtn) firstBtn.classList.add('active');
     }, 800);
 });
+// ==========================================
+// KEYBOARD NAVIGATION (Space, ArrowUp, ArrowDown)
+// ==========================================
+document.addEventListener('keydown', function(event) {
+    // التأكد من أن المستخدم لا يكتب داخل مربع نص (إذا وجد)
+    if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.tagName === 'SELECT') {
+        return; 
+    }
+
+    // المفاتيح المستهدفة
+    const keys = ['Space', 'ArrowUp', 'ArrowDown'];
+    
+    // إذا كان المفتاح المضغوط من ضمن المفاتيح المستهدفة
+    if (keys.includes(event.code)) {
+        event.preventDefault(); // منع المتصفح من النزول للأسفل افتراضياً
+
+        // جلب كل أزرار القائمة الجانبية
+        const navBtns = Array.from(document.querySelectorAll('.nav-btn'));
+        if (navBtns.length === 0) return;
+
+        // إيجاد الزر المفعل حالياً
+        const activeBtn = document.querySelector('.nav-btn.active');
+        let currentIndex = navBtns.indexOf(activeBtn);
+        
+        let nextIndex = currentIndex;
+
+        // تحديد التاب القادم بناءً على الزر المضغوط
+        if (event.code === 'ArrowDown' || event.code === 'Space') {
+            // الانتقال للتالي، وإذا وصلنا للنهاية نرجع للبداية (Loop)
+            nextIndex = (currentIndex + 1) % navBtns.length;
+        } else if (event.code === 'ArrowUp') {
+            // الرجوع للسابق، وإذا كنا بالبداية نذهب للنهاية
+            nextIndex = (currentIndex - 1 + navBtns.length) % navBtns.length;
+        }
+
+        // تفعيل التاب الجديد إذا اختلف عن الحالي
+        if (nextIndex !== currentIndex) {
+            navBtns[nextIndex].click(); // محاكاة ضغطة الماوس
+            
+            // عمل Scroll ناعم للقائمة الجانبية حتى يبقى الزر المفعل ظاهر أمامك
+            navBtns[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+});
