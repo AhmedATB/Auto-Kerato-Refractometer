@@ -103,34 +103,47 @@ const simOptics = {
             actualFocalX = retinaX; // العدسة تجبر الضوء على السقوط على الشبكية تماماً
         }
 
-        // ==========================================
-        // 3. تحديث شاشة الـ DSP التلسكوبية (HUD)
+       // ==========================================
+        // 3. تحديث شاشة الـ DSP التلسكوبية (HUD) - LOGIC FIXED
         // ==========================================
         let noise = 0; let readingColor = '#00f0ff'; let desc = ""; let indColor = "bg-cyan-500";
         let displayVal = val;
+        let baseMessage = "";
 
+        // 1. هل تم تطبيق عدسة تصحيحية؟ (هذا يصفر الخطأ الانكساري فقط)
         if (this.correctionOn && val !== 0) {
-            readingColor = '#39ff14'; indColor = "bg-green-500";
-            desc = `CORRECTION APPLIED. LENS POWER: ${val > 0 ? '+':''}${val.toFixed(2)}D. FOCUS RESTORED.`;
             displayVal = 0; 
-        } else {
-            if(cond === 'shake') { 
-                noise = (Math.random() - 0.5) * 1.5; 
-                readingColor = '#ffaa00'; indColor = "bg-amber-500";
-                desc = "ERR: HIGH FREQUENCY TREMOR DETECTED. SIGNAL UNSTABLE."; 
+            baseMessage = `[LENS: ${val > 0 ? '+':''}${val.toFixed(2)}D] `;
+        }
+
+        // 2. هل يوجد مانع سريري؟ (هذا يضيف ضوضاء ويغير لون الحالة، حتى لو لابس نظارة!)
+        if (cond === 'shake') { 
+            noise = (Math.random() - 0.5) * 1.5; // قراءة متذبذبة بسبب الاهتزاز
+            readingColor = '#ffaa00'; indColor = "bg-amber-500";
+            desc = baseMessage + "ERR: TREMOR DETECTED. SIGNAL UNSTABLE."; 
+        }
+        else if (cond === 'cataract') { 
+            noise = (Math.random() - 0.5) * 0.8; // قراءة مشتتة بسبب العتامة
+            readingColor = '#ef4444'; indColor = "bg-red-500";
+            desc = baseMessage + "ERR: MEDIA OPACITY. SEVERE SCATTERING."; 
+        }
+        else {
+            // المريض طبيعي ومستقر
+            if (displayVal === 0) { 
+                readingColor = '#39ff14'; indColor = "bg-green-500";
+                desc = baseMessage + "SYSTEM NOMINAL. PERFECT FOCUS."; 
             }
-            else if(cond === 'cataract') { 
-                noise = (Math.random() - 0.5) * 0.8; 
-                readingColor = '#ef4444'; indColor = "bg-red-500";
-                desc = "ERR: MEDIA OPACITY (CATARACT). SEVERE SCATTERING. LOW CONFIDENCE."; 
+            else if (val < 0) { 
+                readingColor = '#ef4444'; indColor = "bg-red-500"; 
+                desc = `MYOPIA DETECTED. FOCUS IN FRONT OF RETINA.`; 
             }
-            else {
-                if(val === 0) { desc = "SYSTEM NOMINAL. PERFECT RETINAL FOCUS."; }
-                else if(val < 0) { readingColor = '#ef4444'; indColor = "bg-red-500"; desc = `MYOPIA DETECTED. AXIAL ELONGATION. FOCUS IN FRONT OF RETINA.`; }
-                else { readingColor = '#ef4444'; indColor = "bg-red-500"; desc = `HYPEROPIA DETECTED. AXIAL SHORTENING. FOCUS BEHIND RETINA.`; }
+            else { 
+                readingColor = '#ef4444'; indColor = "bg-red-500"; 
+                desc = `HYPEROPIA DETECTED. FOCUS BEHIND RETINA.`; 
             }
         }
         
+        // إخراج النتيجة النهائية
         let finalReading = (displayVal + noise).toFixed(2);
         const resEl = document.getElementById('optics-result');
         resEl.innerText = `SPH: ${finalReading > 0 && finalReading != 0 ? '+':''}${finalReading} D`;
@@ -140,7 +153,6 @@ const simOptics = {
         document.getElementById('optics-desc').innerText = desc;
         document.getElementById('dsp-indicator').className = `absolute top-0 left-0 w-1.5 h-full transition-colors duration-300 ${indColor}`;
         document.getElementById('dsp-status-dot').className = `w-1.5 h-1.5 md:w-2 md:h-2 rounded-full animate-pulse transition-colors ${indColor}`;
-
         // ==========================================
         // 4. رسم تشريح العين (Anatomy Rendering)
         // ==========================================
