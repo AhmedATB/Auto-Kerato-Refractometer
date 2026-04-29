@@ -189,3 +189,39 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+// ==========================================
+// 1. CINEMATIC BOOT SEQUENCE (+1000 Aura)
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const bootLines = [
+        "KERNEL LOADED. INITIALIZING BME SECURE BOOT...",
+        "MOUNTING OPTICAL SENSORS [CCD: OK, SLD: OK]...",
+        "CALIBRATING STEPPER MOTORS (X: 0, Y: 0, Z: 0)...",
+        "LOADING PLACIDO RING ALGORITHMS...",
+        "ESTABLISHING NEURAL TRACKING LINK...",
+        "SYSTEM DIAGNOSTICS: ALL SYSTEMS NOMINAL.",
+        "LAUNCHING CLINICAL INTERFACE..."
+    ];
+    
+    const bootText = document.getElementById('boot-text');
+    const bootProgress = document.getElementById('boot-progress');
+    const overlay = document.getElementById('loading-overlay');
+    
+    let currentLine = 0;
+    
+    function typeLine() {
+        if (currentLine < bootLines.length && bootText) {
+            bootText.innerHTML += `<div>> ${bootLines[currentLine]}</div>`;
+            bootProgress.style.width = `${((currentLine + 1) / bootLines.length) * 100}%`;
+            currentLine++;
+            setTimeout(typeLine, 400 + Math.random() * 400); // تأخير عشوائي لواقعية الآلة
+        } else if (overlay) {
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 1000);
+            }, 800);
+        }
+    }
+    
+    if(overlay) setTimeout(typeLine, 500);
+});
