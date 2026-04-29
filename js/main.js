@@ -1,5 +1,5 @@
 let currentActiveSim = null;
-
+ 
 function nav(secId, e) {
     // 1. إخفاء كل الأقسام
     document.querySelectorAll('.content-sec').forEach(el => el.classList.add('hidden'));
