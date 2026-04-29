@@ -263,26 +263,29 @@
                             <!-- إضاءة علوية للوحة -->
                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
                             
-                            <!-- 1. التحكم بالطول المحوري -->
+                           <!-- 1. التحكم بالطول المحوري -->
                             <div class="mb-8 relative z-10">
                                 <label class="flex justify-between items-center text-cyan-400 font-bold mb-4 uppercase tracking-widest text-xs font-mono">
                                     <span>Axial Length</span>
                                     <span class="text-slate-400 border border-slate-700 px-2 py-0.5 rounded text-[10px] bg-slate-900">الطول المحوري</span>
                                 </label>
                                 
-                                <!-- Slider فخم مخصص -->
-                                <div class="relative w-full h-2 bg-slate-900 rounded-full border border-slate-800 shadow-inner mb-3">
-                                    <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" 
-                                           class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-20"
-                                           oninput="document.getElementById('slider-track').style.width = ((this.value - this.min) / (this.max - this.min)) * 100 + '%'">
-                                    <div id="slider-track" class="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full w-1/2 pointer-events-none shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
-                                    <div class="absolute top-1/2 left-1/2 w-1 h-3 bg-white/30 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-                                </div>
-                                
-                                <div class="flex justify-between text-[10px] text-slate-500 font-mono font-bold uppercase tracking-wider">
-                                    <span class="hover:text-cyan-400 transition-colors">قصر نظر</span>
-                                    <span class="text-cyan-500">مثالي</span>
-                                    <span class="hover:text-cyan-400 transition-colors">طول نظر</span>
+                                <!-- الحل هنا: إضافة dir="ltr" لتوحيد حركة الماوس مع اللون -->
+                                <div dir="ltr" class="w-full">
+                                    <div class="relative w-full h-2 bg-slate-900 rounded-full border border-slate-800 shadow-inner mb-3">
+                                        <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" 
+                                               class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-20"
+                                               oninput="document.getElementById('slider-track').style.width = ((this.value - this.min) / (this.max - this.min)) * 100 + '%'">
+                                        <!-- البار الملون الآن ينمو من اليسار لليمين مع حركة الماوس -->
+                                        <div id="slider-track" class="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full w-1/2 pointer-events-none shadow-[0_0_10px_rgba(0,240,255,0.5)] transition-all duration-75"></div>
+                                        <div class="absolute top-1/2 left-1/2 w-1 h-3 bg-white/30 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                                    </div>
+                                    
+                                    <div class="flex justify-between text-[11px] text-slate-500 font-mono font-bold uppercase tracking-wider">
+                                        <span class="hover:text-cyan-400 transition-colors">(-D) قصر نظر</span>
+                                        <span class="text-cyan-500">مثالي (0)</span>
+                                        <span class="hover:text-cyan-400 transition-colors">طول نظر (+D)</span>
+                                    </div>
                                 </div>
                             </div>
 
