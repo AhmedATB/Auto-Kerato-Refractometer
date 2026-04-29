@@ -51,42 +51,67 @@ const simMires = {
         }
     },
 
-    // تحديث البيانات السريرية
+   // تحديث البيانات السريرية
     update() {
         const type = document.getElementById('corneaSelect').value; 
         const analysisBox = document.getElementById('mire-analysis');
         const hudR1 = document.getElementById('hud-r1'); 
         const hudR2 = document.getElementById('hud-r2');
-        const hudAx = document.getElementById('hud-ax'); 
         const hudWarn = document.getElementById('hud-warning');
         
         hudWarn.classList.add('hidden');
 
+        // نصوص التحليل مصممة لتبدو كتقرير طبي
         if(type === 'normal') {
-            hudR1.innerText = "43.00D"; hudR1.className = "text-green-400 font-bold";
-            hudR2.innerText = "43.00D"; hudR2.className = "text-green-400 font-bold"; hudAx.innerText = "---";
-            analysisBox.innerHTML = `<span class="text-green-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(57,255,20,0.5)] block mb-2">قرنية كروية (Normal)</span><span class="text-white">الفيزياء:</span> الحلقات المنعكسة دائرية تماماً وبمسافات متساوية.<br><span class="text-white">الخريطة:</span> تظهر بلون أخضر متجانس مما يعني أن التحدب طبيعي وموحد في كل المحاور.`;
+            hudR1.innerText = "43.00D"; hudR1.className = "text-green-400";
+            hudR2.innerText = "43.00D"; hudR2.className = "text-green-400";
+            analysisBox.innerHTML = `
+                <span class="text-green-400 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">قرنية كروية (Normal)</span>
+                <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
+                الحلقات المنعكسة دائرية تماماً وبمسافات متساوية.<br><br>
+                <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
+                تظهر بلون أخضر متجانس مما يعني أن التحدب طبيعي وموحد في كل المحاور.`;
         }
         else if(type === 'astig_with') {
-            hudR1.innerText = "42.00D"; hudR1.className = "text-green-400 font-bold";
-            hudR2.innerText = "46.50D"; hudR2.className = "text-amber-400 font-bold"; hudAx.innerText = "180°";
-            analysisBox.innerHTML = `<span class="text-amber-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] block mb-2">استجماتيزم مع القاعدة (WTR)</span><span class="text-white">الفيزياء:</span> المحور العمودي أكثر تحدباً، لذا تنضغط الحلقات من الأعلى والأسفل.<br><span class="text-white">الخريطة:</span> تشكل نمط "ربطة العنق" (Bowtie) العمودية باللون الأحمر/الأصفر.`;
+            hudR1.innerText = "42.00D"; hudR1.className = "text-green-400";
+            hudR2.innerText = "46.50D"; hudR2.className = "text-amber-400";
+            analysisBox.innerHTML = `
+                <span class="text-amber-400 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">استجماتيزم مع القاعدة (WTR)</span>
+                <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
+                المحور العمودي أكثر تحدباً، لذا تنضغط الحلقات من الأعلى والأسفل (كلما زاد التحدب، تقاربت الحلقات).<br><br>
+                <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
+                تشكل نمط "ربطة العنق" (Bowtie) العمودية باللونين الأحمر والأصفر.`;
         }
         else if(type === 'astig_against') {
-            hudR1.innerText = "42.00D"; hudR1.className = "text-green-400 font-bold";
-            hudR2.innerText = "46.50D"; hudR2.className = "text-amber-400 font-bold"; hudAx.innerText = "90°";
-            analysisBox.innerHTML = `<span class="text-amber-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] block mb-2">استجماتيزم ضد القاعدة (ATR)</span><span class="text-white">الفيزياء:</span> المحور الأفقي هو الأكثر تحدباً، فتنضغط الحلقات من الجوانب.<br><span class="text-white">الخريطة:</span> نمط "ربطة العنق" (Bowtie) يظهر أفقياً.`;
+            hudR1.innerText = "42.00D"; hudR1.className = "text-green-400";
+            hudR2.innerText = "46.50D"; hudR2.className = "text-amber-400";
+            analysisBox.innerHTML = `
+                <span class="text-amber-400 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">استجماتيزم ضد القاعدة (ATR)</span>
+                <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
+                المحور الأفقي هو الأكثر تحدباً في هذه الحالة النادرة، فتنضغط الحلقات من الجوانب.<br><br>
+                <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
+                نمط "ربطة العنق" (Bowtie) يظهر أفقياً.`;
         }
         else if(type === 'keratoconus') {
             hudR1.innerText = "54.50D"; hudR1.className = "text-red-500 font-bold animate-pulse";
-            hudR2.innerText = "61.00D"; hudR2.className = "text-red-500 font-bold animate-pulse"; hudAx.innerText = "ERR";
+            hudR2.innerText = "61.00D"; hudR2.className = "text-red-500 font-bold animate-pulse"; 
             hudWarn.classList.remove('hidden');
-            analysisBox.innerHTML = `<span class="text-red-500 font-bold text-lg drop-shadow-[0_0_8px_rgba(239,68,68,0.8)] block mb-2">القرنية المخروطية (Keratoconus)</span><span class="text-white">الفيزياء:</span> تشوه شديد وتقارب كثيف للحلقات في الجزء السفلي.<br><span class="text-white">الخريطة:</span> بقعة حمراء شديدة الانحدار منزاحة للأسفل، الدليل القاطع للمرض.`;
+            analysisBox.innerHTML = `
+                <span class="text-red-500 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">القرنية المخروطية (Keratoconus)</span>
+                <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
+                تشوه شديد وتقارب كثيف للحلقات في الجزء السفلي بسبب ترقق القرنية وبروزها.<br><br>
+                <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
+                بقعة حمراء شديدة الانحدار منزاحة للأسفل، وهو الدليل السريري القاطع للمرض.`;
         }
         else if(type === 'dry_eye') {
-            hudR1.innerText = "ERR"; hudR1.className = "text-amber-500 font-bold";
-            hudR2.innerText = "ERR"; hudR2.className = "text-amber-500 font-bold"; hudAx.innerText = "ERR";
-            analysisBox.innerHTML = `<span class="text-amber-500 font-bold text-lg drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] block mb-2">جفاف العين (Tear Film Breakup)</span><span class="text-white">الفيزياء:</span> تبخر الدموع يدمر سطح الانعكاس الأملس فتتكسر الحلقات.<br><span class="text-white">الخريطة:</span> ظهور بقع عشوائية تمنع الجهاز من أخذ قراءة موثوقة.`;
+            hudR1.innerText = "ERR"; hudR1.className = "text-amber-500";
+            hudR2.innerText = "ERR"; hudR2.className = "text-amber-500";
+            analysisBox.innerHTML = `
+                <span class="text-amber-500 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">جفاف العين (Tear Film Breakup)</span>
+                <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
+                تبخر الدموع يدمر سطح الانعكاس الأملس (المرايا) فتتكسر الحلقات هندسياً.<br><br>
+                <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
+                ظهور بقع عشوائية تمنع خوارزميات الـ DSP من أخذ قراءة موثوقة (False Astigmatism).`;
         }
     },
     
