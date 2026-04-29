@@ -1,28 +1,20 @@
-class Particle {
-    constructor(x, y, vx, vy, color, glow) { 
-        this.x = x; this.y = y; this.vx = vx; this.vy = vy; 
-        this.color = color; this.glow = glow; this.life = 1.0; 
-        this.state = 'outgoing'; // 'outgoing', 'inside_eye', 'returning', 'to_sensor'
-    }
-    update() { 
-        this.x += this.vx; 
-        this.y += this.vy; 
-        this.life -= 0.003; // عمر أطول للجسيمات
-    }
-    draw(c) { 
-        if(this.life <= 0) return; 
-        c.globalAlpha = this.life; 
-        c.shadowBlur = this.glow; c.shadowColor = this.color; 
-        c.fillStyle = this.color; 
-        c.beginPath(); c.arc(this.x, this.y, 2.5, 0, Math.PI*2); c.fill(); 
-        c.globalAlpha = 1.0; c.shadowBlur = 0; 
-    }
-}
+// === MODULE: AUTO-FOGGING & LIGHT PATH SIMULATOR (PREMIUM UPGRADE) ===
 
 const simLight = {
-    initialized: false, canvas: document.getElementById('lightPathCanvas'), ctx: null, 
-    time: 0, animId: null, foggingOn: false, firing: false, particles: [], 
-    lensCurrentX: 0, eyeLensThick: 18, isRunning: false, currentReading: "STANDBY",
+    initialized: false, 
+    canvas: document.getElementById('lightPathCanvas'), 
+    ctx: null, 
+    time: 0, animId: null, isRunning: false,
+    
+    // متغيرات الحالة
+    foggingOn: false, 
+    isFiring: false, 
+    fireProgress: 0, // من 0 إلى 1 للتحكم بنبضة الليزر
+    
+    // متغيرات الحركة الميكانيكية
+    lensCurrentX: 0, 
+    eyeLensThick: 18, 
+    currentReading: "SYSTEM STANDBY",
 
     init() { 
         this.ctx = this.canvas.getContext('2d'); 
@@ -30,8 +22,17 @@ const simLight = {
         window.addEventListener('resize', () => { if(this.isRunning) this.resize(); }); 
         this.initialized = true; 
     },
-    start() { this.isRunning = true; this.animate(); },
-    stop() { this.isRunning = false; cancelAnimationFrame(this.animId); },
+    
+    start() { 
+        this.isRunning = true; 
+        this.animate(); 
+    },
+    
+    stop() { 
+        this.isRunning = false; 
+        cancelAnimationFrame(this.animId); 
+    },
+    
     resize() { 
         if(this.canvas.parentElement) {
             this.canvas.width = this.canvas.parentElement.clientWidth; 
@@ -39,44 +40,41 @@ const simLight = {
         }
     },
     
+    // دالة زر التضبيب
     toggleFogging() {
         this.foggingOn = !this.foggingOn;
-        document.getElementById('btn-fogging').innerText = this.foggingOn ? "مفعّل (تشويش الهدف)" : "مغلق (الهدف واضح)";
-        document.getElementById('btn-fogging').className = this.foggingOn ? "text-green-400 font-bold" : "text-red-400 font-bold";
+        const btn = document.getElementById('btn-fogging');
+        const physioStatus = document.getElementById('physio-status');
         
-        const physioBox = document.getElementById('fogging-explanation'); 
-        const physioText = document.getElementById('physio-status');
-        
-        if(this.foggingOn) {
-            physioBox.className = "mt-6 p-4 border-2 border-green-500/30 rounded-lg bg-green-950/20 transition-all duration-500";
-            physioText.innerHTML = "<span class='text-green-400 font-bold'>عضلة العين مسترخية تماماً (Relaxed).</span><br><br>العدسة ابتعدت عن العين، المنطاد أصبح ضبابياً. الدماغ يئس من التوضيح فأرخى العضلات. <br><span class='text-xs text-cyan-300 font-mono'>*لاحظ تسطح عدسة العين الداخلية*</span>";
+        if (this.foggingOn) {
+            btn.innerText = "مفعّل (الهدف ضبابي)";
+            btn.className = "text-green-400 font-bold drop-shadow-[0_0_8px_rgba(57,255,20,0.6)]";
+            physioStatus.innerHTML = "<span class='text-green-400 font-bold'>عضلة العين مسترخية (Relaxed).</span><br>الهدف ابتعد وأصبح ضبابياً (Optical Infinity). الدماغ توقف عن محاولة التركيز، فتسطحت عدسة العين الداخلية استعداداً للقياس الحقيقي.";
         } else {
-            physioBox.className = "mt-6 p-4 border-2 border-amber-500/30 rounded-lg bg-amber-950/20 transition-all duration-500";
-            physioText.innerHTML = "<span class='text-red-400 font-bold'>عضلة العين متشنجة (Accommodation).</span><br><br>العدسة اقتربت، المريض يرى المنطاد بوضوح، مما يجبر عينه على التركيز. <br><span class='text-xs text-amber-300 font-mono'>*لاحظ انتفاخ عدسة العين الداخلية*</span>";
+            btn.innerText = "مغلق (الهدف واضح)";
+            btn.className = "text-red-400 font-bold drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]";
+            physioStatus.innerHTML = "<span class='text-red-400 font-bold'>عضلة العين متشنجة (Accommodation).</span><br>الهدف قريب وواضح، المريض يركز عليه لا إرادياً مما يؤدي لانتفاخ عدسة العين (قصر نظر كاذب).";
         }
     },
     
+    // دالة إطلاق إشعاع القياس
     fireLaser() {
-        if(this.firing) return; 
-        this.firing = true; 
-        this.currentReading = "CALCULATING...";
+        if(this.isFiring) return; 
+        this.isFiring = true; 
+        this.fireProgress = 0;
+        this.currentReading = "CALCULATING DSP MATRIX...";
         
-        let sldY = this.canvas.height / 2; 
-        let sldX = this.canvas.width * 0.1;
+        // تأثير الزر
+        const btn = document.querySelector('button[onclick="simLight.fireLaser()"]');
+        btn.classList.add('bg-cyan-400', 'text-black', 'scale-95');
+        setTimeout(() => btn.classList.remove('bg-cyan-400', 'text-black', 'scale-95'), 150);
         
-        // إطلاق نبضة مكثفة
-        for(let i=0; i<25; i++) { 
-            setTimeout(() => { 
-                let spread = (Math.random() - 0.5) * 8; // تشتت بسيط للواقعية
-                this.particles.push(new Particle(sldX + 20, sldY + spread, 8, 0, '#ff003c', 20)); 
-            }, i * 40); 
-        }
-        
-        // استقرار القراءة النهائية
+        // إنهاء النبضة بعد 2.5 ثانية
         setTimeout(() => { 
-            this.firing = false; 
-            this.currentReading = this.foggingOn ? "0.00 D (TRUE SPH)" : "-2.50 D (FAKE SPH)";
-        }, 2200); 
+            this.isFiring = false; 
+            this.fireProgress = 0;
+            this.currentReading = this.foggingOn ? "TRUE REFRACTION: 0.00 D" : "FAKE MYOPIA: -2.50 D";
+        }, 2500); 
     },
     
     animate() {
@@ -84,130 +82,166 @@ const simLight = {
         const c = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
         this.time += 0.05; 
         
-        // تأثير التلاشي للجسيمات
-        c.fillStyle = 'rgba(0, 0, 0, 0.35)'; c.fillRect(0, 0, w, h);
+        // 1. مسح الشاشة ورسم الخلفية التقنية
+        c.fillStyle = '#02050f'; c.fillRect(0, 0, w, h);
         
-        // رسم شبكة القياس الهندسية
-        c.strokeStyle = 'rgba(30, 41, 59, 0.5)'; c.lineWidth = 1; c.beginPath();
+        // رسم شبكة (Grid)
+        c.strokeStyle = 'rgba(0, 240, 255, 0.05)'; c.lineWidth = 1;
+        c.beginPath();
         for(let i=0; i<w; i+=40) { c.moveTo(i,0); c.lineTo(i,h); }
-        for(let i=0; i<h; i+=40) { c.moveTo(0,i); c.lineTo(w,i); } c.stroke();
+        for(let i=0; i<h; i+=40) { c.moveTo(0,i); c.lineTo(w,i); }
+        c.stroke();
         
+        // إحداثيات القطع الهندسية
         const cy = h/2; 
         const sldX = w*0.1; 
-        const mirrorX = w*0.4; 
+        const mirrorX = w*0.35; 
         const eyeX = w*0.85; 
         const ccdY = h*0.85;
         
-        // حسابات الحركة الميكانيكية للعدسة وتشنج العين
-        const targetLensX = this.foggingOn ? w*0.45 : w*0.65;
+        // ديناميكية الحركة الميكانيكية والفسيولوجية
+        const targetLensX = this.foggingOn ? w*0.55 : w*0.45;
         if(this.lensCurrentX === 0) this.lensCurrentX = targetLensX;
-        this.lensCurrentX += (targetLensX - this.lensCurrentX) * 0.08;
-        this.eyeLensThick += ((this.foggingOn ? 8 : 18) - this.eyeLensThick) * 0.08;
+        
+        // معادلات الانسيابية (Lerp)
+        this.lensCurrentX += (targetLensX - this.lensCurrentX) * 0.08; // حركة عدسة الجهاز
+        this.eyeLensThick += ((this.foggingOn ? 8 : 18) - this.eyeLensThick) * 0.08; // سمك عدسة العين
 
         // ==========================================
-        // خطوط المسار البصري النظري (Optical Path Rails)
+        // 2. مسار إشعاع الليزر (The Laser Pulse Beam)
         // ==========================================
-        c.setLineDash([5, 5]); c.strokeStyle = this.firing ? 'rgba(255, 0, 60, 0.3)' : 'rgba(51, 65, 85, 0.5)';
-        c.beginPath(); c.moveTo(sldX, cy); c.lineTo(eyeX - 60, cy); c.stroke(); // من المصدر للعين
-        c.strokeStyle = this.firing ? 'rgba(57, 255, 20, 0.3)' : 'rgba(51, 65, 85, 0.5)';
-        c.beginPath(); c.moveTo(mirrorX, cy); c.lineTo(mirrorX, ccdY); c.stroke(); // من المرآة للحساس
-        c.setLineDash([]);
-
-        // ==========================================
-        // فيزياء الجزيئات (Particle Physics Engine)
-        // ==========================================
-        for(let i = this.particles.length - 1; i >= 0; i--) {
-            let p = this.particles[i]; 
-            p.update();
+        if (this.isFiring) {
+            this.fireProgress += 0.015; // سرعة تقدم الشعاع
+            c.lineWidth = 3;
+            c.lineCap = 'round';
             
-            // 1. اختراق القرنية والانكسار نحو الشبكية
-            if(p.state === 'outgoing' && p.x >= eyeX - 60 && p.x < eyeX) { 
-                p.state = 'inside_eye';
-                p.vx = 4; // تبطئ داخل السائل الزجاجي
-                // الانكسار يتأثر بسمك العدسة (Accommodation)
-                let refractionAngle = (p.y - cy) * (this.eyeLensThick / 50);
-                p.vy = -refractionAngle;
-            }
-            // 2. الاصطدام بالشبكية والارتداد
-            else if(p.state === 'inside_eye' && p.x >= eyeX) {
-                p.state = 'returning';
-                p.vx = -6; // ارتداد سريع
-                p.vy = 0; // تعود بشكل أفقي تقريباً
-                p.color = '#39ff14'; // تتحول لأخضر (بيانات مقروءة)
-                p.glow = 15;
-            }
-            // 3. الاصطدام بالمرآة النصف شفافة والنزول للحساس
-            else if(p.state === 'returning' && p.x <= mirrorX + 5 && p.y < cy + 15) { 
-                p.state = 'to_sensor';
-                p.vx = 0; 
-                p.vy = 8; // تنحرف للأسفل 90 درجة
+            // المرحلة الأولى: الانطلاق من SLD إلى العين (لون أحمر IR)
+            if (this.fireProgress > 0.1 && this.fireProgress < 0.6) {
+                let beamEnd = sldX + (eyeX - sldX) * ((this.fireProgress - 0.1) * 2);
+                if (beamEnd > eyeX) beamEnd = eyeX;
+                
+                c.shadowBlur = 15; c.shadowColor = '#ff003c'; c.strokeStyle = '#ff003c';
+                c.beginPath(); c.moveTo(sldX + 25, cy); c.lineTo(beamEnd, cy); c.stroke();
+                
+                // أشعة متوازية علوية وسفلية
+                c.lineWidth = 1; c.strokeStyle = 'rgba(255, 0, 60, 0.5)';
+                c.beginPath(); c.moveTo(sldX + 25, cy-15); c.lineTo(beamEnd, cy-15); c.stroke();
+                c.beginPath(); c.moveTo(sldX + 25, cy+15); c.lineTo(beamEnd, cy+15); c.stroke();
             }
             
-            // تحديث القراءة الحية بشكل جنوني أثناء سقوط البيانات على الحساس
-            if(p.state === 'to_sensor' && p.y >= ccdY - 20) {
-                let liveNoise = (Math.random() * -3.0).toFixed(2);
-                this.currentReading = `DSP: ${liveNoise} D`;
+            // الفيزياء: أين تقع البؤرة؟
+            // إذا تشنجت العين (Thick) البؤرة تسقط قبل الشبكية بمقدار 20px
+            // إذا استرخت العين (Thin) البؤرة تسقط على الشبكية تماماً
+            const focalPointX = eyeX + 45 - (this.eyeLensThick === 8 ? 0 : 20); 
+            
+            // انكسار الضوء داخل العين
+            if (this.fireProgress > 0.4 && this.fireProgress < 0.7) {
+                c.strokeStyle = '#ff003c'; c.lineWidth = 2; c.shadowBlur = 10;
+                c.beginPath(); c.moveTo(eyeX - 35, cy-15); c.lineTo(focalPointX, cy); c.stroke();
+                c.beginPath(); c.moveTo(eyeX - 35, cy+15); c.lineTo(focalPointX, cy); c.stroke();
+                
+                // رسم نقطة البؤرة (Focus Point)
+                c.fillStyle = this.foggingOn ? '#39ff14' : '#ff003c'; // خضراء إذا صح، حمراء إذا خطأ
+                c.beginPath(); c.arc(focalPointX, cy, 4, 0, Math.PI*2); c.fill();
             }
 
-            p.draw(c); 
-            if(p.life <= 0 || p.y > h) this.particles.splice(i, 1);
+            // المرحلة الثانية: الارتداد من الشبكية إلى الـ CCD (لون أخضر Data)
+            if (this.fireProgress > 0.6) {
+                let returnProgress = (this.fireProgress - 0.6) * 2.5;
+                if (returnProgress > 1) returnProgress = 1;
+                
+                c.shadowBlur = 15; c.shadowColor = '#39ff14'; c.strokeStyle = '#39ff14'; c.lineWidth = 2;
+                
+                // من العين للمرآة
+                let retEnd = eyeX - (eyeX - mirrorX) * returnProgress;
+                c.beginPath(); c.moveTo(eyeX, cy); c.lineTo(retEnd, cy); c.stroke();
+                
+                // من المرآة للأسفل (CCD)
+                if (returnProgress > 0.8) {
+                    let downProgress = (returnProgress - 0.8) * 5;
+                    let ccdEnd = cy + (ccdY - cy) * downProgress;
+                    c.beginPath(); c.moveTo(mirrorX, cy); c.lineTo(mirrorX, ccdEnd); c.stroke();
+                    
+                    // وميض الحساس عند استلام البيانات
+                    if(downProgress > 0.9) {
+                        c.fillStyle = 'rgba(57, 255, 20, 0.4)';
+                        c.fillRect(mirrorX-40, ccdY-10, 80, 20);
+                    }
+                }
+            }
+            c.shadowBlur = 0;
         }
 
         // ==========================================
-        // رسم العتاد الصلب (Hardware Components)
+        // 3. رسم العتاد الصلب (Hardware Components)
         // ==========================================
-        // 1. SLD Source
-        c.shadowBlur = 15; c.shadowColor = '#ff003c'; 
-        c.fillStyle = '#0f172a'; c.strokeStyle = '#ff003c'; c.lineWidth = 2; 
+        
+        // --- 1. SLD Source ---
+        c.fillStyle = '#0a0f1c'; c.strokeStyle = '#ff003c'; c.lineWidth = 2; 
+        if(this.isFiring && this.fireProgress < 0.6) { c.shadowBlur = 20; c.shadowColor = '#ff003c'; c.fillStyle = '#3a000b'; }
         c.fillRect(sldX-25, cy-25, 50, 50); c.strokeRect(sldX-25, cy-25, 50, 50);
-        c.shadowBlur = 0; c.fillStyle = '#fff'; c.font = 'bold 12px monospace'; c.fillText('SLD', sldX - 10, cy+45);
+        c.shadowBlur = 0; c.fillStyle = '#fff'; c.font = 'bold 10px monospace'; c.fillText('SLD', sldX - 10, cy+45);
 
-        // 2. Beam Splitter (المرآة)
-        c.shadowColor = '#00f0ff'; c.shadowBlur = 10; c.strokeStyle = '#00f0ff'; c.lineWidth = 3;
+        // --- 2. Beam Splitter (المرآة) ---
+        c.shadowColor = '#00f0ff'; c.shadowBlur = 15; c.strokeStyle = '#00f0ff'; c.lineWidth = 3;
         c.beginPath(); c.moveTo(mirrorX-25, cy-25); c.lineTo(mirrorX+25, cy+25); c.stroke();
-        c.fillStyle = 'rgba(0, 240, 255, 0.15)'; 
+        c.fillStyle = 'rgba(0, 240, 255, 0.1)'; 
         c.beginPath(); c.moveTo(mirrorX-25, cy-25); c.lineTo(mirrorX+25, cy+25); c.lineTo(mirrorX+25, cy+15); c.lineTo(mirrorX-15, cy-25); c.fill();
-        
-        // 3. Fogging Lens
-        c.shadowColor = '#fff'; c.shadowBlur = 8; c.fillStyle = 'rgba(255, 255, 255, 0.2)'; c.strokeStyle = '#fff'; c.lineWidth = 2;
-        c.beginPath(); c.ellipse(this.lensCurrentX, cy, 8, 45, 0, 0, Math.PI*2); c.fill(); c.stroke(); 
-        c.shadowBlur = 0; c.fillStyle = '#94a3b8'; c.fillText('FOG LENS', this.lensCurrentX - 25, cy + 65);
+        c.shadowBlur = 0; c.fillStyle = '#8ba4b5'; c.fillText('BEAM SPLITTER', mirrorX - 35, cy - 40);
 
-        // 4. CCD Sensor
-        c.shadowColor = '#39ff14'; c.shadowBlur = 15; 
-        c.fillStyle = '#050a15'; c.strokeStyle = '#39ff14'; 
-        c.fillRect(mirrorX-45, ccdY-10, 90, 20); c.strokeRect(mirrorX-45, ccdY-10, 90, 20); 
-        c.shadowBlur = 0; c.fillStyle = '#39ff14'; c.fillText('CCD SENSOR', mirrorX-35, ccdY+25);
+        // --- 3. Fogging Lens (عدسة التضبيب المتحركة) ---
+        c.shadowColor = 'rgba(255,255,255,0.5)'; c.shadowBlur = 10; 
+        c.fillStyle = 'rgba(0, 240, 255, 0.1)'; c.strokeStyle = '#00f0ff'; c.lineWidth = 2;
+        c.beginPath(); c.ellipse(this.lensCurrentX, cy, 6, 45, 0, 0, Math.PI*2); c.fill(); c.stroke(); 
         
-        // Live Sensor Readout
-        c.fillStyle = this.foggingOn ? '#00f0ff' : '#ffaa00';
-        c.fillText(this.currentReading, mirrorX-40, ccdY - 20);
+        // سكة حركة العدسة (Rail)
+        c.shadowBlur = 0; c.strokeStyle = '#334155'; c.lineWidth = 4; c.setLineDash([2, 4]);
+        c.beginPath(); c.moveTo(w*0.45, cy + 55); c.lineTo(w*0.65, cy + 55); c.stroke(); c.setLineDash([]);
+        c.fillStyle = '#8ba4b5'; c.fillText('AUTO-FOG LENS', this.lensCurrentX - 35, cy + 75);
 
-        // 5. Target (Balloon)
+        // --- 4. Target (المنطاد) ---
         c.save(); 
-        if(this.foggingOn) { c.filter = 'blur(5px)'; } // التغويش الحقيقي
-        let targetX = eyeX - 110;
-        c.fillStyle = '#ef4444'; c.beginPath(); c.arc(targetX, cy - 15, 15, 0, Math.PI*2); c.fill(); // Balloon
-        c.fillStyle = '#f59e0b'; c.beginPath(); c.moveTo(targetX, cy); c.lineTo(targetX+5, cy+10); c.lineTo(targetX-5, cy+10); c.fill(); // Basket
+        // التغويش الحقيقي بناءً على وضع التضبيب
+        if(this.foggingOn) { c.filter = 'blur(6px)'; c.globalAlpha = 0.6; } 
+        let targetX = w * 0.75;
+        // رسم المنطاد
+        c.fillStyle = '#ef4444'; c.beginPath(); c.arc(targetX, cy - 15, 18, 0, Math.PI*2); c.fill(); 
+        c.fillStyle = '#f59e0b'; c.beginPath(); c.moveTo(targetX, cy); c.lineTo(targetX+6, cy+12); c.lineTo(targetX-6, cy+12); c.fill(); 
         c.restore(); 
-        c.fillStyle = '#64748b'; c.fillText('TARGET', targetX - 18, cy + 25);
+        c.fillStyle = '#8ba4b5'; c.fillText('TARGET', targetX - 18, cy + 30);
+
+        // --- 5. CCD Sensor & HUD ---
+        c.shadowColor = '#39ff14'; c.shadowBlur = 10; 
+        c.fillStyle = '#050a15'; c.strokeStyle = '#39ff14'; c.lineWidth = 2;
+        c.fillRect(mirrorX-40, ccdY-10, 80, 20); c.strokeRect(mirrorX-40, ccdY-10, 80, 20); 
+        c.shadowBlur = 0; c.fillStyle = '#39ff14'; c.fillText('CCD SENSOR', mirrorX-30, ccdY+25);
+        
+        // شاشة القراءة الحية (Live Readout) بجانب الـ CCD
+        c.fillStyle = this.foggingOn ? '#39ff14' : '#ff003c';
+        c.font = 'bold 14px monospace';
+        c.fillText(this.currentReading, mirrorX + 60, ccdY);
 
         // ==========================================
-        // رسم عين المريض (Patient Eye)
+        // 4. رسم عين المريض (Physiology)
         // ==========================================
         // Sclera/Retina
         c.fillStyle = '#0f172a'; c.strokeStyle = '#475569'; c.lineWidth = 3; 
-        c.beginPath(); c.arc(eyeX, cy, 60, 0, Math.PI*2); c.fill(); c.stroke();
+        c.beginPath(); c.arc(eyeX, cy, 50, Math.PI*-0.4, Math.PI*0.4, true); c.fill(); c.stroke();
         
         // Cornea
-        c.shadowBlur = 10; c.shadowColor = '#00f0ff'; c.strokeStyle = '#00f0ff'; c.lineWidth = 4;
-        c.beginPath(); c.arc(eyeX-60, cy, 25, Math.PI*-0.4, Math.PI*0.4, false); c.stroke();
+        c.shadowBlur = 10; c.shadowColor = '#00f0ff'; c.strokeStyle = '#00f0ff'; c.lineWidth = 3;
+        c.beginPath(); c.arc(eyeX-50, cy, 25, Math.PI*-0.35, Math.PI*0.35, false); c.stroke();
         
-        // Crystalline Lens (Accommodation Physics)
+        // Crystalline Lens (عدسة العين الداخلية - Accommodation Physics)
         c.shadowBlur = 0;
-        c.fillStyle = this.foggingOn ? 'rgba(57,255,20,0.15)' : 'rgba(255,0,60,0.15)'; 
+        c.fillStyle = this.foggingOn ? 'rgba(57,255,20,0.1)' : 'rgba(255,0,60,0.1)'; 
         c.strokeStyle = this.foggingOn ? '#39ff14' : '#ff003c'; c.lineWidth = 2;
-        c.beginPath(); c.ellipse(eyeX-35, cy, this.eyeLensThick, 24, 0, 0, Math.PI*2); c.fill(); c.stroke();
+        c.beginPath(); c.ellipse(eyeX-30, cy, this.eyeLensThick, 22, 0, 0, Math.PI*2); c.fill(); c.stroke();
+        
+        // نصوص طبية توضيحية فوق العين
+        c.fillStyle = this.foggingOn ? '#39ff14' : '#ff003c';
+        c.font = '10px monospace';
+        c.fillText(this.foggingOn ? 'RELAXED LENS' : 'SPASM (ACCOMMODATION)', eyeX - 60, cy - 40);
 
         this.animId = requestAnimationFrame(this.animate.bind(this));
     }
