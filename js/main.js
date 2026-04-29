@@ -76,22 +76,22 @@ function openComp(id) {
     const desc = document.getElementById('comp-modal-desc');
     const icon = document.getElementById('comp-modal-icon');
     
-    // قاعدة بيانات القطع الهندسية (محدثة بدقة علمية)
+   // قاعدة بيانات القطع الهندسية (محدثة بالفيزياء الطبية العميقة)
     const data = {
         'sld': { 
             t: 'SLD Source (840nm)', 
             i: '💡', 
-            d: 'مصدر ضوء فائق النقاء (Super Luminescent Diode) يعمل بطول موجي 840nm. يخترق المياه البيضاء (Cataract) بسهولة، ولا يزعج عين المريض لأنه يقع خارج الطيف المرئي.' 
+            d: '<span class="text-cyan-400 font-bold">الوظيفة:</span> مصدر ضوء فائق النقاء يخترق المياه البيضاء (Cataract).<br><br><span class="text-amber-400 font-bold">الآلية الفيزيائية (Projection):</span><br>يُسقط حلقة ضوئية دقيقة (Ring Target) على شبكية المريض. هذه النقطة المضيئة على الشبكية ستعمل الآن كـ "مصدر ضوء ثانوي" يرتد عائداً نحو الجهاز للقياس.' 
         },
         'fog': { 
             t: 'Auto-Fogging System', 
             i: '🌫️', 
-            d: 'نظام ميكانيكي دقيق يدفع الهدف البصري (Fixation Target) بعيداً ليرخي العضلة الهدبية للعين، مما يلغي تأثير التكيف (Accommodation) ويمنع قصر النظر الكاذب.' 
+            d: '<span class="text-cyan-400 font-bold">الوظيفة:</span> منع قصر النظر الكاذب (Instrument Myopia).<br><br><span class="text-amber-400 font-bold">الآلية الفسيولوجية (Relaxation):</span><br>نظام ميكانيكي دقيق يدفع الهدف البصري لجعله ضبابياً (Optical Infinity). هذا يكسر استجابة الدماغ للتركيز، مما يُرخي العضلة الهدبية للعين تماماً قبل أخذ القياس.' 
         },
         'ccd': { 
-            t: 'CCD Sensor Matrix', 
+            t: 'CCD Sensor & DSP', 
             i: '📸', 
-            d: 'حساس كاميرا طبي متقدم يقرأ انعكاسات الأشعة تحت الحمراء من الشبكية والقرنية بدقة بكسلية عالية، ويرسلها لخوارزميات الـ DSP لمعالجتها فورياً.' 
+            d: '<span class="text-cyan-400 font-bold">الوظيفة:</span> حساس الكاميرا والعقل المدبر للجهاز.<br><br><span class="text-amber-400 font-bold">الآلية الفيزيائية (Vergence Analysis):</span><br>يحلل الضوء المرتد من الشبكية؛ إذا كانت العين طبيعية تخرج الأشعة <span class="text-white">"متوازية"</span>. في قصر النظر تخرج <span class="text-red-400">"متجمعة"</span>، وفي طول النظر تخرج <span class="text-red-400">"متشتتة"</span>. الـ DSP يقيس زاوية الانحراف ويحولها فورياً إلى قيمة ديوبتر (Diopter).' 
         }
     };
     
