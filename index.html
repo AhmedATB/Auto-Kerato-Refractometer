@@ -211,43 +211,74 @@
             </section>
 
             <!-- 4. التحديات السريرية -->
+            <!-- 4. التحديات السريرية والفسيولوجية -->
             <section id="sec-limitations" class="content-sec hidden fade-in">
                 <div class="mb-8">
-                    <h2 class="text-3xl md:text-4xl font-black text-white mb-3 md:mb-4">متى يتحدى الجهاز؟ <span class="text-amber-500 text-xl md:text-2xl font-light block md:inline">(الحلول الهندسية)</span></h2>
-                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 max-w-3xl">الأجهزة العادية تفشل في الحالات المعقدة. هندستنا توفر لك الحلول مباشرة لتتجنب إرهاق المريض وإعادة الفحص.</p>
+                    <h2 class="text-3xl md:text-4xl font-black text-white mb-3 md:mb-4">التحديات الفسيولوجية <span class="text-amber-500 text-xl md:text-2xl font-light block md:inline">(Clinical Edge)</span></h2>
+                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 max-w-3xl">حجم العين ليس المتغير الوحيد. العادات اليومية والتقدم بالعمر يغيران فسيولوجيا العدسة. الأجهزة العادية تفشل هنا، لكن هندستنا توفر الحلول.</p>
                     
                     <div class="space-y-4">
-                        <div class="bg-gradient-to-r from-red-950/40 to-black/20 border border-red-900/30 rounded-xl md:rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 relative overflow-hidden">
+                        
+                        <!-- 1. إجهاد الشاشات (تحديث لقصر النظر الكاذب) -->
+                        <div class="bg-gradient-to-r from-red-950/40 to-black/20 border border-red-900/30 rounded-xl md:rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 relative overflow-hidden group hover:border-red-500/50 transition-all duration-300">
                             <div class="absolute left-0 top-0 w-1 h-full bg-red-500 shadow-[0_0_15px_#ef4444]"></div>
                             <div class="md:w-1/4">
-                                <h4 class="font-bold text-white text-lg md:text-xl mb-1">قصر النظر الكاذب</h4>
-                                <span class="text-[10px] md:text-xs font-mono text-red-500/70 tracking-widest">ACCOMMODATION</span>
+                                <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">📱</div>
+                                <h4 class="font-bold text-white text-lg md:text-xl mb-1">إجهاد الشاشات</h4>
+                                <span class="text-[10px] md:text-xs font-mono text-red-500/70 tracking-widest">PSEUDOMYOPIA</span>
                             </div>
-                            <div class="md:w-3/4 flex items-start gap-2 md:gap-3">
-                                <span class="text-green-400 mt-1 flex-shrink-0">✓</span>
+                            <div class="md:w-3/4 flex flex-col justify-center gap-2">
                                 <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-                                    <strong class="text-white">الحل الهندسي:</strong> تفعيل نظام (Auto-fogging) الميكانيكي لدفع الهدف بعيدًا، مما يُرخي العضلة الهدبية تمامًا قبل إطلاق الأشعة.
+                                    التركيز المستمر على الهاتف يسبب تشنج العضلة الهدبية وانتفاخ العدسة الدائم، مما يعطي قراءة **قصر نظر وهمي**.
                                 </p>
+                                <div class="flex items-start gap-2 mt-2 pt-2 border-t border-red-900/50">
+                                    <span class="text-green-400 mt-1 flex-shrink-0">✓</span>
+                                    <p class="text-slate-400 text-sm"><strong class="text-white">الحل الهندسي:</strong> تفعيل نظام (Auto-fogging) الميكانيكي لدفع الهدف بعيدًا، مما يُرخي العضلة تمامًا قبل القياس.</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-amber-950/40 to-black/20 border border-amber-900/30 rounded-xl md:rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 relative overflow-hidden">
+                        <!-- 2. الشيخوخة (الجديد) -->
+                        <div class="bg-gradient-to-r from-purple-950/40 to-black/20 border border-purple-900/30 rounded-xl md:rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300">
+                            <div class="absolute left-0 top-0 w-1 h-full bg-purple-500 shadow-[0_0_15px_#a855f7]"></div>
+                            <div class="md:w-1/4">
+                                <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">👴</div>
+                                <h4 class="font-bold text-white text-lg md:text-xl mb-1">التقدم بالعمر</h4>
+                                <span class="text-[10px] md:text-xs font-mono text-purple-500/70 tracking-widest">PRESBYOPIA</span>
+                            </div>
+                            <div class="md:w-3/4 flex flex-col justify-center gap-2">
+                                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                                    بعد سن الـ 40، تتصلب العدسة الداخلية وتفقد مرونتها، فيفقد المريض قدرة "الزوم" للقريب (لا يستطيع القراءة).
+                                </p>
+                                <div class="flex items-start gap-2 mt-2 pt-2 border-t border-purple-900/50">
+                                    <span class="text-cyan-400 mt-1 flex-shrink-0">ℹ</span>
+                                    <p class="text-slate-400 text-sm"><strong class="text-white">الميزة السريرية:</strong> الجهاز سيقيس للمسافات البعيدة بدقة، لكن المريض سيحتاج حتماً لوصفة **نظارة قراءة (+D)** منفصلة لتعويض تصلب العدسة.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. المياه البيضاء (من الكود القديم) -->
+                        <div class="bg-gradient-to-r from-amber-950/40 to-black/20 border border-amber-900/30 rounded-xl md:rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300">
                             <div class="absolute left-0 top-0 w-1 h-full bg-amber-500 shadow-[0_0_15px_#f59e0b]"></div>
                             <div class="md:w-1/4">
+                                <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🌫️</div>
                                 <h4 class="font-bold text-white text-lg md:text-xl mb-1">المياه البيضاء</h4>
                                 <span class="text-[10px] md:text-xs font-mono text-amber-500/70 tracking-widest">CATARACT</span>
                             </div>
-                            <div class="md:w-3/4 flex items-start gap-2 md:gap-3">
-                                <span class="text-green-400 mt-1 flex-shrink-0">✓</span>
+                            <div class="md:w-3/4 flex flex-col justify-center gap-2">
                                 <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-                                    <strong class="text-white">الحل الهندسي:</strong> استخدام (SLD) طوله الموجي 840nm يخترق العتامة، مع تفعيل (Cataract Mode) لرفع حساسية كاميرا الـ CCD.
+                                    إعتام العدسة الداخلية يشتت أشعة القياس داخل العين، مما يجعل إشارة الـ DSP ضعيفة وغير موثوقة.
                                 </p>
+                                <div class="flex items-start gap-2 mt-2 pt-2 border-t border-amber-900/50">
+                                    <span class="text-green-400 mt-1 flex-shrink-0">✓</span>
+                                    <p class="text-slate-400 text-sm"><strong class="text-white">الحل الهندسي:</strong> استخدام (SLD) طوله الموجي 840nm يخترق العتامة، مع تفعيل (Cataract Mode) لرفع حساسية كاميرا الـ CCD.</p>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>
-
             <!-- 5. مختبر الفيزياء البصرية (الكانفاس المتجاوب مع Slider مصحح) -->
             <section id="sec-sim-optics" class="content-sec hidden fade-in">
                 <div class="mb-8">
@@ -298,8 +329,10 @@
                                 </label>
                                 <div class="relative">
                                     <select id="patientCondition" class="w-full bg-[#050b14] text-slate-300 border border-slate-700/50 rounded-xl p-3 md:p-3.5 outline-none focus:border-cyan-500/50 shadow-inner font-mono text-xs md:text-sm appearance-none cursor-pointer">
-                                        <option value="normal">NORMAL : مريض مثالي</option>
-                                        <option value="cataract">CATARACT : مياه بيضاء (تشتت)</option>
+                                        <option value="normal">NORMAL : مريض طبيعي</option>
+                                        <option value="phone_strain">SCREEN STRAIN : إجهاد التليفون (قصر كاذب)</option>
+                                        <option value="presbyopia">PRESBYOPIA : شيخوخة العدسة (فقدان المرونة)</option>
+                                        <option value="cataract">CATARACT : مياه بيضاء (تشتت بصري)</option>
                                         <option value="shake">TREMOR : عدم استقرار المريض</option>
                                     </select>
                                     <div class="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500 text-xs md:text-sm">▼</div>
