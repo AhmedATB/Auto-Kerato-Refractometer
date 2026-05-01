@@ -92,7 +92,7 @@ const simLight = {
         const eyeX = w*0.85; 
         const ccdY = h*0.75; // رُفع قليلاً لتوفير مساحة للنص بالأسفل
         
-        const targetLensX = this.foggingOn ? w*0.58 : w*0.48;
+        const targetLensX = this.foggingOn ? w*0.45 : w*0.58;
         if(this.lensCurrentX === 0) this.lensCurrentX = targetLensX;
         
         this.lensCurrentX += (targetLensX - this.lensCurrentX) * 0.05; 
@@ -197,7 +197,7 @@ const simLight = {
         c.beginPath(); c.ellipse(this.lensCurrentX, cy, 6, 40, 0, 0, Math.PI*2); c.fill(); c.stroke(); 
         
         c.shadowBlur = 0; c.strokeStyle = '#334155'; c.lineWidth = 4; c.setLineDash([2, 4]);
-        c.beginPath(); c.moveTo(w*0.45, cy + 50); c.lineTo(w*0.60, cy + 50); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.moveTo(w*0.40, cy + 50); c.lineTo(w*0.65, cy + 50); c.stroke(); c.setLineDash([]);
         c.fillStyle = '#8ba4b5'; c.fillText('AUTO-FOG LENS', this.lensCurrentX - 35, cy + 70);
 
         // 4. Target (المنطاد - تم إبعاده عن العين)
