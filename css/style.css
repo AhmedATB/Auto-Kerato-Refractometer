@@ -1,57 +1,241 @@
+/* ==========================================
+   1. المتغيرات والألوان الأساسية (Theme Variables)
+   ========================================== */
 :root {
-    --bg-main: #020617; 
+    /* الألوان الخلفية */
+    --bg-main: #02040a; 
     --bg-panel: #0f172a; 
+    
+    /* ألوان النيون (الطبية) */
     --accent-cyan: #00f0ff;
-    --accent-amber: #ffaa00;
-    --accent-green: #39ff14;
-    --accent-purple: #9d00ff;
+    --accent-blue: #3b82f6;
+    --accent-amber: #f59e0b;
+    --accent-green: #22c55e;
+    --accent-emerald: #10b981;
+    --accent-purple: #a855f7;
+    --accent-red: #ef4444;
+    
+    /* ألوان النصوص */
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
 }
 
-body { font-family: 'Changa', sans-serif; background-color: var(--bg-main); color: var(--text-main); overflow: hidden; margin: 0; padding: 0; }
-
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-main); }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
-
-h1, h2, h3, h4 { letter-spacing: -0.02em; }
-.glass-box { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
-
-.fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.pulse-glow { animation: pulseGlow 2s infinite alternate; }
-@keyframes pulseGlow { from { box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); } to { box-shadow: 0 0 30px rgba(157, 0, 255, 0.5); border-color: rgba(157,0,255,0.8); } }
-
-.sim-container { position: relative; width: 100%; background: #000; border-radius: 12px; border: 2px solid #1e293b; overflow: hidden; }
-canvas { display: block; width: 100%; image-rendering: high-quality; }
-
-.nav-btn { transition: all 0.3s ease; position: relative; overflow: hidden; }
-.nav-btn::before { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--accent-purple); transform: scaleY(0); transition: transform 0.3s ease; }
-.nav-btn.active::before { transform: scaleY(1); }
-.nav-btn.active { background: linear-gradient(90deg, rgba(157, 0, 255, 0.15) 0%, transparent 100%); color: #fff; text-shadow: 0 0 8px var(--accent-purple); font-weight: 700; }
-.nav-btn:hover:not(.active) { background: rgba(255, 255, 255, 0.05); }
-
-.term { color: var(--accent-amber); cursor: help; border-bottom: 1px dashed var(--accent-amber); transition: all 0.2s; font-weight: 600; }
-.term:hover { background: rgba(245, 158, 11, 0.2); text-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
-
-#prof-modal { transition: all 0.3s ease-in-out; }
-#prof-modal.show { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
-
-.receipt-bg { background-color: #fdfbf7; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; color: #1e293b; font-family: monospace; border-top: 2px dashed #94a3b8; border-bottom: 2px dashed #94a3b8; }
-.receipt-row { cursor: pointer; transition: background 0.2s; border-bottom: 1px dotted #cbd5e1; }
-.receipt-row:hover { background-color: #fef3c7; }
-
-.scanline {
-    width: 100%; height: 100%; position: absolute; pointer-events: none;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
-    background-size: 100% 4px; z-index: 10; opacity: 0.3;
+/* ==========================================
+   2. الإعدادات العامة (Base Styles)
+   ========================================== */
+html {
+    scroll-behavior: smooth;
 }
 
-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-th, td { padding: 15px; text-align: right; border-bottom: 1px solid #334155; font-size: 0.95rem; }
-th { background-color: #0f172a; color: #00f0ff; font-weight: bold; border-top: 2px solid #00f0ff; border-bottom: 2px solid #00f0ff; }
-tr:hover { background-color: rgba(0, 240, 255, 0.05); }
-.td-highlight { color: #39ff14; font-family: monospace; font-weight: bold; }
+body { 
+    font-family: 'Changa', sans-serif; 
+    background-color: var(--bg-main); 
+    color: var(--text-main); 
+    margin: 0; 
+    padding: 0; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================
+   3. شريط التمرير (Custom Scrollbar)
+   ========================================== */
+::-webkit-scrollbar { 
+    width: 6px; 
+    height: 6px; 
+}
+::-webkit-scrollbar-track { 
+    background: #050b14; 
+}
+::-webkit-scrollbar-thumb { 
+    background: #1e293b; 
+    border-radius: 10px; 
+}
+::-webkit-scrollbar-thumb:hover { 
+    background: var(--accent-cyan); 
+    box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* ==========================================
+   4. التأثيرات الزجاجية والأنيميشن (Glass & Animations)
+   ========================================== */
+.glass-box { 
+    background: rgba(15, 23, 42, 0.7); 
+    backdrop-filter: blur(25px); 
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(0, 240, 255, 0.15); 
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
+}
+
+/* تأثير دخول السلايدات (سلس جداً) */
+.fade-in { 
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
+
+@keyframes fadeInUp { 
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+}
+
+/* نبض مضيء للعناصر المهمة */
+.pulse-glow { 
+    animation: pulseGlow 2s infinite alternate; 
+}
+
+@keyframes pulseGlow { 
+    from { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); border-color: rgba(0, 240, 255, 0.3); } 
+    to { box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); border-color: rgba(0, 240, 255, 0.8); } 
+}
+
+/* ==========================================
+   5. أزرار القائمة الجانبية (Navigation)
+   ========================================== */
+.nav-btn { 
+    transition: all 0.3s ease; 
+    position: relative; 
+    overflow: hidden; 
+}
+
+.nav-btn::before { 
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    width: 4px; 
+    height: 100%; 
+    background: var(--accent-cyan); 
+    transform: scaleY(0); 
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+.nav-btn.active::before { 
+    transform: scaleY(1); 
+}
+
+.nav-btn.active { 
+    background: linear-gradient(90deg, rgba(0, 240, 255, 0.1) 0%, transparent 100%); 
+    color: #fff; 
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5); 
+}
+
+/* ==========================================
+   6. المصطلحات الطبية (Tooltips & Terms)
+   ========================================== */
+.term { 
+    color: var(--accent-amber); 
+    cursor: help; 
+    border-bottom: 2px dotted var(--accent-amber); 
+    transition: all 0.2s; 
+    font-weight: 800; 
+}
+
+.term:hover { 
+    background: rgba(245, 158, 11, 0.15); 
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.6); 
+    border-bottom: 2px solid var(--accent-amber);
+}
+
+/* ==========================================
+   7. النوافذ المنبثقة (Modals)
+   ========================================== */
+#comp-modal { 
+    transition: all 0.3s ease-in-out; 
+}
+
+#comp-modal.show { 
+    transform: translateY(0) scale(1); 
+    opacity: 1; 
+    pointer-events: auto; 
+}
+
+/* ==========================================
+   8. تأثيرات الكانفاس والشاشات (Simulators)
+   ========================================== */
+.sim-container { 
+    position: relative; 
+    width: 100%; 
+    background: #010205; 
+    overflow: hidden; 
+}
+
+canvas { 
+    display: block; 
+    width: 100%; 
+    image-rendering: high-quality; 
+}
+
+/* خط مسح الشاشات الطبية (CRT Scanline Effect) */
+.scanline {
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25));
+    background-size: 100% 4px; 
+    z-index: 10; 
+    opacity: 0.4;
+}
+
+/* ==========================================
+   9. الورقة الحرارية والجداول (EMR Receipt)
+   ========================================== */
+.receipt-bg { 
+    background-color: #f8fafc; /* لون الورق الحراري */
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px); 
+    background-size: 20px 20px; 
+    color: #0f172a; 
+    font-family: 'Courier New', Courier, monospace; 
+    border-top: 3px dashed #64748b; 
+    border-bottom: 3px dashed #64748b; 
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.05);
+}
+
+.receipt-row { 
+    cursor: pointer; 
+    transition: background 0.2s; 
+    border-bottom: 1px dotted #94a3b8; 
+}
+
+.receipt-row:hover { 
+    background-color: #fef3c7; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 15px; 
+}
+
+th, td { 
+    padding: 16px; 
+    text-align: right; 
+    border-bottom: 1px solid #1e293b; 
+}
+
+th { 
+    background-color: #050b14; 
+    color: var(--accent-cyan); 
+    font-weight: 900; 
+    border-top: 2px solid var(--accent-cyan); 
+    border-bottom: 2px solid var(--accent-cyan); 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tr:hover { 
+    background-color: rgba(0, 240, 255, 0.05); 
+}
+
+.td-highlight { 
+    color: var(--accent-green); 
+    font-family: monospace; 
+    font-weight: bold; 
+    font-size: 1.1em;
+}
