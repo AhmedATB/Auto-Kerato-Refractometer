@@ -308,44 +308,108 @@ function showAnatomy(id) {
 }
 
 // ==========================================
-// نظام بنية النظام الهندسي (System Architecture)
+// 1. بيانات نظام مكونات الجهاز
 // ==========================================
+
+// بيانات المكونات الداخلية (Block Diagram)
 const componentsData = {
     'sld': {
-        icon: '💡', title: 'مصدر الانبعاث (SLD - 840nm)', color: 'cyan', stage: 'Stage 1: Signal Generation',
-        eng: 'توليد حزمة ضوئية تحت حمراء (Near-IR). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر (Coherence) والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة (Speckle Noise) على الصورة النهائية.',
-        clin: 'الطول الموجي 840nm غير مرئي للعين البشرية، فلا يتسبب بتقلص بؤبؤ المريض بسبب الوهج المزعج، كما أنه قادر على اختراق عتامة المياه البيضاء (Cataract) بكفاءة عالية.'
+        icon: '💡', title: 'مصدر الانبعاث (SLD)', color: 'cyan', stage: 'Stage 1: Signal Generation',
+        eng: 'توليد حزمة ضوئية تحت حمراء (Near-IR). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة على الصورة النهائية.',
+        clin: 'الطول الموجي 840nm غير مرئي للعين، فلا يتسبب بتقلص بؤبؤ المريض بسبب الوهج المزعج، ويخترق عتامة المياه البيضاء بكفاءة.'
     },
     'optics': {
         icon: '🔭', title: 'المسار البصري (Optics)', color: 'amber', stage: 'Stage 2: Light Modulation',
-        eng: 'مجموعة معقدة من المنشورات (Prisms) ومقسمات الأشعة (Beam Splitters). تحتوي على محرك خطي دقيق يتحرك ميكانيكياً لسحب العدسة وإبعاد الهدف البصري إلى المالانهاية.',
-        clin: 'هذا النظام الميكانيكي مسؤول عن عملية الـ (Auto-fogging). بدونه، سيقوم دماغ المريض بالتركيز على الجهاز القريب، مما يسبب تشنجاً في العضلة الهدبية وقراءة قصر نظر كاذب.'
+        eng: 'مجموعة معقدة من المنشورات ومقسمات الأشعة. تحتوي على محرك خطي دقيق يتحرك ميكانيكياً لسحب العدسة وإبعاد الهدف البصري إلى المالانهاية.',
+        clin: 'مسؤول عن الـ (Auto-fogging). بدونه سيركز دماغ المريض على الجهاز القريب، مما يسبب تشنجاً في العضلة الهدبية وقراءة قصر نظر كاذب.'
     },
     'sensor': {
-        icon: '📸', title: 'نظام الالتقاط (CCD Sensor)', color: 'purple', stage: 'Stage 3: Data Acquisition',
-        eng: 'مستشعر كاميرا عالي الحساسية مصمم خصيصاً لالتقاط الطيف تحت الأحمر (IR). يقوم بتحويل الفوتونات المرتدة من شبكية العين وتضاريس القرنية إلى إشارات كهربائية (Pixels).',
-        clin: 'دقة هذا الحساس تحدد قدرة الجهاز على القياس في ظروف الإضاءة الصعبة. يتم رفع كسب الحساس (Gain) إلكترونياً لالتقاط أضعف الإشارات العائدة من العيون المريضة بالماء الأبيض.'
+        icon: '📸', title: 'الالتقاط (CCD Sensor)', color: 'purple', stage: 'Stage 3: Data Acquisition',
+        eng: 'مستشعر كاميرا عالي الحساسية مصمم خصيصاً لالتقاط الطيف تحت الأحمر (IR). يقوم بتحويل الفوتونات المرتدة من العين إلى إشارات رقمية.',
+        clin: 'يتم رفع كسب الحساس (Gain) إلكترونياً لالتقاط أضعف الإشارات العائدة من العيون المريضة بالماء الأبيض.'
     },
     'dsp': {
-        icon: '🧠', title: 'المعالج المركزي (DSP Engine)', color: 'green', stage: 'Stage 4: Signal Processing',
-        eng: 'معالج إشارات رقمية (Digital Signal Processor). يستلم الصورة من الـ CCD، ويطبق خوارزميات كشف الحواف (Edge Detection) ومصفوفات فورير لحساب زوايا الانكسار بدقة المايكرون.',
-        clin: 'هو المترجم الفوري للمنظومة. يحول التشوهات الفيزيائية لدوائر الضوء إلى أرقام طبية مفهومة للطبيب (SPH, CYL, AXIS)، ويرسم الخرائط الحرارية لاكتشاف الأمراض المعقدة.'
+        icon: '🧠', title: 'المعالج (DSP Engine)', color: 'green', stage: 'Stage 4: Signal Processing',
+        eng: 'معالج إشارات رقمية. يستلم الصورة ويطبق خوارزميات كشف الحواف ومصفوفات فورير لحساب زوايا الانكسار بدقة المايكرون.',
+        clin: 'المترجم الفوري للمنظومة. يحول التشوهات الفيزيائية إلى أرقام طبية (SPH, CYL) ويرسم الخرائط الحرارية.'
     }
 };
 
+// بيانات المكونات الخارجية (Ergonomics)
+const ergoData = {
+    'screen': {
+        icon: '🖥️', title: 'شاشة العرض (Touch UI)', color: 'blue',
+        desc: 'شاشة لمس ملونة قابلة للإمالة لتناسب مستوى نظر الطبيب. تعرض واجهة المستخدم وتوفر إرشادات حية لضبط المحاذاة مع عين المريض.',
+        note: 'تقلل من منحنى التعلم وتسمح للممرضين بإجراء الفحص المبدئي بثقة وسرعة.'
+    },
+    'joystick': {
+        icon: '🕹️', title: 'عصا التوجيه (3D Joystick)', color: 'amber',
+        desc: 'عصا تحكم تتيح للطبيب تحريك رأس الجهاز بثلاثة أبعاد (X, Y, Z). تحتوي على زر علوي مدمج لإطلاق أشعة القياس يدوياً.',
+        note: 'توفر دقة ناعمة جداً في توجيه الكاميرا نحو بؤبؤ المريض قبل تفعيل التتبع الآلي.'
+    },
+    'chinrest': {
+        icon: '💺', title: 'منصة استقرار المريض', color: 'emerald',
+        desc: 'مزودة بمحرك كهربائي لضبط الارتفاع. مصممة هندسياً لمنع حركة المريض الدقيقة (Motion Artifacts) أثناء أخذ القياسات.',
+        note: 'راحة المريض الجسدية تمنع تشنج عضلات العين اللاإرادي، مما يضمن قراءات مستقرة.'
+    },
+    'printer': {
+        icon: '🖨️', title: 'وحدة الطباعة الفورية', color: 'slate',
+        desc: 'طابعة حرارية مدمجة بخاصية القطع الآلي. توفر نسخة ورقية ملموسة للبيانات فور انتهاء الفحص.',
+        note: 'تعمل كخيار احتياطي مكمل (Backup) لنظام نقل البيانات الرقمي (EMR).'
+    }
+};
+
+// ==========================================
+// 2. وظائف التبديل والضغط
+// ==========================================
+
+// دالة التبديل بين الداخلي والخارجي
+function switchComponentView(viewType) {
+    const internalView = document.getElementById('view-internal');
+    const externalView = document.getElementById('view-external');
+    const btnInternal = document.getElementById('tab-internal');
+    const btnExternal = document.getElementById('tab-external');
+
+    if(viewType === 'internal') {
+        // ستايل الأزرار الفوق
+        btnInternal.className = "px-6 py-2 rounded-lg font-bold text-sm md:text-base transition-all bg-cyan-600 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]";
+        btnExternal.className = "px-6 py-2 rounded-lg font-bold text-sm md:text-base transition-all text-slate-400 hover:text-white";
+        
+        // إخفاء الخارجي وإظهار الداخلي
+        externalView.style.opacity = 0;
+        setTimeout(() => {
+            externalView.classList.replace('flex', 'hidden');
+            internalView.classList.replace('hidden', 'flex');
+            setTimeout(() => internalView.style.opacity = 1, 50);
+        }, 300);
+
+    } else {
+        // ستايل الأزرار الفوق
+        btnExternal.className = "px-6 py-2 rounded-lg font-bold text-sm md:text-base transition-all bg-blue-600 text-black shadow-[0_0_15px_rgba(59,130,246,0.4)]";
+        btnInternal.className = "px-6 py-2 rounded-lg font-bold text-sm md:text-base transition-all text-slate-400 hover:text-white";
+        
+        // إخفاء الداخلي وإظهار الخارجي
+        internalView.style.opacity = 0;
+        setTimeout(() => {
+            internalView.classList.replace('flex', 'hidden');
+            externalView.classList.replace('hidden', 'flex');
+            setTimeout(() => externalView.style.opacity = 1, 50);
+        }, 300);
+    }
+}
+
+// دالة أزرار المكونات الداخلية
 function showComponent(id, btnElement) {
     const data = componentsData[id];
     const panel = document.getElementById('comp-panel');
     
-    // إرجاع كل الأزرار للوضع الخامل (الرصاصي المطفى)
     document.querySelectorAll('.module-btn').forEach(btn => {
-        btn.className = 'module-btn relative z-10 w-full text-right bg-[#050b14] border border-slate-700/50 p-4 md:p-5 rounded-2xl flex items-center gap-4 transition-all group opacity-60 hover:opacity-100';
+        btn.className = 'module-btn relative z-50 cursor-pointer w-full text-right bg-[#050b14] border border-slate-700/50 p-4 md:p-5 rounded-2xl flex items-center gap-4 transition-all group opacity-60 hover:opacity-100';
         btn.querySelector('div:first-child').className = 'w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-2xl shrink-0 transition-all';
         btn.querySelector('h3').className = 'text-slate-300 group-hover:text-white font-bold text-sm md:text-base transition-all';
         btn.querySelector('div.font-mono').className = 'text-[10px] md:text-xs font-mono text-slate-500 tracking-widest mb-1 uppercase transition-all';
     });
 
-    // تفعيل الزر المضغوط وإضاءته بأسلوب الـ Cyberpunk
     const colorClasses = {
         'cyan': 'bg-cyan-900/20 border-cyan-500 shadow-[inset_-4px_0_0_#00f0ff] opacity-100',
         'amber': 'bg-amber-900/20 border-amber-500 shadow-[inset_-4px_0_0_#f59e0b] opacity-100',
@@ -353,30 +417,61 @@ function showComponent(id, btnElement) {
         'green': 'bg-green-900/20 border-green-500 shadow-[inset_-4px_0_0_#22c55e] opacity-100'
     };
     
-    btnElement.className = `module-btn relative z-10 w-full text-right p-4 md:p-5 rounded-2xl flex items-center gap-4 transition-all group ${colorClasses[data.color]}`;
+    btnElement.className = `module-btn relative z-50 cursor-pointer w-full text-right p-4 md:p-5 rounded-2xl flex items-center gap-4 transition-all group ${colorClasses[data.color]}`;
     btnElement.querySelector('div:first-child').className = `w-12 h-12 rounded-xl bg-[#02050f] border border-${data.color}-500/50 flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(var(--tw-colors-${data.color}-500),0.3)] shrink-0`;
     btnElement.querySelector('h3').className = 'text-white font-bold text-sm md:text-base';
     btnElement.querySelector('div.font-mono').className = `text-[10px] md:text-xs font-mono text-${data.color}-400 tracking-widest mb-1 uppercase`;
 
-    // تحديث اللوحة الجانبية مع تأثير التلاشي
     panel.style.opacity = 0;
     setTimeout(() => {
         document.getElementById('comp-icon').innerText = data.icon;
         document.getElementById('comp-title').innerText = data.title;
         document.getElementById('comp-title').nextElementSibling.innerText = data.stage;
-        
-        // تلوين الأيقونة والمؤشر الجانبي والتوهج
         document.getElementById('comp-icon').className = `w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-${data.color}-950/50 border border-${data.color}-500 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(var(--tw-colors-${data.color}-500),0.3)] shrink-0 transition-all`;
         
         const indicator = document.getElementById('comp-indicator');
         if(indicator) indicator.className = `absolute -right-4 top-0 w-1 h-full rounded-full hidden lg:block bg-${data.color}-500 shadow-[0_0_15px_var(--tw-colors-${data.color}-500)] transition-all`;
-        
         document.getElementById('comp-glow').className = `absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-${data.color}-900/20 via-transparent to-transparent pointer-events-none`;
-
         document.getElementById('comp-title').className = `text-2xl md:text-3xl font-black text-${data.color}-400 mb-1`;
         document.getElementById('comp-eng').innerText = data.eng;
         document.getElementById('comp-clin').innerText = data.clin;
+        panel.style.opacity = 1;
+    }, 200);
+}
+
+// دالة أزرار المكونات الخارجية
+function showErgo(id, btnElement) {
+    const data = ergoData[id];
+    const panel = document.getElementById('ergo-panel');
+    
+    document.querySelectorAll('.ergo-btn').forEach(btn => {
+        btn.classList.add('opacity-60');
+        btn.querySelector('span:nth-child(1)').className = 'absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all';
+        btn.querySelector('span:nth-child(2)').className = 'relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all';
+    });
+
+    btnElement.classList.remove('opacity-60');
+    const colorClasses = {
+        'blue': { bg: 'bg-blue-500', shadow: 'shadow-[0_0_15px_#3b82f6]', ping: 'bg-blue-400' },
+        'amber': { bg: 'bg-amber-500', shadow: 'shadow-[0_0_15px_#f59e0b]', ping: 'bg-amber-400' },
+        'emerald': { bg: 'bg-emerald-500', shadow: 'shadow-[0_0_15px_#10b981]', ping: 'bg-emerald-400' },
+        'slate': { bg: 'bg-slate-300', shadow: 'shadow-[0_0_15px_#cbd5e1]', ping: 'bg-slate-200' }
+    };
+    
+    btnElement.querySelector('span:nth-child(1)').className = `absolute inline-flex h-full w-full rounded-full opacity-40 animate-ping ${colorClasses[data.color].ping}`;
+    btnElement.querySelector('span:nth-child(2)').className = `relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 border-2 border-[#02050f] items-center justify-center text-xs md:text-sm font-black text-black ${colorClasses[data.color].bg} ${colorClasses[data.color].shadow}`;
+
+    panel.style.opacity = 0;
+    setTimeout(() => {
+        document.getElementById('ergo-icon').innerText = data.icon;
+        document.getElementById('ergo-title').innerText = data.title;
+        document.getElementById('ergo-desc').innerText = data.desc;
+        document.getElementById('ergo-note').innerText = data.note;
+        document.getElementById('ergo-title').className = `text-xl md:text-2xl font-black text-${data.color}-400`;
+        document.getElementById('ergo-icon').className = `w-12 h-12 rounded-xl bg-${data.color}-900/50 border border-${data.color}-500 flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(var(--tw-colors-${data.color}-500),0.3)]`;
         
+        const indicator = document.getElementById('ergo-indicator');
+        if(indicator) indicator.className = `absolute -right-4 top-0 w-1 h-full rounded-full hidden lg:block bg-${data.color}-500 shadow-[0_0_15px_var(--tw-colors-${data.color}-500)] transition-all`;
         panel.style.opacity = 1;
     }, 200);
 }
