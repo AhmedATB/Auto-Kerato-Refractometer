@@ -220,3 +220,89 @@ document.addEventListener("DOMContentLoaded", () => {
     if(typeof simMires !== 'undefined') simMires.init();
     if(typeof simAI !== 'undefined') simAI.init();
 });
+// ==========================================
+// نظام عرض التشريح الهندسي (Hardware Anatomy)
+// ==========================================
+const anatomyData = {
+    'emitter': {
+        icon: '💡',
+        title: 'مصدر الانبعاث (SLD - 840nm)',
+        color: 'text-cyan-400',
+        eng: 'توليد حزمة ضوئية تحت حمراء (Near-IR). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر (Coherence) والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة (Speckle Noise) على الصورة النهائية.',
+        clin: 'الطول الموجي 840nm غير مرئي للعين البشرية، فلا يتسبب بتقلص بؤبؤ المريض (Miosis) بسبب الوهج المزعج، كما أنه قادر على اختراق عتامة المياه البيضاء (Cataract) بكفاءة عالية جداً.'
+    },
+    'optics': {
+        icon: '🔭',
+        title: 'المسار البصري والتضبيب (Optical Pathway)',
+        color: 'text-amber-400',
+        eng: 'مجموعة معقدة من المنشورات (Prisms) ومقسمات الأشعة (Beam Splitters). تحتوي على محرك خطي دقيق (Stepper Motor) يتحرك لسحب العدسة وإبعاد الهدف البصري (صورة المنطاد) إلى المالانهاية.',
+        clin: 'هذا النظام الميكانيكي مسؤول عن عملية الـ (Auto-fogging). بدونه، سيقوم دماغ المريض بالتركيز على الجهاز القريب، مما يسبب تشنجاً في العضلة الهدبية وقراءة قصر نظر كاذب (Instrument Myopia).'
+    },
+    'sensor': {
+        icon: '📸',
+        title: 'نظام الالتقاط (CCD Image Sensor)',
+        color: 'text-purple-400',
+        eng: 'مستشعر كاميرا عالي الحساسية مصمم خصيصاً لالتقاط الطيف تحت الأحمر (IR). يقوم بتحويل الفوتونات المرتدة من شبكية العين وتضاريس القرنية إلى إشارات كهربائية رقمية.',
+        clin: 'دقة هذا الحساس تحدد قدرة الجهاز على القياس في ظروف الإضاءة الصعبة. في (Cataract Mode)، يتم رفع كسب الحساس (Gain) إلكترونياً لالتقاط أضعف الإشارات العائدة من العيون المريضة.'
+    },
+    'dsp': {
+        icon: '🧠',
+        title: 'العقل المدبر (DSP & Microprocessor)',
+        color: 'text-green-400',
+        eng: 'معالج إشارات رقمية (Digital Signal Processor). يستلم الصورة من الـ CCD، ويطبق خوارزميات كشف الحواف (Edge Detection) ومصفوفات فورير (FFT) لحساب زوايا الانكسار وتتبع البؤبؤ بدقة المايكرون.',
+        clin: 'هو المترجم الفوري. يحول التشوهات الفيزيائية لدوائر الضوء إلى أرقام طبية مفهومة (SPH, CYL, AXIS)، ويرسم الخرائط الحرارية (Heatmaps) لاكتشاف الأمراض المعقدة كالقرنية المخروطية.'
+    }
+};
+
+function showAnatomy(id) {
+    const contentDiv = document.getElementById('anatomy-content');
+    const btns = document.querySelectorAll('.anatomy-btn');
+    
+    // تصفير الأزرار (إرجاعها للون الرصاصي الباهت)
+    btns.forEach(btn => {
+        btn.classList.remove('active-anatomy');
+        btn.classList.add('opacity-50');
+        const iconDiv = btn.querySelector('div');
+        iconDiv.className = 'w-14 h-14 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform z-10';
+        btn.querySelector('span').classList.replace('text-white', 'text-slate-300');
+    });
+
+    // تفعيل الزر المضغوط (إضاءة باللون السماوي)
+    const activeBtn = Array.from(btns).find(b => b.getAttribute('onclick').includes(id));
+    if(activeBtn) {
+        activeBtn.classList.remove('opacity-50');
+        activeBtn.classList.add('active-anatomy');
+        const activeIcon = activeBtn.querySelector('div');
+        activeIcon.className = 'w-14 h-14 rounded-full bg-cyan-950 border-2 border-cyan-500 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.4)] z-10';
+        activeBtn.querySelector('span').classList.replace('text-slate-300', 'text-white');
+    }
+
+    // تأثير اختفاء وظهور للمحتوى
+    contentDiv.classList.remove('fade-in');
+    contentDiv.style.opacity = 0;
+    
+    setTimeout(() => {
+        const data = anatomyData[id];
+        contentDiv.innerHTML = `
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">${data.icon}</span>
+                <h3 class="text-2xl font-black ${data.color}">${data.title}</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-white font-bold mb-2 border-b border-slate-700 pb-1">الوظيفة الهندسية (Engineering)</h4>
+                    <p class="text-slate-300 text-sm leading-relaxed">${data.eng}</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-2 border-b border-slate-700 pb-1">الميزة السريرية (Clinical)</h4>
+                    <p class="text-slate-300 text-sm leading-relaxed flex items-start gap-2">
+                        <span class="text-green-400">✓</span>
+                        ${data.clin}
+                    </p>
+                </div>
+            </div>
+        `;
+        contentDiv.style.opacity = 1;
+        contentDiv.classList.add('fade-in');
+    }, 150);
+}
