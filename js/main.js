@@ -306,3 +306,71 @@ function showAnatomy(id) {
         contentDiv.classList.add('fade-in');
     }, 150);
 }
+
+// ==========================================
+// نظام التشريح الهندسي (Interactive Hotspots)
+// ==========================================
+const componentsData = {
+    'sld': {
+        icon: '💡', title: 'مصدر الانبعاث (SLD - 840nm)', color: 'cyan',
+        eng: 'توليد حزمة ضوئية تحت حمراء (Near-IR). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر (Coherence) والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة (Speckle Noise) على الصورة النهائية.',
+        clin: 'الطول الموجي 840nm غير مرئي للعين البشرية، فلا يتسبب بتقلص بؤبؤ المريض بسبب الوهج المزعج، كما أنه قادر على اختراق عتامة المياه البيضاء (Cataract) بكفاءة عالية.'
+    },
+    'optics': {
+        icon: '🔭', title: 'المسار البصري والمرايا (Optics)', color: 'amber',
+        eng: 'مجموعة معقدة من المنشورات (Prisms) ومقسمات الأشعة (Beam Splitters). تحتوي على محرك خطي دقيق (Stepper Motor) يتحرك لسحب العدسة وإبعاد الهدف البصري إلى المالانهاية.',
+        clin: 'هذا النظام الميكانيكي مسؤول عن عملية الـ (Auto-fogging). بدونه، سيقوم دماغ المريض بالتركيز على الجهاز القريب، مما يسبب تشنجاً في العضلة الهدبية وقراءة قصر نظر كاذب.'
+    },
+    'sensor': {
+        icon: '📸', title: 'نظام الالتقاط (CCD Sensor)', color: 'purple',
+        eng: 'مستشعر كاميرا عالي الحساسية مصمم خصيصاً لالتقاط الطيف تحت الأحمر (IR). يقوم بتحويل الفوتونات المرتدة من شبكية العين وتضاريس القرنية إلى إشارات كهربائية رقمية.',
+        clin: 'دقة هذا الحساس تحدد قدرة الجهاز على القياس في ظروف الإضاءة الصعبة. يتم رفع كسب الحساس (Gain) إلكترونياً لالتقاط أضعف الإشارات العائدة من العيون المريضة.'
+    },
+    'dsp': {
+        icon: '🧠', title: 'المعالج المركزي (DSP Engine)', color: 'green',
+        eng: 'معالج إشارات رقمية (Digital Signal Processor). يستلم الصورة من الـ CCD، ويطبق خوارزميات كشف الحواف (Edge Detection) ومصفوفات فورير لحساب زوايا الانكسار بدقة المايكرون.',
+        clin: 'هو المترجم الفوري. يحول التشوهات الفيزيائية لدوائر الضوء إلى أرقام طبية مفهومة (SPH, CYL, AXIS)، ويرسم الخرائط الحرارية (Heatmaps) لاكتشاف الأمراض كالقرنية المخروطية.'
+    }
+};
+
+function showComponent(id, btnElement) {
+    const data = componentsData[id];
+    const panel = document.getElementById('comp-panel');
+    
+    // تصفير كل النقاط (إرجاعها للون الرصاصي)
+    document.querySelectorAll('.hotspot-btn').forEach(btn => {
+        btn.classList.add('opacity-60');
+        btn.querySelector('span:nth-child(1)').className = 'absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-30 group-hover:animate-ping transition-all';
+        btn.querySelector('span:nth-child(2)').className = 'relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 bg-slate-500 border-2 border-white shadow-[0_0_10px_#94a3b8] items-center justify-center text-[10px] text-white font-bold transition-all';
+    });
+
+    // تفعيل النقطة المضغوطة (إضاءتها حسب لونها)
+    btnElement.classList.remove('opacity-60');
+    const colorClasses = {
+        'cyan': { ping: 'bg-cyan-400 opacity-30 animate-ping', core: 'bg-cyan-500 shadow-[0_0_15px_#00f0ff] text-black' },
+        'amber': { ping: 'bg-amber-400 opacity-30 animate-ping', core: 'bg-amber-500 shadow-[0_0_15px_#f59e0b] text-black' },
+        'purple': { ping: 'bg-purple-400 opacity-30 animate-ping', core: 'bg-purple-500 shadow-[0_0_15px_#a855f7] text-white' },
+        'green': { ping: 'bg-green-400 opacity-30 animate-ping', core: 'bg-green-500 shadow-[0_0_15px_#22c55e] text-black' }
+    };
+    
+    btnElement.querySelector('span:nth-child(1)').className = `absolute inline-flex h-full w-full rounded-full ${colorClasses[data.color].ping}`;
+    btnElement.querySelector('span:nth-child(2)').className = `relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 border-2 border-white items-center justify-center text-[10px] font-bold ${colorClasses[data.color].core}`;
+
+    // تغيير محتوى اللوحة الجانبية مع تأثير تلاشي
+    panel.style.opacity = 0;
+    setTimeout(() => {
+        document.getElementById('comp-icon').innerText = data.icon;
+        document.getElementById('comp-title').innerText = data.title;
+        document.getElementById('comp-title').className = `text-xl md:text-2xl font-black text-${data.color}-400`;
+        
+        // تغيير لون الأيقونة والخط الجانبي
+        document.getElementById('comp-icon').className = `w-10 h-10 rounded-lg bg-${data.color}-950 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(var(--tw-colors-${data.color}-500),0.2)]`;
+        const indicator = document.getElementById('comp-indicator');
+        if(indicator) indicator.className = `absolute -left-4 top-0 w-1 h-full rounded-full hidden lg:block bg-${data.color}-500 shadow-[0_0_15px_var(--tw-colors-${data.color}-500)]`;
+
+        document.getElementById('comp-eng').innerText = data.eng;
+        document.getElementById('comp-clin').innerText = data.clin;
+        
+        panel.style.opacity = 1;
+    }, 200);
+}
