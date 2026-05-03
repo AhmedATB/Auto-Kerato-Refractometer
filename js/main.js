@@ -308,28 +308,28 @@ function showAnatomy(id) {
 }
 
 // ==========================================
-// نظام التشريح الهندسي (Interactive Hotspots)
+// نظام بنية النظام الهندسي (System Architecture)
 // ==========================================
 const componentsData = {
     'sld': {
-        icon: '💡', title: 'مصدر الانبعاث (SLD - 840nm)', color: 'cyan',
+        icon: '💡', title: 'مصدر الانبعاث (SLD - 840nm)', color: 'cyan', stage: 'Stage 1: Signal Generation',
         eng: 'توليد حزمة ضوئية تحت حمراء (Near-IR). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر (Coherence) والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة (Speckle Noise) على الصورة النهائية.',
         clin: 'الطول الموجي 840nm غير مرئي للعين البشرية، فلا يتسبب بتقلص بؤبؤ المريض بسبب الوهج المزعج، كما أنه قادر على اختراق عتامة المياه البيضاء (Cataract) بكفاءة عالية.'
     },
     'optics': {
-        icon: '🔭', title: 'المسار البصري والمرايا (Optics)', color: 'amber',
-        eng: 'مجموعة معقدة من المنشورات (Prisms) ومقسمات الأشعة (Beam Splitters). تحتوي على محرك خطي دقيق (Stepper Motor) يتحرك لسحب العدسة وإبعاد الهدف البصري إلى المالانهاية.',
+        icon: '🔭', title: 'المسار البصري (Optics)', color: 'amber', stage: 'Stage 2: Light Modulation',
+        eng: 'مجموعة معقدة من المنشورات (Prisms) ومقسمات الأشعة (Beam Splitters). تحتوي على محرك خطي دقيق يتحرك ميكانيكياً لسحب العدسة وإبعاد الهدف البصري إلى المالانهاية.',
         clin: 'هذا النظام الميكانيكي مسؤول عن عملية الـ (Auto-fogging). بدونه، سيقوم دماغ المريض بالتركيز على الجهاز القريب، مما يسبب تشنجاً في العضلة الهدبية وقراءة قصر نظر كاذب.'
     },
     'sensor': {
-        icon: '📸', title: 'نظام الالتقاط (CCD Sensor)', color: 'purple',
-        eng: 'مستشعر كاميرا عالي الحساسية مصمم خصيصاً لالتقاط الطيف تحت الأحمر (IR). يقوم بتحويل الفوتونات المرتدة من شبكية العين وتضاريس القرنية إلى إشارات كهربائية رقمية.',
-        clin: 'دقة هذا الحساس تحدد قدرة الجهاز على القياس في ظروف الإضاءة الصعبة. يتم رفع كسب الحساس (Gain) إلكترونياً لالتقاط أضعف الإشارات العائدة من العيون المريضة.'
+        icon: '📸', title: 'نظام الالتقاط (CCD Sensor)', color: 'purple', stage: 'Stage 3: Data Acquisition',
+        eng: 'مستشعر كاميرا عالي الحساسية مصمم خصيصاً لالتقاط الطيف تحت الأحمر (IR). يقوم بتحويل الفوتونات المرتدة من شبكية العين وتضاريس القرنية إلى إشارات كهربائية (Pixels).',
+        clin: 'دقة هذا الحساس تحدد قدرة الجهاز على القياس في ظروف الإضاءة الصعبة. يتم رفع كسب الحساس (Gain) إلكترونياً لالتقاط أضعف الإشارات العائدة من العيون المريضة بالماء الأبيض.'
     },
     'dsp': {
-        icon: '🧠', title: 'المعالج المركزي (DSP Engine)', color: 'green',
+        icon: '🧠', title: 'المعالج المركزي (DSP Engine)', color: 'green', stage: 'Stage 4: Signal Processing',
         eng: 'معالج إشارات رقمية (Digital Signal Processor). يستلم الصورة من الـ CCD، ويطبق خوارزميات كشف الحواف (Edge Detection) ومصفوفات فورير لحساب زوايا الانكسار بدقة المايكرون.',
-        clin: 'هو المترجم الفوري. يحول التشوهات الفيزيائية لدوائر الضوء إلى أرقام طبية مفهومة (SPH, CYL, AXIS)، ويرسم الخرائط الحرارية (Heatmaps) لاكتشاف الأمراض كالقرنية المخروطية.'
+        clin: 'هو المترجم الفوري للمنظومة. يحول التشوهات الفيزيائية لدوائر الضوء إلى أرقام طبية مفهومة للطبيب (SPH, CYL, AXIS)، ويرسم الخرائط الحرارية لاكتشاف الأمراض المعقدة.'
     }
 };
 
@@ -337,37 +337,43 @@ function showComponent(id, btnElement) {
     const data = componentsData[id];
     const panel = document.getElementById('comp-panel');
     
-    // تصفير كل النقاط (إرجاعها للون الرصاصي)
-    document.querySelectorAll('.hotspot-btn').forEach(btn => {
-        btn.classList.add('opacity-60');
-        btn.querySelector('span:nth-child(1)').className = 'absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-30 group-hover:animate-ping transition-all';
-        btn.querySelector('span:nth-child(2)').className = 'relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 bg-slate-500 border-2 border-white shadow-[0_0_10px_#94a3b8] items-center justify-center text-[10px] text-white font-bold transition-all';
+    // إرجاع كل الأزرار للوضع الخامل (الرصاصي المطفى)
+    document.querySelectorAll('.module-btn').forEach(btn => {
+        btn.className = 'module-btn relative z-10 w-full text-right bg-[#050b14] border border-slate-700/50 p-4 md:p-5 rounded-2xl flex items-center gap-4 transition-all group opacity-60 hover:opacity-100';
+        btn.querySelector('div:first-child').className = 'w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-2xl shrink-0 transition-all';
+        btn.querySelector('h3').className = 'text-slate-300 group-hover:text-white font-bold text-sm md:text-base transition-all';
+        btn.querySelector('div.font-mono').className = 'text-[10px] md:text-xs font-mono text-slate-500 tracking-widest mb-1 uppercase transition-all';
     });
 
-    // تفعيل النقطة المضغوطة (إضاءتها حسب لونها)
-    btnElement.classList.remove('opacity-60');
+    // تفعيل الزر المضغوط وإضاءته بأسلوب الـ Cyberpunk
     const colorClasses = {
-        'cyan': { ping: 'bg-cyan-400 opacity-30 animate-ping', core: 'bg-cyan-500 shadow-[0_0_15px_#00f0ff] text-black' },
-        'amber': { ping: 'bg-amber-400 opacity-30 animate-ping', core: 'bg-amber-500 shadow-[0_0_15px_#f59e0b] text-black' },
-        'purple': { ping: 'bg-purple-400 opacity-30 animate-ping', core: 'bg-purple-500 shadow-[0_0_15px_#a855f7] text-white' },
-        'green': { ping: 'bg-green-400 opacity-30 animate-ping', core: 'bg-green-500 shadow-[0_0_15px_#22c55e] text-black' }
+        'cyan': 'bg-cyan-900/20 border-cyan-500 shadow-[inset_-4px_0_0_#00f0ff] opacity-100',
+        'amber': 'bg-amber-900/20 border-amber-500 shadow-[inset_-4px_0_0_#f59e0b] opacity-100',
+        'purple': 'bg-purple-900/20 border-purple-500 shadow-[inset_-4px_0_0_#a855f7] opacity-100',
+        'green': 'bg-green-900/20 border-green-500 shadow-[inset_-4px_0_0_#22c55e] opacity-100'
     };
     
-    btnElement.querySelector('span:nth-child(1)').className = `absolute inline-flex h-full w-full rounded-full ${colorClasses[data.color].ping}`;
-    btnElement.querySelector('span:nth-child(2)').className = `relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 border-2 border-white items-center justify-center text-[10px] font-bold ${colorClasses[data.color].core}`;
+    btnElement.className = `module-btn relative z-10 w-full text-right p-4 md:p-5 rounded-2xl flex items-center gap-4 transition-all group ${colorClasses[data.color]}`;
+    btnElement.querySelector('div:first-child').className = `w-12 h-12 rounded-xl bg-[#02050f] border border-${data.color}-500/50 flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(var(--tw-colors-${data.color}-500),0.3)] shrink-0`;
+    btnElement.querySelector('h3').className = 'text-white font-bold text-sm md:text-base';
+    btnElement.querySelector('div.font-mono').className = `text-[10px] md:text-xs font-mono text-${data.color}-400 tracking-widest mb-1 uppercase`;
 
-    // تغيير محتوى اللوحة الجانبية مع تأثير تلاشي
+    // تحديث اللوحة الجانبية مع تأثير التلاشي
     panel.style.opacity = 0;
     setTimeout(() => {
         document.getElementById('comp-icon').innerText = data.icon;
         document.getElementById('comp-title').innerText = data.title;
-        document.getElementById('comp-title').className = `text-xl md:text-2xl font-black text-${data.color}-400`;
+        document.getElementById('comp-title').nextElementSibling.innerText = data.stage;
         
-        // تغيير لون الأيقونة والخط الجانبي
-        document.getElementById('comp-icon').className = `w-10 h-10 rounded-lg bg-${data.color}-950 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(var(--tw-colors-${data.color}-500),0.2)]`;
+        // تلوين الأيقونة والمؤشر الجانبي والتوهج
+        document.getElementById('comp-icon').className = `w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-${data.color}-950/50 border border-${data.color}-500 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(var(--tw-colors-${data.color}-500),0.3)] shrink-0 transition-all`;
+        
         const indicator = document.getElementById('comp-indicator');
-        if(indicator) indicator.className = `absolute -left-4 top-0 w-1 h-full rounded-full hidden lg:block bg-${data.color}-500 shadow-[0_0_15px_var(--tw-colors-${data.color}-500)]`;
+        if(indicator) indicator.className = `absolute -right-4 top-0 w-1 h-full rounded-full hidden lg:block bg-${data.color}-500 shadow-[0_0_15px_var(--tw-colors-${data.color}-500)] transition-all`;
+        
+        document.getElementById('comp-glow').className = `absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-${data.color}-900/20 via-transparent to-transparent pointer-events-none`;
 
+        document.getElementById('comp-title').className = `text-2xl md:text-3xl font-black text-${data.color}-400 mb-1`;
         document.getElementById('comp-eng').innerText = data.eng;
         document.getElementById('comp-clin').innerText = data.clin;
         
