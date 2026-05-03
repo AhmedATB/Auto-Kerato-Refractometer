@@ -26,23 +26,25 @@
             </div>
         </div>
         
-        <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-2 md:p-3 space-y-0 md:space-y-1 space-x-2 md:space-x-0 rtl:space-x-reverse scrollbar-hide" id="nav-container">
+       <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-2 md:p-3 space-y-0 md:space-y-1 space-x-2 md:space-x-0 rtl:space-x-reverse scrollbar-hide" id="nav-container">
             
-            <button onclick="nav('sec-hero', event)" class="nav-btn active flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🎯</span> النظرة الشاملة</button>
-            <button onclick="nav('sec-multi', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🌌</span> الاندماج الوظيفي</button>
-            <button onclick="nav('sec-sim-optics', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🔬</span> مختبر البصريات</button>
-            <button onclick="nav('sec-limitations', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">⚠️</span> التحديات والحلول</button>
-            
-            <!-- فاصل المحاكيات -->
-            <div class="w-full h-px bg-slate-700 my-3 hidden md:block relative">
-                <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-2 text-[10px] text-cyan-500 font-mono tracking-widest">INTERACTIVE DEMOS</span>
-            </div>
+    <button onclick="nav('sec-hero', event)" class="nav-btn active flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🎯</span> النظرة الشاملة</button>
+    <button onclick="nav('sec-multi', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🌌</span> الاندماج الوظيفي</button>
+    <button onclick="nav('sec-sim-optics', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🔬</span> مختبر البصريات</button>
+    <button onclick="nav('sec-limitations', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">⚠️</span> التحديات والحلول</button>
+    
+    <!-- فاصل المحاكيات -->
+    <div class="w-full h-px bg-slate-700 my-3 hidden md:block relative">
+        <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-2 text-[10px] text-cyan-500 font-mono tracking-widest">INTERACTIVE DEMOS</span>
+    </div>
 
             <button onclick="nav('sec-sim-light', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-cyan-400/80 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🎮</span> محاكي: التضبيب</button>
             <button onclick="nav('sec-sim-kerato', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-cyan-400/80 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🎮</span> محاكي: القرنية</button>
-            <button onclick="nav('sec-sim-ai', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-cyan-400/80 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🎮</span> محاكي: التتبع 3D</button>
-            
-            <div class="w-full h-px bg-slate-700 my-3 hidden md:block"></div>
+             <button onclick="nav('sec-sim-ai', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-cyan-400/80 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🎮</span> محاكي: التتبع 3D</button>
+    
+    <!-- فاصل الهاردوير والبيانات -->
+      <div class="w-full h-px bg-slate-700 my-3 hidden md:block"></div>
+            <button onclick="nav('sec-components', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">⚙️</span> التشريح الهندسي</button>
             <button onclick="nav('sec-printout', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-lg flex items-center whitespace-nowrap text-slate-300 text-sm md:text-base"><span class="text-lg md:text-xl ml-2 md:ml-3">🧾</span> البيانات (EMR)</button>
         </div>
     </nav>
