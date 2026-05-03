@@ -169,37 +169,44 @@
 
                         <div class="flex flex-col lg:flex-row gap-8 items-center bg-gradient-to-br from-slate-900/50 to-black border border-white/5 rounded-3xl p-6 md:p-10 shadow-2xl">
                             
-                            <!-- الجزء الأيمن: صورة الجهاز مع النقاط -->
-                            <div class="w-full lg:w-1/2 relative flex justify-center items-center">
-                                <div class="absolute inset-0 bg-cyan-500/5 blur-[50px] rounded-full pointer-events-none"></div>
-                                <!-- صورة جهازك -->
-                                <img src="./images/fa-100-auto-kerato-refractometer55003979528-removebg-preview.png" alt="Device" class="w-[70%] md:w-[60%] h-auto object-contain relative z-10 drop-shadow-[0_10px_20px_rgba(0,240,255,0.15)] opacity-80">
-                                
-                                <!-- النقطة 1: مصدر الضوء (بالخلف) -->
-                                <button onclick="showComponent('sld', this)" class="hotspot-btn absolute z-20 top-[40%] right-[25%] group">
-                                    <span class="absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-30 group-hover:animate-ping"></span>
-                                    <span class="relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 bg-cyan-500 border-2 border-white shadow-[0_0_15px_#00f0ff] items-center justify-center text-[10px] text-black font-bold">1</span>
-                                </button>
+                         <!-- الجزء الأيمن: صورة الجهاز مع النقاط -->
+                            <div class="w-full lg:w-1/2 flex justify-center items-center">
+                                <!-- هذه الحاوية تلتف حول الصورة بالضبط، فتثبت الأزرار بمكانها دائماً -->
+                                <div class="relative inline-block w-[80%] md:w-[70%]">
+                                    
+                                    <!-- تأثير التوهج بالخلفية -->
+                                    <div class="absolute inset-0 bg-cyan-500/10 blur-[40px] rounded-full pointer-events-none z-0"></div>
+                                    
+                                    <!-- صورة جهازك -->
+                                    <img src="./images/fa-100-auto-kerato-refractometer55003979528-removebg-preview.png" alt="Device" class="w-full h-auto object-contain relative z-10 drop-shadow-[0_10px_20px_rgba(0,240,255,0.15)] opacity-90">
+                                    
+                                    <!-- النقطة 1: مصدر الضوء (بالرأس البصري - مواجه للمريض يمين) -->
+                                    <!-- اضغطنا z-40 حتى نضمن انه دائماً قابل للضغط -->
+                                    <button onclick="showComponent('sld', this)" class="hotspot-btn absolute z-40 top-[35%] right-[15%] group cursor-pointer">
+                                        <span class="absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-40 group-hover:animate-ping"></span>
+                                        <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-cyan-500 border-2 border-[#02050f] shadow-[0_0_15px_#00f0ff] items-center justify-center text-xs md:text-sm text-black font-black">1</span>
+                                    </button>
 
-                                <!-- النقطة 2: المسار البصري والعدسات (بالمنتصف) -->
-                                <button onclick="showComponent('optics', this)" class="hotspot-btn absolute z-20 top-[35%] left-[45%] group opacity-60 hover:opacity-100 transition-opacity">
-                                    <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-30 group-hover:animate-ping transition-all"></span>
-                                    <span class="relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 bg-slate-500 border-2 border-white shadow-[0_0_10px_#94a3b8] items-center justify-center text-[10px] text-white font-bold transition-all">2</span>
-                                </button>
+                                    <!-- النقطة 2: المسار البصري (في منتصف الرأس البصري) -->
+                                    <button onclick="showComponent('optics', this)" class="hotspot-btn absolute z-40 top-[45%] left-[45%] group opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                                        <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all"></span>
+                                        <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all">2</span>
+                                    </button>
 
-                                <!-- النقطة 3: الكاميرا (بالأعلى) -->
-                                <button onclick="showComponent('sensor', this)" class="hotspot-btn absolute z-20 top-[20%] right-[40%] group opacity-60 hover:opacity-100 transition-opacity">
-                                    <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-30 group-hover:animate-ping transition-all"></span>
-                                    <span class="relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 bg-slate-500 border-2 border-white shadow-[0_0_10px_#94a3b8] items-center justify-center text-[10px] text-white font-bold transition-all">3</span>
-                                </button>
+                                    <!-- النقطة 3: حساس الكاميرا (في الخلف أعلى الشاشة يسار) -->
+                                    <button onclick="showComponent('sensor', this)" class="hotspot-btn absolute z-40 top-[25%] left-[30%] group opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                                        <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all"></span>
+                                        <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all">3</span>
+                                    </button>
 
-                                <!-- النقطة 4: المعالج (بالقاعدة) -->
-                                <button onclick="showComponent('dsp', this)" class="hotspot-btn absolute z-20 bottom-[15%] left-[50%] group opacity-60 hover:opacity-100 transition-opacity">
-                                    <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-30 group-hover:animate-ping transition-all"></span>
-                                    <span class="relative inline-flex rounded-full h-5 w-5 md:h-6 md:w-6 bg-slate-500 border-2 border-white shadow-[0_0_10px_#94a3b8] items-center justify-center text-[10px] text-white font-bold transition-all">4</span>
-                                </button>
+                                    <!-- النقطة 4: المعالج واللوحة الأم (في القاعدة السفلية) -->
+                                    <button onclick="showComponent('dsp', this)" class="hotspot-btn absolute z-40 bottom-[18%] left-[45%] group opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                                        <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all"></span>
+                                        <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all">4</span>
+                                    </button>
+
+                                </div>
                             </div>
-
                             <!-- الجزء الأيسر: لوحة المعلومات -->
                             <div class="w-full lg:w-1/2 relative">
                                 <div class="absolute -left-4 top-0 w-1 h-full bg-cyan-500 shadow-[0_0_15px_#00f0ff] rounded-full hidden lg:block" id="comp-indicator"></div>
