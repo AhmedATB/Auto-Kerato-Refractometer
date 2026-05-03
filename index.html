@@ -263,61 +263,90 @@
                                 </div>
                             </div>
 
-                            <!-- القسم الثاني: المكونات الخارجية (Hotspots) - يظهر عند الضغط -->
-                            <div id="view-external" class="hidden flex-col lg:flex-row gap-8 items-center bg-gradient-to-br from-[#050b14] to-[#02040a] border border-white/5 rounded-3xl p-6 md:p-10 shadow-2xl transition-opacity duration-500 opacity-0 relative z-40">
+                            <!-- القسم الثاني: المكونات الخارجية (Infographic Callouts) - يظهر عند الضغط -->
+                            <div id="view-external" class="hidden flex-col items-center justify-center bg-gradient-to-br from-[#050b14] to-[#02040a] border border-white/5 rounded-3xl p-6 md:p-12 shadow-2xl transition-opacity duration-500 opacity-0 relative z-40 min-h-[500px]">
                                 
-                                <!-- الجزء الأيمن: الصورة والنقاط -->
-                                <div class="w-full lg:w-1/2 flex justify-center items-center">
-                                    <div class="relative inline-block w-[80%] md:w-[70%]">
-                                        <div class="absolute inset-0 bg-blue-500/10 blur-[40px] rounded-full pointer-events-none z-0"></div>
-                                        <img src="./images/fa-100-auto-kerato-refractometer55003979528-removebg-preview.png" alt="Device Exterior" class="w-full h-auto object-contain relative z-10 drop-shadow-[0_10px_20px_rgba(0,100,255,0.15)] opacity-90">
-                                        
-                                        <!-- النقطة 1: الشاشة -->
-                                        <button onclick="showErgo('screen', this)" class="ergo-btn absolute z-50 top-[20%] left-[20%] group cursor-pointer active-ergo">
-                                            <span class="absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-40 group-hover:animate-ping"></span>
-                                            <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-blue-500 border-2 border-[#02050f] shadow-[0_0_15px_#3b82f6] items-center justify-center text-xs md:text-sm text-white font-black">1</span>
-                                        </button>
-
-                                        <!-- النقطة 2: عصا التحكم -->
-                                        <button onclick="showErgo('joystick', this)" class="ergo-btn absolute z-50 top-[55%] left-[35%] group opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
-                                            <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all"></span>
-                                            <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all">2</span>
-                                        </button>
-
-                                        <!-- النقطة 3: مسند المريض -->
-                                        <button onclick="showErgo('chinrest', this)" class="ergo-btn absolute z-50 top-[45%] right-[5%] group opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
-                                            <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all"></span>
-                                            <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all">3</span>
-                                        </button>
-
-                                        <!-- النقطة 4: الطابعة -->
-                                        <button onclick="showErgo('printer', this)" class="ergo-btn absolute z-50 bottom-[10%] left-[25%] group opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
-                                            <span class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-all"></span>
-                                            <span class="relative inline-flex rounded-full h-6 w-6 md:h-8 md:w-8 bg-slate-600 border-2 border-[#02050f] shadow-[0_0_10px_#94a3b8] items-center justify-center text-xs md:text-sm text-white font-black transition-all">4</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- الجزء الأيسر: لوحة التفاصيل -->
-                                <div class="w-full lg:w-1/2 relative z-50">
-                                    <div class="absolute -right-4 top-0 w-1 h-full bg-blue-500 shadow-[0_0_15px_#3b82f6] rounded-full hidden lg:block" id="ergo-indicator"></div>
+                                <div class="relative w-full max-w-4xl flex justify-center items-center">
+                                    <!-- توهج خلفي للجهاز -->
+                                    <div class="absolute inset-0 bg-blue-500/10 blur-[60px] rounded-full z-0 pointer-events-none"></div>
                                     
-                                    <div id="ergo-panel" class="bg-black/40 border border-slate-700 rounded-2xl p-6 md:p-8 min-h-[250px] shadow-inner transition-opacity duration-300">
-                                        <div class="flex items-center gap-3 mb-4">
-                                            <div class="w-12 h-12 rounded-xl bg-blue-900/50 border border-blue-500 flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(59,130,246,0.3)]" id="ergo-icon">🖥️</div>
-                                            <h3 class="text-xl md:text-2xl font-black text-blue-400" id="ergo-title">شاشة العرض (Touch UI)</h3>
+                                    <!-- صورة الجهاز (مكبرة وفي المنتصف) -->
+                                    <img src="./images/fa-100-auto-kerato-refractometer55003979528-removebg-preview.png" alt="Device Exterior" class="relative z-10 w-[60%] md:w-[45%] drop-shadow-[0_20px_30px_rgba(0,100,255,0.2)] opacity-90">
+
+                                    <!-- ========================================== -->
+                                    <!-- 1. مؤشر الشاشة (أعلى اليسار) -->
+                                    <!-- ========================================== -->
+                                    <div class="absolute top-[20%] left-[-2%] md:left-[5%] flex items-center z-20 group hover:scale-105 transition-transform cursor-default">
+                                        <!-- صندوق النص -->
+                                        <div class="bg-[#02050f]/80 border border-blue-500/50 p-2.5 md:p-4 rounded-xl backdrop-blur-md text-right w-28 md:w-48 shadow-[0_0_15px_rgba(59,130,246,0.3)] relative overflow-hidden">
+                                            <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                                            <h4 class="text-blue-400 font-bold text-[11px] md:text-sm mb-1">شاشة لمس (Touch UI)</h4>
+                                            <p class="text-slate-400 text-[8px] md:text-[10px] leading-tight">واجهة رسومية لضبط المحاذاة مع العين بسهولة.</p>
                                         </div>
-                                        
-                                        <div class="space-y-4">
-                                            <p class="text-slate-300 text-sm md:text-base leading-relaxed" id="ergo-desc">شاشة لمس ملونة قابلة للإمالة لتناسب مستوى نظر الطبيب. تعرض واجهة المستخدم الرسومية وتوفر إرشادات حية لضبط المحاذاة مع عين المريض.</p>
-                                            
-                                            <div class="bg-blue-950/30 border border-blue-900/50 p-3 rounded-lg flex items-center gap-3">
-                                                <span class="text-blue-400 text-xl">💡</span>
-                                                <p class="text-slate-400 text-xs md:text-sm" id="ergo-note">تقلل من منحنى التعلم وتسمح للممرضين بإجراء الفحص المبدئي بثقة وسرعة.</p>
+                                        <!-- الخط والنقطة -->
+                                        <div class="w-8 md:w-16 h-px bg-blue-500/70 relative">
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6]">
+                                                <div class="absolute inset-0 bg-blue-400 rounded-full animate-ping opacity-60"></div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- ========================================== -->
+                                    <!-- 2. مؤشر عصا التحكم (أسفل اليسار) -->
+                                    <!-- ========================================== -->
+                                    <div class="absolute top-[55%] left-[-5%] md:left-[2%] flex items-center z-20 group hover:scale-105 transition-transform cursor-default">
+                                        <!-- صندوق النص -->
+                                        <div class="bg-[#02050f]/80 border border-amber-500/50 p-2.5 md:p-4 rounded-xl backdrop-blur-md text-right w-28 md:w-48 shadow-[0_0_15px_rgba(245,158,11,0.3)] relative overflow-hidden">
+                                            <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                                            <h4 class="text-amber-400 font-bold text-[11px] md:text-sm mb-1">عصا التوجيه (Joystick)</h4>
+                                            <p class="text-slate-400 text-[8px] md:text-[10px] leading-tight">لتحريك رأس الجهاز (3D) بدقة والتقاط القياس.</p>
+                                        </div>
+                                        <!-- الخط والنقطة -->
+                                        <div class="w-12 md:w-20 h-px bg-amber-500/70 relative">
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 rounded-full bg-amber-500 shadow-[0_0_10px_#f59e0b]">
+                                                <div class="absolute inset-0 bg-amber-400 rounded-full animate-ping opacity-60"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ========================================== -->
+                                    <!-- 3. مؤشر مسند المريض (أعلى اليمين) -->
+                                    <!-- ========================================== -->
+                                    <div class="absolute top-[30%] right-[-2%] md:right-[5%] flex items-center z-20 group hover:scale-105 transition-transform cursor-default">
+                                        <!-- الخط والنقطة (معكوسة لأنها باليمين) -->
+                                        <div class="w-8 md:w-16 h-px bg-emerald-500/70 relative">
+                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]">
+                                                <div class="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-60"></div>
+                                            </div>
+                                        </div>
+                                        <!-- صندوق النص -->
+                                        <div class="bg-[#02050f]/80 border border-emerald-500/50 p-2.5 md:p-4 rounded-xl backdrop-blur-md text-right w-28 md:w-48 shadow-[0_0_15px_rgba(16,185,129,0.3)] relative overflow-hidden">
+                                            <div class="absolute top-0 right-0 w-1 h-full bg-emerald-500"></div>
+                                            <h4 class="text-emerald-400 font-bold text-[11px] md:text-sm mb-1">منصة استقرار المريض</h4>
+                                            <p class="text-slate-400 text-[8px] md:text-[10px] leading-tight">مسند ذقن لمنع الحركة الدقيقة وضمان دقة الفحص.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- ========================================== -->
+                                    <!-- 4. مؤشر الطابعة (أسفل اليمين - مكانها الصحيح) -->
+                                    <!-- ========================================== -->
+                                    <div class="absolute bottom-[20%] right-[0%] md:right-[8%] flex items-center z-20 group hover:scale-105 transition-transform cursor-default">
+                                        <!-- الخط والنقطة (معكوسة) -->
+                                        <div class="w-6 md:w-12 h-px bg-slate-400/70 relative">
+                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 rounded-full bg-slate-400 shadow-[0_0_10px_#94a3b8]">
+                                                <div class="absolute inset-0 bg-slate-300 rounded-full animate-ping opacity-60"></div>
+                                            </div>
+                                        </div>
+                                        <!-- صندوق النص -->
+                                        <div class="bg-[#02050f]/80 border border-slate-500/50 p-2.5 md:p-4 rounded-xl backdrop-blur-md text-right w-28 md:w-48 shadow-[0_0_15px_rgba(148,163,184,0.3)] relative overflow-hidden">
+                                            <div class="absolute top-0 right-0 w-1 h-full bg-slate-400"></div>
+                                            <h4 class="text-slate-300 font-bold text-[11px] md:text-sm mb-1">وحدة الطباعة الفورية</h4>
+                                            <p class="text-slate-500 text-[8px] md:text-[10px] leading-tight">طابعة حرارية لإصدار تقرير ورقي كخيار احتياطي.</p>
+                                        </div>
+                                    </div>
+
                                 </div>
+                            </div>
                             </div>
 
                         </div>
