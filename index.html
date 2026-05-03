@@ -163,49 +163,77 @@
             </section>
 
             <!-- 3. التشريح الهندسي -->
+            <!-- 2. التشريح الهندسي ومسار الإشارة (Hardware Anatomy) -->
             <section id="sec-components" class="content-sec hidden fade-in">
                 <div class="mb-8">
-                    <h2 class="text-3xl md:text-4xl font-black text-white mb-3 md:mb-4">التشريح الهندسي <span class="text-slate-500 font-light block md:inline text-xl md:text-2xl">(ما وراء الغلاف)</span></h2>
-                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 max-w-3xl">كأطباء، أنتم ترون الواجهة، ونحن كمهندسين نصمم "المحرك". اضغط على أي نقطة ضوئية لترى انعكاسها على دقة تشخيصك.</p>
+                    <h2 class="text-3xl md:text-4xl font-black text-white mb-3 md:mb-4">التشريح الهندسي <span class="text-cyan-500 text-xl md:text-2xl font-light block md:inline">(Hardware Anatomy)</span></h2>
+                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 max-w-3xl">نظرة عميقة داخل الصندوق الأسود. كيف يتم توليد، توجيه، ومعالجة الإشارة الضوئية خطوة بخطوة للحصول على أدق قراءة.</p>
 
-                    <div class="relative w-full h-[350px] md:h-[500px] bg-[#02050f] rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at center, #00f0ff 1px, transparent 1px); background-size: 20px 20px md:background-size: 30px 30px;"></div>
-                        <div class="absolute top-1/2 left-0 w-full h-px bg-cyan-500/20 -translate-y-1/2"></div>
-                        <div class="absolute left-1/2 top-0 w-px h-full bg-cyan-500/20 -translate-x-1/2"></div>
+                    <!-- شريط مسار الإشارة (Signal Flow Pipeline) -->
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-slate-900/50 p-4 md:p-6 rounded-2xl border border-slate-700/50">
                         
-                        <!-- مسارات الضوء -->
-                        <div class="absolute top-1/2 right-[15%] w-[65%] h-0.5 bg-gradient-to-l from-cyan-400 via-cyan-400 to-transparent shadow-[0_0_15px_#00f0ff] -translate-y-1/2"></div>
-                        <div class="absolute top-[30%] right-[45%] w-0.5 h-[20%] bg-gradient-to-t from-emerald-400 to-transparent shadow-[0_0_15px_#34d399]"></div>
-
-                        <!-- Nodes -->
-                        <button onclick="openComp('sld')" class="absolute top-1/2 right-[15%] -translate-y-1/2 -translate-x-1/2 outline-none">
-                            <div class="w-4 h-4 md:w-6 md:h-6 bg-cyan-500 rounded-full shadow-[0_0_20px_#00f0ff] flex items-center justify-center relative">
-                                <div class="absolute inset-0 rounded-full border border-cyan-400 animate-ping opacity-75"></div>
-                            </div>
-                            <div class="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 text-cyan-400 font-mono text-[8px] md:text-xs font-bold tracking-widest whitespace-nowrap bg-[#02050f]/80 px-1 rounded">SLD SOURCE</div>
+                        <!-- الزر الأول -->
+                        <button onclick="showAnatomy('emitter')" class="anatomy-btn active-anatomy flex-1 w-full flex flex-col items-center gap-2 group transition-all">
+                            <div class="w-14 h-14 rounded-full bg-cyan-950 border-2 border-cyan-500 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.4)] z-10">💡</div>
+                            <span class="text-white font-bold text-sm">مصدر الانبعاث</span>
                         </button>
 
-                        <button onclick="openComp('fog')" class="absolute top-1/2 right-[35%] -translate-y-1/2 -translate-x-1/2 outline-none">
-                            <div class="w-4 h-4 md:w-6 md:h-6 bg-amber-500 rounded-full shadow-[0_0_20px_#f59e0b] flex items-center justify-center relative">
-                                <div class="absolute inset-0 rounded-full border border-amber-400 animate-ping opacity-75" style="animation-delay: 0.5s;"></div>
-                            </div>
-                            <div class="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 text-amber-400 font-mono text-[8px] md:text-xs font-bold tracking-widest whitespace-nowrap bg-[#02050f]/80 px-1 rounded">AUTO-FOGGING</div>
+                        <div class="hidden md:block w-8 h-1 bg-gradient-to-r from-cyan-500 to-slate-700"></div>
+                        <div class="md:hidden h-6 w-1 bg-gradient-to-b from-cyan-500 to-slate-700"></div>
+
+                        <!-- الزر الثاني -->
+                        <button onclick="showAnatomy('optics')" class="anatomy-btn flex-1 w-full flex flex-col items-center gap-2 group transition-all opacity-50 hover:opacity-100">
+                            <div class="w-14 h-14 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform z-10">🔭</div>
+                            <span class="text-slate-300 font-bold text-sm">المسار البصري</span>
                         </button>
 
-                        <button onclick="openComp('ccd')" class="absolute top-[30%] right-[45%] -translate-y-1/2 -translate-x-1/2 outline-none">
-                            <div class="w-4 h-4 md:w-6 md:h-6 bg-emerald-500 rounded-full shadow-[0_0_20px_#10b981] flex items-center justify-center relative">
-                                <div class="absolute inset-0 rounded-full border border-emerald-400 animate-ping opacity-75" style="animation-delay: 1s;"></div>
-                            </div>
-                            <div class="absolute -top-5 md:-top-6 left-1/2 -translate-x-1/2 text-emerald-400 font-mono text-[8px] md:text-xs font-bold tracking-widest whitespace-nowrap bg-[#02050f]/80 px-1 rounded">CCD SENSOR</div>
+                        <div class="hidden md:block w-8 h-1 bg-slate-700"></div>
+                        <div class="md:hidden h-6 w-1 bg-slate-700"></div>
+
+                        <!-- الزر الثالث -->
+                        <button onclick="showAnatomy('sensor')" class="anatomy-btn flex-1 w-full flex flex-col items-center gap-2 group transition-all opacity-50 hover:opacity-100">
+                            <div class="w-14 h-14 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform z-10">📸</div>
+                            <span class="text-slate-300 font-bold text-sm">نظام الالتقاط</span>
                         </button>
 
-                        <div class="absolute top-1/2 right-[80%] -translate-y-1/2 -translate-x-1/2 flex flex-col items-center">
-                            <div class="w-10 h-10 md:w-16 md:h-16 rounded-full border-2 border-slate-600 bg-slate-900/50 backdrop-blur flex items-center justify-center">
-                                <span class="text-sm md:text-2xl opacity-50">👁️</span>
+                        <div class="hidden md:block w-8 h-1 bg-slate-700"></div>
+                        <div class="md:hidden h-6 w-1 bg-slate-700"></div>
+
+                        <!-- الزر الرابع -->
+                        <button onclick="showAnatomy('dsp')" class="anatomy-btn flex-1 w-full flex flex-col items-center gap-2 group transition-all opacity-50 hover:opacity-100">
+                            <div class="w-14 h-14 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform z-10">🧠</div>
+                            <span class="text-slate-300 font-bold text-sm">العقل المدبر</span>
+                        </button>
+                    </div>
+
+                    <!-- شاشة العرض التفصيلية (Dashboard Screen) -->
+                    <div class="bg-[#050b14] border border-cyan-900/50 rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-2xl min-h-[250px]">
+                        <!-- تأثير بصري في الخلفية -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+                        
+                        <!-- المحتوى المتغير -->
+                        <div id="anatomy-content" class="relative z-10 fade-in">
+                            <!-- المحتوى الافتراضي (SLD) -->
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-3xl">💡</span>
+                                <h3 class="text-2xl font-black text-cyan-400">مصدر الانبعاث (SLD - 840nm)</h3>
                             </div>
-                            <div class="mt-2 md:mt-3 text-slate-500 font-mono text-[8px] md:text-xs font-bold tracking-widest whitespace-nowrap bg-[#02050f]/80 px-1 rounded">PATIENT EYE</div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="text-white font-bold mb-2 border-b border-slate-700 pb-1">الوظيفة الهندسية</h4>
+                                    <p class="text-slate-300 text-sm leading-relaxed">توليد حزمة ضوئية تحت حمراء (Near-IR). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر (Coherence) والأمان والسطوع لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة (Speckle Noise) على الصورة.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-2 border-b border-slate-700 pb-1">الميزة السريرية</h4>
+                                    <p class="text-slate-300 text-sm leading-relaxed flex items-start gap-2">
+                                        <span class="text-green-400">✓</span>
+                                        الطول الموجي 840nm غير مرئي للعين البشرية، فلا يتسبب بتقلص بؤبؤ المريض بسبب الوهج، كما أنه قادر على اختراق المياه البيضاء (Cataract) بكفاءة عالية.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </section>
 
