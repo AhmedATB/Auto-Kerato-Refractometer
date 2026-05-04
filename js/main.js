@@ -172,39 +172,53 @@ document.addEventListener('keydown', function(event) {
 });
 
 // ==========================================
-// شاشة الإقلاع والتحميل (Boot Sequence)
+// 4. نظام الإقلاع السينمائي (Cinematic Boot)
 // ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('loading-overlay');
+document.addEventListener("DOMContentLoaded", () => {
+    const bootLines = [
+        "BME KERNEL v3.0 LOADED. SECURE BOOT INITIATED...",
+        "MOUNTING OPTICAL SENSORS [CCD: OK, SLD: OK]...",
+        "CALIBRATING STEPPER MOTORS (X: 0, Y: 0, Z: 0)...",
+        "LOADING PLACIDO RING ALGORITHMS...",
+        "ESTABLISHING NEURAL TRACKING LINK...",
+        "SYSTEM DIAGNOSTICS: ALL SYSTEMS NOMINAL.",
+        "LAUNCHING CLINICAL INTERFACE..."
+    ];
+    
     const bootText = document.getElementById('boot-text');
     const bootProgress = document.getElementById('boot-progress');
-
-    if (overlay && bootText && bootProgress) {
-        const bootSequence = [
-            "INITIALIZING BME KERNEL...",
-            "LOADING DSP ALGORITHMS...",
-            "CALIBRATING OPTICAL SENSORS...",
-            "SYSTEM READY."
-        ];
-
-        let step = 0;
-        
-        // تغيير النص وزيادة شريط التحميل كل 400 ملي ثانية
-        const bootInterval = setInterval(() => {
-            if (step < bootSequence.length) {
-                bootText.innerText = bootSequence[step];
-                bootProgress.style.width = `${(step + 1) * 25}%`;
-                step++;
-            } else {
-                clearInterval(bootInterval);
-                // إخفاء الشاشة بسلاسة
+    const overlay = document.getElementById('loading-overlay');
+    
+    let currentLine = 0;
+    
+    function typeLine() {
+        if (currentLine < bootLines.length && bootText) {
+            bootText.innerHTML += `<div class="mb-1">> ${bootLines[currentLine]}</div>`;
+            bootProgress.style.width = `${((currentLine + 1) / bootLines.length) * 100}%`;
+            currentLine++;
+            setTimeout(typeLine, 300 + Math.random() * 300); // سرعة إقلاع ديناميكية
+        } else if (overlay) {
+            // إنهاء الإقلاع وفتح الشاشة الرئيسية
+            setTimeout(() => {
                 overlay.style.opacity = '0';
                 setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 1000); // 1000ms هي مدة الـ duration-1000 بالـ HTML
-            }
-        }, 400); // سرعة التحميل (تقدر تقللها اذا تريدها اسرع)
+                    overlay.remove();
+                    // تفعيل التاب الأول برمجياً بعد الإقلاع
+                    const firstBtn = document.querySelector('.nav-btn');
+                    if(firstBtn) firstBtn.click();
+                }, 1000);
+            }, 600);
+        }
     }
+    
+    // بدء الإقلاع
+    if(overlay) setTimeout(typeLine, 500);
+    
+    // التهيئة الصامتة للمحاكيات في الخلفية
+    if(typeof simOptics !== 'undefined') simOptics.init();
+    if(typeof simLight !== 'undefined') simLight.init();
+    if(typeof simMires !== 'undefined') simMires.init();
+    if(typeof simAI !== 'undefined') simAI.init();
 });
 // ==========================================
 // نظام عرض التشريح الهندسي (Hardware Anatomy)
