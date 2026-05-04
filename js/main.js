@@ -141,33 +141,103 @@ function closeComp() {
     modal.classList.add('opacity-0', 'pointer-events-none');
 }
 // ==========================================
-// 3. التحكم بالكيبورد (Presentation Mode)
+// 3. نظام التنقل الذكي للكيبورد (Presentation Engine) 🚀
 // ==========================================
 document.addEventListener('keydown', function(event) {
-    // تجاهل الكيبورد إذا كان الدكتور يكتب في مربع نص أو قائمة منسدلة
+    // منع التفاعل إذا كان الدكتور يكتب في حقل نصي أو قائمة منسدلة
     if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') return; 
 
-    const keys = ['Space', 'ArrowDown', 'ArrowUp'];
+    // الأزرار المسموح بها (المسافة، الأسهم للأسفل وللأعلى)
+    const keys = ['Space', 'ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
+    if (!keys.includes(event.code)) return;
+
+    event.preventDefault(); // إيقاف نزول الشاشة الافتراضي للمتصفح
+
+    // 1. التحقق: هل نحن في قسم "مكونات الجهاز"؟
+    const componentsSection = document.getElementById('sec-components');
+    // نستخدم !hidden بدلاً من block لضمان التوافق مع دالة الـ nav مالتك
+    const isComponentsActive = componentsSection && !componentsSection.classList.contains('hidden'); 
+
+    // 🌟 السحر: التحكم بخطوات مكونات الجهاز الداخلية 🌟
+    if (isComponentsActive && (event.code === 'Space' || event.code === 'ArrowDown' || event.code === 'ArrowLeft')) {
+        presentationStep++;
+
+        if (presentationStep === 1) {
+            switchComponentView('internal');
+            // ننتظر 350 ملي ثانية حتى يكتمل أنيميشن التحويل ثم نضغط زر SLD
+            setTimeout(() => { 
+                const btnSld = document.getElementById('btn-sld');
+                if(btnSld) btnSld.click(); 
+            }, 350);
+            return; // توقف هنا ولا تعبر للتاب التالي
+        } 
+        else if (presentationStep === 2) {
+            const btnOptics = document.getElementById('btn-optics');
+            if(btnOptics) btnOptics.click();
+            return; // توقف هنا
+        } 
+        else if (presentationStep === 3) {
+            const btnSensor = document.getElementById('btn-sensor');
+            if(btnSensor) btnSensor.click();
+            return; // توقف هنا
+        } 
+        else if (presentationStep === 4) {
+            const btnDsp = document.getElementById('btn-dsp');
+            if(btnDsp) btnDsp.click();
+            return; // توقف هنا
+        } 
+        else if (presentationStep >= 5) {
+            // انتهت الخطوات الداخلية، ننتقل لقسم EMR يدوياً وبدقة
+            presentationStep = 0; // تصفير العداد
+            const emrBtn = document.getElementById('nav-btn-emr');
+            if(emrBtn) emrBtn.click(); // الضغط على زر البيانات EMR
+            return; // توقف هنا
+        }
+    }
+
+    // 🌟 إعطاء القدرة للرجوع خطوة للخلف داخل المكونات (باستخدام السهم للأعلى) 🌟
+    if (isComponentsActive && (event.code === 'ArrowUp' || event.code === 'ArrowRight')) {
+        if (presentationStep > 0) {
+            presentationStep--;
+            if(presentationStep === 0) switchComponentView('external');
+            if(presentationStep === 1) { const b = document.getElementById('btn-sld'); if(b) b.click(); }
+            if(presentationStep === 2) { const b = document.getElementById('btn-optics'); if(b) b.click(); }
+            if(presentationStep === 3) { const b = document.getElementById('btn-sensor'); if(b) b.click(); }
+            return; // توقف هنا طالما نحن نتراجع داخل المكونات
+        }
+    }
+
+    // =========================================================
+    // 🌟 التنقل العادي بين التابات (لباقي أقسام الموقع) 🌟
+    // =========================================================
     
-    if (keys.includes(event.code)) {
-        event.preventDefault(); // منع نزول الشاشة
-        const navBtns = Array.from(document.querySelectorAll('.nav-btn'));
-        if (navBtns.length === 0) return;
+    // حصرنا البحث بالـ nav-container فقط حتى لا يتخربط بأزرار ثانية
+    const navBtns = Array.from(document.querySelectorAll('#nav-container .nav-btn')); 
+    if (navBtns.length === 0) return;
 
-        const activeBtn = document.querySelector('.nav-btn.active');
-        let currentIndex = navBtns.indexOf(activeBtn);
-        let nextIndex = currentIndex;
+    // البحث عن الزر الفعال حالياً
+    const activeBtn = document.querySelector('#nav-container .nav-btn.active');
+    let currentIndex = navBtns.indexOf(activeBtn);
+    if (currentIndex === -1) currentIndex = 0; // كخطوة احتياطية
 
-        if (event.code === 'ArrowDown' || event.code === 'Space') {
-            nextIndex = (currentIndex + 1) % navBtns.length;
-        } else if (event.code === 'ArrowUp') {
-            nextIndex = (currentIndex - 1 + navBtns.length) % navBtns.length;
-        }
+    let nextIndex = currentIndex;
 
-        if (nextIndex !== currentIndex) {
-            navBtns[nextIndex].click(); // محاكاة ضغطة الماوس
-            navBtns[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+    // النزول لأسفل أو مسافة
+    if (event.code === 'ArrowDown' || event.code === 'Space' || event.code === 'ArrowLeft') {
+        nextIndex = (currentIndex + 1) % navBtns.length;
+        presentationStep = 0; // تصفير العداد تحسباً لأي شيء
+    } 
+    // الصعود للأعلى
+    else if (event.code === 'ArrowUp' || event.code === 'ArrowRight') {
+        nextIndex = (currentIndex - 1 + navBtns.length) % navBtns.length;
+        presentationStep = 0; // تصفير العداد
+    }
+
+    // إذا تغير الاندكس، اضغط على الزر الجديد
+    if (nextIndex !== currentIndex) {
+        navBtns[nextIndex].click(); 
+        // تحريك القائمة الجانبية إذا كانت الأزرار كثيرة
+        navBtns[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 });
 
