@@ -86,7 +86,7 @@ const simAI = {
         ctx.globalAlpha = 1;
     },
 
-    animate() {
+   animate() {
         if (!this.rawCanvas || !this.procCanvas) return;
 
         const rw = this.rawCanvas.width;
@@ -149,11 +149,12 @@ const simAI = {
             this.procCtx.arc(pCenterX, pCenterY, 70, 0, Math.PI * 2);
             this.procCtx.stroke();
 
+            // تصحيح إحداثيات النص
             this.procCtx.fillStyle = '#22c55e';
             this.procCtx.font = 'bold 16px monospace';
-            this.procCtx.fillText('LOCKED', 20, 30);
+            this.procCtx.fillText('LOCKED', pw - 80, 30);
             this.procCtx.font = '12px monospace';
-            this.procCtx.fillText('DSP ALIGNMENT: 100%', 20, 50);
+            this.procCtx.fillText('ALIGNMENT: 100%', pw - 120, 50);
 
         } else {
             // الشاشة فارغة (نص خفيف يوضح انه لا توجد إشارة)
@@ -161,12 +162,11 @@ const simAI = {
             this.procCtx.font = 'bold 16px monospace';
             this.procCtx.fillText('NO SIGNAL', pCenterX - 45, pCenterY);
             this.procCtx.font = '12px monospace';
-            this.procCtx.fillText('AWAITING AI TRACKING...', pCenterX - 75, pCenterY + 20);
+            this.procCtx.fillText('AWAITING AI TRACKING...', pCenterX - 85, pCenterY + 20);
         }
 
         this.animationId = requestAnimationFrame(() => this.animate());
     }
-};
 
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { simAI.init(); }, 500);
