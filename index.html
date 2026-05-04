@@ -556,28 +556,36 @@
                     </div>
                 </section>
 
-                <!-- 8. محاكي التتبع الآلي -->
+               <!-- 8. محاكي التتبع الآلي -->
                 <section id="sec-sim-ai" class="content-sec hidden fade-in w-full">
                     <div class="mb-8">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 md:mb-8">التتبع الآلي <span class="text-cyan-400 font-medium block md:inline text-2xl md:text-3xl">(AI Auto-Tracking)</span></h2>
-                        <div class="flex flex-col lg:flex-row gap-8">
-                            <div class="w-full lg:w-1/2 flex flex-col gap-4 md:gap-6">
-                                <div class="bg-slate-900 p-4 md:p-6 rounded-[2rem] border-2 border-slate-700 text-center shadow-2xl">
-                                    <div class="sim-container h-[250px] md:h-[350px] bg-slate-950 rounded-xl overflow-hidden"><canvas id="aiRawCanvas" class="w-full h-full"></canvas></div>
+                        <h2 class="text-3xl md:text-4xl font-black text-white mb-3 md:mb-4">التتبع الآلي <span class="text-cyan-500 font-light block md:inline text-xl md:text-2xl">(AI Auto-Tracking)</span></h2>
+                        
+                        <!-- إضافة dir="ltr" هنا مهم جداً لعكس اتجاه الشاشات -->
+                        <div class="flex flex-col lg:flex-row gap-6" dir="ltr">
+                            
+                            <!-- الشاشة اليسرى: الكاميرا الخام (Raw Camera) -->
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3 md:gap-4">
+                                <div class="bg-slate-900 p-3 md:p-4 rounded-xl border border-slate-700 text-center shadow-lg relative">
+                                    <div class="absolute top-2 left-4 text-slate-500 font-mono text-xs z-20">RAW CAMERA</div>
+                                    <div class="sim-container h-[200px] md:h-[250px] bg-black rounded-lg"><canvas id="aiRawCanvas" class="w-full h-full"></canvas></div>
                                 </div>
-                                <button onclick="simAI.process()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-black font-black text-xl md:text-3xl py-4 md:py-6 rounded-2xl transition-all shadow-[0_0_30px_rgba(0,240,255,0.4)]">
+                                <button id="btn-track" onclick="simAI.toggleTracking()" class="w-full bg-slate-800 text-slate-300 font-black text-xl md:text-3xl py-4 md:py-6 rounded-2xl border-2 border-slate-600 transition-all hover:border-cyan-500">
                                     تفعيل التتبع الآلي
                                 </button>
                             </div>
-                            <div class="w-full lg:w-1/2 flex flex-col gap-4 md:gap-6">
-                                <div class="bg-slate-950 p-4 md:p-6 rounded-[2rem] border-2 border-cyan-800 text-center shadow-2xl">
-                                    <div class="sim-container h-[250px] md:h-[350px] rounded-xl overflow-hidden"><canvas id="aiProcessedCanvas" class="w-full h-full"></canvas></div>
+
+                            <!-- الشاشة اليمنى: شاشة المعالجة (Processed DSP) -->
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3 md:gap-4">
+                                <div class="bg-black p-3 md:p-4 rounded-xl border border-cyan-800 text-center shadow-lg relative">
+                                    <div class="absolute top-2 right-4 text-cyan-700 font-mono text-xs z-20">DSP PROCESSOR</div>
+                                    <div class="sim-container h-[200px] md:h-[250px]"><canvas id="aiProcessedCanvas" class="w-full h-full"></canvas></div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </section>
-
                 <!-- 9. الخلاصة والبيانات (EMR) -->
                 <section id="sec-printout" class="content-sec hidden fade-in w-full">
                     <div class="relative rounded-[3rem] p-10 md:p-20 mb-8 overflow-hidden bg-gradient-to-b from-[#0a0f1c] to-black border-2 border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center text-center min-h-[60vh] md:min-h-[75vh]">
