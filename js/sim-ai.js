@@ -97,14 +97,17 @@ const simAI = {
         this.rawCtx.clearRect(0, 0, rw, rh);
         this.procCtx.clearRect(0, 0, pw, ph);
 
-        // حركة العين مستمرة ولا تتوقف أبداً
-        this.time += 0.04;
-        const centerX = rw / 2;
-        const centerY = rh / 2;
-        
-        const offsetX = Math.sin(this.time) * (rw * 0.25) + Math.cos(this.time * 3.5) * 5;
-        const offsetY = Math.cos(this.time * 0.8) * (rh * 0.2) + Math.sin(this.time * 4.2) * 5;
-        
+       // 🚀 السر هنا: قلل هذه القيمة لتقليل السرعة
+    // القيمة 0.04 كانت سريعة جداً للسمنر، جرب 0.015 أو 0.02
+    this.time += 0.015; 
+
+    const centerX = rw / 2;
+    const centerY = rh / 2;
+    
+    // باقي المعادلات تعتمد على هذا الوقت، لذا ستبطأ الحركة تلقائياً
+    const offsetX = Math.sin(this.time) * (rw * 0.25) + Math.cos(this.time * 3.5) * 5;
+    const offsetY = Math.cos(this.time * 0.8) * (rh * 0.2) + Math.sin(this.time * 4.2) * 5;
+     
         this.eyeX = centerX + offsetX;
         this.eyeY = centerY + offsetY;
 
