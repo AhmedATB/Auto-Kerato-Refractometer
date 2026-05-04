@@ -1,179 +1,205 @@
-// === MODULE: AI AUTO-TRACKING SIMULATOR (PREMIUM UPGRADE - FIXED) ===
+// ==========================================
+// محاكي التتبع الآلي 3D (AI Auto-Tracking)
+// ==========================================
+
 const simAI = {
-    initialized: false, 
-    rawCanvas: document.getElementById('aiRawCanvas'), 
-    procCanvas: document.getElementById('aiProcessedCanvas'),
-    rawCtx: null, procCtx: null, 
-    time: 0, animId: null, isRunning: false,
+    rawCanvas: null,
+    rawCtx: null,
+    procCanvas: null,
+    procCtx: null,
     
-    // متغيرات التتبع والميكاترونكس
-    isEngaged: false, 
-    eyeX: 0, eyeY: 0, 
-    trackX: 0, trackY: 0, 
-    saccadeOffsetX: 0, saccadeOffsetY: 0,
+    isTracking: false,
+    animationId: null,
+    time: 0,
     
-    init() { 
-        this.rawCtx = this.rawCanvas.getContext('2d'); 
-        this.procCtx = this.procCanvas.getContext('2d'); 
-        this.resize(); 
-        window.addEventListener('resize', () => { if(this.isRunning) this.resize(); }); 
-        this.initialized = true; 
-    },
-    
-    start() { 
-        this.isRunning = true; 
-        this.resize(); 
-        // توسيط مبدئي
-        this.eyeX = this.rawCanvas.width / 2;
-        this.eyeY = this.rawCanvas.height / 2;
-        this.trackX = this.eyeX;
-        this.trackY = this.eyeY;
-        this.animate(); 
-    },
-    
-    stop() { 
-        this.isRunning = false; 
-        cancelAnimationFrame(this.animId); 
-    },
-    
-    resize() { 
-        if(this.rawCanvas.parentElement) {
-            this.rawCanvas.width = this.rawCanvas.parentElement.clientWidth; 
-            this.rawCanvas.height = this.rawCanvas.parentElement.clientHeight; 
-            this.procCanvas.width = this.procCanvas.parentElement.clientWidth; 
-            this.procCanvas.height = this.procCanvas.parentElement.clientHeight; 
-        }
-    },
-    
-    // زر التفعيل (Engage Button)
-    process() { 
-        this.isEngaged = !this.isEngaged; 
-        const log = document.getElementById('ai-log');
-        const btn = document.querySelector('button[onclick="simAI.process()"]');
+    // إحداثيات العين العشوائية
+    eyeX: 0,
+    eyeY: 0,
+
+    init() {
+        this.rawCanvas = document.getElementById('aiRawCanvas');
+        this.procCanvas = document.getElementById('aiProcessedCanvas');
         
-        if(this.isEngaged) {
-            log.innerHTML = `<span class="text-cyan-400">> AUTO-TRACKING ENGAGED. INITIALIZING MOTORS...</span>`;
-            btn.innerHTML = "إيقاف التتبع (STANDBY)";
-            btn.className = "w-full bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 font-black text-base md:text-xl py-3 md:py-5 rounded-xl transition shadow-inner";
+        if (!this.rawCanvas || !this.procCanvas) return;
+
+        this.rawCtx = this.rawCanvas.getContext('2d');
+        this.procCtx = this.procCanvas.getContext('2d');
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+
+        // بدء الحركة (الأنيميشن)
+        this.animate();
+    },
+
+    resize() {
+        // ضبط أبعاد الكانفاس لتطابق الحاوية
+        const rawRect = this.rawCanvas.parentElement.getBoundingClientRect();
+        this.rawCanvas.width = rawRect.width;
+        this.rawCanvas.height = rawRect.height;
+
+        const procRect = this.procCanvas.parentElement.getBoundingClientRect();
+        this.procCanvas.width = procRect.width;
+        this.procCanvas.height = procRect.height;
+    },
+
+    toggleTracking() {
+        this.isTracking = !this.isTracking;
+        const btn = document.getElementById('btn-track');
+        
+        if (this.isTracking) {
+            // حالة التفعيل
+            btn.innerHTML = 'إلغاء التتبع ⏹';
+            btn.className = 'w-full bg-cyan-600 text-black font-black text-xl md:text-3xl py-4 md:py-6 rounded-2xl transition-all shadow-[0_0_30px_rgba(0,240,255,0.4)] border-2 border-cyan-400';
         } else {
-            log.innerHTML = `> SYSTEM STANDBY. MANUAL OVERRIDE ACTIVE.`;
-            btn.innerHTML = "تفعيل التتبع الآلي";
-            btn.className = "w-full bg-cyan-600 hover:bg-cyan-500 text-black font-black text-base md:text-xl py-3 md:py-5 rounded-xl transition shadow-[0_0_20px_rgba(0,240,255,0.4)]";
+            // حالة الإغلاق
+            btn.innerHTML = 'تفعيل التتبع الآلي (Auto-Tracking)';
+            btn.className = 'w-full bg-slate-800 text-slate-300 font-black text-xl md:text-3xl py-4 md:py-6 rounded-2xl border-2 border-slate-600 transition-all hover:border-cyan-500';
         }
     },
-    
+
+    drawEye(ctx, x, y, alpha = 1) {
+        // رسم العين (البؤبؤ والقزحية)
+        ctx.globalAlpha = alpha;
+        
+        // القزحية (قرمزي غامق)
+        ctx.beginPath();
+        ctx.arc(x, y, 40, 0, Math.PI * 2);
+        ctx.fillStyle = '#0f172a';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#1e293b';
+        ctx.stroke();
+
+        // البؤبؤ (أسود)
+        ctx.beginPath();
+        ctx.arc(x, y, 15, 0, Math.PI * 2);
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+
+        // لمعة العين (انعكاس الضوء)
+        ctx.beginPath();
+        ctx.arc(x + 5, y - 5, 4, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fill();
+        
+        ctx.globalAlpha = 1;
+    },
+
     animate() {
-        if(!this.isRunning) return;
-        this.time += 0.05; 
-        const w = this.rawCanvas.width; const h = this.rawCanvas.height; 
-        const cx = w/2; const cy = h/2;
+        if (!this.rawCanvas || !this.procCanvas) return;
+
+        const rw = this.rawCanvas.width;
+        const rh = this.rawCanvas.height;
+        const pw = this.procCanvas.width;
+        const ph = this.procCanvas.height;
+
+        // مسح الشاشات
+        this.rawCtx.clearRect(0, 0, rw, rh);
+        this.procCtx.clearRect(0, 0, pw, ph);
+
+        // حساب حركة المريض العشوائية (Sine Waves + Noise)
+        this.time += 0.03;
+        const centerX = rw / 2;
+        const centerY = rh / 2;
         
-        // ==========================================
-        // 1. محاكاة حركة عين المريض (Saccades & Micro-saccades)
-        // ==========================================
-        let targetEyeX = cx + Math.sin(this.time * 0.6) * (w * 0.15) + Math.sin(this.time * 10) * 1.5; 
-        let targetEyeY = cy + Math.cos(this.time * 0.4) * (h * 0.1) + Math.cos(this.time * 12) * 1.5;
+        // حركة واسعة + اهتزاز دقيق
+        const offsetX = Math.sin(this.time) * (rw * 0.25) + Math.cos(this.time * 3.5) * 5;
+        const offsetY = Math.cos(this.time * 0.8) * (rh * 0.2) + Math.sin(this.time * 4.2) * 5;
         
-        if(Math.random() < 0.02) {
-            this.saccadeOffsetX = (Math.random() - 0.5) * 40;
-            this.saccadeOffsetY = (Math.random() - 0.5) * 40;
+        this.eyeX = centerX + offsetX;
+        this.eyeY = centerY + offsetY;
+
+        /* ================================================= */
+        /* الشاشة اليسرى: الكاميرا الخام (Raw Camera)        */
+        /* ================================================= */
+        
+        // رسم العين تتحرك دائماً على اليسار
+        this.drawEye(this.rawCtx, this.eyeX, this.eyeY);
+
+        if (this.isTracking) {
+            // رسم مربع التتبع الملاحق للعين (أخضر/سماوي)
+            this.rawCtx.strokeStyle = '#00f0ff';
+            this.rawCtx.lineWidth = 2;
+            this.rawCtx.strokeRect(this.eyeX - 50, this.eyeY - 50, 100, 100);
+            
+            // رسم علامة الزائد الملاحقة
+            this.rawCtx.beginPath();
+            this.rawCtx.moveTo(this.eyeX - 10, this.eyeY);
+            this.rawCtx.lineTo(this.eyeX + 10, this.eyeY);
+            this.rawCtx.moveTo(this.eyeX, this.eyeY - 10);
+            this.rawCtx.lineTo(this.rawCtx.lineTo(this.eyeX, this.eyeY + 10));
+            this.rawCtx.stroke();
+        } else {
+            // رسم مربع استهداف ثابت في المنتصف (أحمر) ليدل على الفشل
+            this.rawCtx.strokeStyle = '#ef4444';
+            this.rawCtx.lineWidth = 1;
+            this.rawCtx.setLineDash([5, 5]);
+            this.rawCtx.strokeRect(centerX - 50, centerY - 50, 100, 100);
+            this.rawCtx.setLineDash([]);
+            
+            this.rawCtx.fillStyle = '#ef4444';
+            this.rawCtx.font = '12px monospace';
+            this.rawCtx.fillText('TARGET LOST - PATIENT MOVING', centerX - 80, centerY + 70);
         }
-        this.saccadeOffsetX *= 0.9;
-        this.saccadeOffsetY *= 0.9;
-        
-        this.eyeX = targetEyeX + this.saccadeOffsetX;
-        this.eyeY = targetEyeY + this.saccadeOffsetY;
 
-        // ==========================================
-        // 2. الشاشة الأولى: الكاميرا الخام (RAW IR FEED)
-        // ==========================================
-        const cRaw = this.rawCtx; 
-        cRaw.fillStyle = '#080808'; cRaw.fillRect(0, 0, w, h);
-        
-        const grd = cRaw.createRadialGradient(this.eyeX, this.eyeY, 10, this.eyeX, this.eyeY, 70);
-        grd.addColorStop(0, '#1a1a1a'); 
-        grd.addColorStop(0.6, '#111'); 
-        grd.addColorStop(1, '#080808');
-        cRaw.fillStyle = grd; cRaw.beginPath(); cRaw.arc(this.eyeX, this.eyeY, 70, 0, Math.PI*2); cRaw.fill();
-        
-        cRaw.fillStyle = '#000'; cRaw.beginPath(); cRaw.arc(this.eyeX, this.eyeY, 22, 0, Math.PI*2); cRaw.fill();
+        /* ================================================= */
+        /* الشاشة اليمنى: معالجة الـ DSP (Processed Image)   */
+        /* ================================================= */
+        const pCenterX = pw / 2;
+        const pCenterY = ph / 2;
 
-        cRaw.fillStyle = 'rgba(255, 255, 255, 0.9)';
-        cRaw.shadowBlur = 8; cRaw.shadowColor = 'rgba(255, 255, 255, 0.8)';
-        cRaw.beginPath(); cRaw.arc(this.eyeX - 10, this.eyeY - 8, 2.5, 0, Math.PI*2); cRaw.fill();
-        cRaw.beginPath(); cRaw.arc(this.eyeX + 12, this.eyeY + 6, 1.5, 0, Math.PI*2); cRaw.fill();
-        cRaw.shadowBlur = 0;
+        if (this.isTracking) {
+            // التتبع مفعل: العين ثابتة تماماً في المنتصف (Hardware Stabilization)
+            this.drawEye(this.procCtx, pCenterX, pCenterY);
+            
+            // رسم دوائر القياس (أن النظام جاهز لأخذ القراءة)
+            this.procCtx.strokeStyle = '#22c55e'; // أخضر
+            this.procCtx.lineWidth = 1.5;
+            this.procCtx.beginPath();
+            this.procCtx.arc(pCenterX, pCenterY, 60, 0, Math.PI * 2);
+            this.procCtx.stroke();
+            this.procCtx.beginPath();
+            this.procCtx.arc(pCenterX, pCenterY, 70, 0, Math.PI * 2);
+            this.procCtx.stroke();
 
-        cRaw.fillStyle = 'rgba(255,255,255,0.03)'; 
-        for(let i=0; i<300; i++) cRaw.fillRect(Math.random()*w, Math.random()*h, 1.5, 1.5);
+            // نصوص الحالة (LOCKED)
+            this.procCtx.fillStyle = '#22c55e';
+            this.procCtx.font = 'bold 16px monospace';
+            this.procCtx.fillText('TRACKING: LOCKED', 20, 30);
+            this.procCtx.font = '12px monospace';
+            this.procCtx.fillText('DSP ALIGNMENT: 100%', 20, 50);
+            this.procCtx.fillText('READY FOR MEASUREMENT', 20, 70);
 
-        // ==========================================
-        // 3. الشاشة الثانية: المعالجة الحاسوبية (PROCESSED FEED)
-        // ==========================================
-        const c = this.procCtx;
-        
-        // الصورة دائمًا معروضة (حتى لو التتبع متوقف)
-        c.clearRect(0, 0, w, h);
-        c.drawImage(this.rawCanvas, 0, 0); 
-        c.fillStyle = 'rgba(0, 240, 255, 0.08)'; c.fillRect(0, 0, w, h);
-        c.fillStyle = 'rgba(0, 240, 255, 0.15)'; c.fillRect(0, (this.time * 60) % h, w, 3);
+        } else {
+            // التتبع مغلق: العين تتحرك خارج إطار القياس المركزي
+            this.drawEye(this.procCtx, pCenterX + offsetX, pCenterY + offsetY, 0.5); // شفافة قليلاً
+            
+            // دوائر القياس المركزية حمراء (دلالة على أن العين غير مطابقة)
+            this.procCtx.strokeStyle = 'rgba(239, 68, 68, 0.3)';
+            this.procCtx.lineWidth = 1;
+            this.procCtx.beginPath();
+            this.procCtx.arc(pCenterX, pCenterY, 60, 0, Math.PI * 2);
+            this.procCtx.stroke();
 
-        let locked = false;
-
-        if(!this.isEngaged) { 
-            // وضع الاستعداد (Standby): المربع يرجع للسنتر بهدوء
-            this.trackX += (cx - this.trackX) * 0.1; 
-            this.trackY += (cy - this.trackY) * 0.1; 
-            c.strokeStyle = '#00f0ff'; c.shadowColor = '#00f0ff';
-        } 
-        else {
-            // وضع التتبع الآلي (Engaged): المربع يطارد العين
-            let dx = this.eyeX - this.trackX; 
-            let dy = this.eyeY - this.trackY; 
-            this.trackX += dx * 0.15; 
-            this.trackY += dy * 0.15; 
-
-            let dist = Math.sqrt(dx*dx + dy*dy); 
-            locked = dist < 4; 
-
-            const log = document.getElementById('ai-log');
-            if(locked) { 
-                log.innerHTML = `<span class="text-green-400 font-bold">> TARGET LOCKED. ALIGNMENT: 100%<br>> MOTORS STABILIZED. READY TO FIRE.</span>`; 
-                c.strokeStyle = '#39ff14'; c.shadowColor = '#39ff14'; 
-            } else { 
-                log.innerHTML = `<span class="text-cyan-400">> TRACKING... OFFSET X:<span class="text-white">${Math.abs(dx).toFixed(1)}</span> Y:<span class="text-white">${Math.abs(dy).toFixed(1)}</span><br>> ADJUSTING MOTORS...</span>`; 
-                c.strokeStyle = '#00f0ff'; c.shadowColor = '#00f0ff'; 
-            }
+            // نصوص الحالة (ERROR)
+            this.procCtx.fillStyle = '#ef4444';
+            this.procCtx.font = 'bold 16px monospace';
+            this.procCtx.fillText('TRACKING: OFF', 20, 30);
+            this.procCtx.font = '12px monospace';
+            this.procCtx.fillText('ERROR: EYE NOT CENTERED', 20, 50);
+            this.procCtx.fillText('CANNOT MEASURE', 20, 70);
         }
-        
-        // رسم واجهة الـ HUD (دائمًا مرئية)
-        c.lineWidth = 2; c.shadowBlur = 12;
-        let tx = this.trackX; let ty = this.trackY;
 
-        // أقواس التتبع
-        const b = locked ? 30 : 40 + Math.sin(this.time * 20) * 3; 
-        const l = 12; 
-        
-        c.beginPath(); c.moveTo(tx-b, ty-b+l); c.lineTo(tx-b, ty-b); c.lineTo(tx-b+l, ty-b); c.stroke(); 
-        c.beginPath(); c.moveTo(tx+b, ty-b+l); c.lineTo(tx+b, ty-b); c.lineTo(tx+b-l, ty-b); c.stroke(); 
-        c.beginPath(); c.moveTo(tx-b, ty+b-l); c.lineTo(tx-b, ty+b); c.lineTo(tx-b+l, ty+b); c.stroke(); 
-        c.beginPath(); c.moveTo(tx+b, ty+b-l); c.lineTo(tx+b, ty+b); c.lineTo(tx+b-l, ty+b); c.stroke(); 
-
-        // مؤشر التصويب والدائرة
-        c.lineWidth = 1;
-        c.beginPath(); c.moveTo(tx-6, ty); c.lineTo(tx+6, ty); c.stroke();
-        c.beginPath(); c.moveTo(tx, ty-6); c.lineTo(tx, ty+6); c.stroke();
-        c.beginPath(); c.arc(tx, ty, 22, 0, Math.PI*2); c.stroke();
-        
-        // خط التوجيه (يظهر فقط إذا كان النظام يبحث عن الهدف أو في وضع الاستعداد)
-        if(!locked) {
-            c.strokeStyle = 'rgba(0, 240, 255, 0.4)';
-            c.setLineDash([4, 4]);
-            c.beginPath(); c.moveTo(cx, cy); c.lineTo(tx, ty); c.stroke();
-            c.setLineDash([]);
-        }
-        
-        c.shadowBlur = 0;
-        this.animId = requestAnimationFrame(this.animate.bind(this));
+        // استدعاء الفريم التالي
+        this.animationId = requestAnimationFrame(() => this.animate());
     }
 };
+
+// تهيئة المحاكي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    // التأكد من تأخير التهيئة قليلاً حتى تكتمل أبعاد الشاشة
+    setTimeout(() => {
+        simAI.init();
+    }, 500);
+});
