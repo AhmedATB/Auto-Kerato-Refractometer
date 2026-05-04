@@ -43,9 +43,10 @@
             <button onclick="nav('sec-sim-ai', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-300 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: التتبع 3D</button>
             
             <!-- فاصل الهاردوير والبيانات -->
+            <!-- فاصل الهاردوير والبيانات -->
             <div class="w-full h-px bg-slate-700 my-4 hidden md:block"></div>
             <button onclick="nav('sec-components', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">⚙️</span> مكونات الجهاز</button>
-            <button onclick="nav('sec-printout', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🧾</span> البيانات (EMR)</button>
+            <button id="nav-btn-emr" onclick="nav('sec-printout', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🧾</span> البيانات (EMR)</button>
         </div>
     </nav>
 
@@ -162,35 +163,89 @@
                     </div>
                 </section>
 
-                <!-- 3. مكونات الجهاز (الداخلية والخارجية) -->
+               <!-- 3. مكونات الجهاز (الخارجية ثم الداخلية) -->
                 <section id="sec-components" class="content-sec hidden fade-in w-full">
                     <div class="mb-8 w-full">
                         <h2 class="text-4xl md:text-5xl font-black text-white mb-6 md:mb-8">مكونات الجهاز <span class="text-cyan-400 text-2xl md:text-3xl font-medium block md:inline">(System Components)</span></h2>
                         
-                        <!-- أزرار التبديل (Toggle Switch) -->
+                        <!-- أزرار التبديل (التصميم الخارجي هو الافتراضي الآن) -->
                         <div class="flex justify-center mb-8 md:mb-10 relative z-50">
                             <div class="bg-slate-900 border-2 border-cyan-900 p-2 rounded-2xl flex gap-3 shadow-2xl">
-                                <button onclick="switchComponentView('internal')" id="tab-internal" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all bg-cyan-600 text-black shadow-[0_0_20px_rgba(0,240,255,0.5)]">
-                                    المكونات الداخلية (معالجة الإشارة)
-                                </button>
-                                <button onclick="switchComponentView('external')" id="tab-external" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all text-slate-300 hover:text-white">
+                                <button onclick="switchComponentView('external')" id="tab-external" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all bg-cyan-600 text-black shadow-[0_0_20px_rgba(0,240,255,0.5)]">
                                     التصميم الخارجي (واجهة الاستخدام)
+                                </button>
+                                <button onclick="switchComponentView('internal')" id="tab-internal" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all text-slate-400 hover:text-white bg-transparent">
+                                    المكونات الداخلية (معالجة الإشارة)
                                 </button>
                             </div>
                         </div>
 
                         <!-- الحاوية الرئيسية للمحتوى -->
                         <div class="relative w-full">
+
+                            <!-- القسم الأول الافتراضي: المكونات الخارجية (Infographic Callouts) -->
+                            <div id="view-external" class="flex flex-col items-center justify-center bg-gradient-to-br from-[#050b14] to-[#010205] border-2 border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl transition-opacity duration-500 opacity-100 relative z-40 min-h-[600px]">
+                                
+                                <div class="relative w-full max-w-5xl flex justify-center items-center mt-10">
+                                    <div class="absolute inset-0 bg-blue-500/20 blur-[80px] rounded-full z-0 pointer-events-none"></div>
+                                    <img src="./images/pngwing.com.png" alt="Device Exterior" class="relative z-10 w-[70%] md:w-[50%] drop-shadow-[0_30px_40px_rgba(0,100,255,0.4)] opacity-100">
+
+                                    <!-- 1. الشاشة -->
+                                    <div class="absolute top-[10%] right-[-10%] md:right-[2%] flex items-center z-20 group cursor-default">
+                                        <div class="bg-slate-950/95 border-2 border-blue-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(59,130,246,0.6)] relative z-30">
+                                            <h4 class="text-blue-400 font-black text-base md:text-xl mb-2">شاشة لمس (Touch UI)</h4>
+                                            <p class="text-white text-sm md:text-base font-medium leading-tight">واجهة رسومية قابلة للإمالة لضبط المحاذاة بسهولة.</p>
+                                        </div>
+                                        <div class="w-8 md:w-20 h-1 bg-blue-500 relative z-20">
+                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#3b82f6]"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2. عصا التحكم -->
+                                    <div class="absolute bottom-[20%] right-[-10%] md:right-[5%] flex items-center z-20 group cursor-default">
+                                        <div class="bg-slate-950/95 border-2 border-amber-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(245,158,11,0.6)] relative z-30">
+                                            <h4 class="text-amber-400 font-black text-base md:text-xl mb-2">عصا التوجيه (Joystick)</h4>
+                                            <p class="text-white text-sm md:text-base font-medium leading-tight">لتحريك الرأس البصري (3D) بدقة والتقاط القياس.</p>
+                                        </div>
+                                        <div class="w-16 md:w-32 h-1 bg-amber-500 relative z-20">
+                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-amber-400 shadow-[0_0_15px_#f59e0b]"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3. مسند المريض -->
+                                    <div class="absolute top-[30%] left-[-10%] md:left-[2%] flex flex-row-reverse items-center z-20 group cursor-default">
+                                        <div class="bg-slate-950/95 border-2 border-emerald-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(16,185,129,0.6)] relative z-30">
+                                            <h4 class="text-emerald-400 font-black text-base md:text-xl mb-2">مسند استقرار المريض</h4>
+                                            <p class="text-white text-sm md:text-base font-medium leading-tight">إطار هندسي لمنع حركة الرأس وضمان دقة الفحص.</p>
+                                        </div>
+                                        <div class="w-12 md:w-20 h-1 bg-emerald-500 relative z-20">
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_15px_#10b981]"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 4. الطابعة -->
+                                    <div class="absolute bottom-[5%] md:bottom-[10%] left-[0%] md:left-[15%] flex flex-row-reverse items-center z-20 group cursor-default">
+                                        <div class="bg-slate-950/95 border-2 border-slate-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(148,163,184,0.6)] relative z-30">
+                                            <h4 class="text-slate-300 font-black text-base md:text-xl mb-2">وحدة الطباعة الفورية</h4>
+                                            <p class="text-white text-sm md:text-base font-medium leading-tight">طابعة حرارية مدمجة لإصدار التقرير الورقي.</p>
+                                        </div>
+                                        <div class="w-20 md:w-24 h-1 bg-slate-400 relative z-20">
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-slate-300 shadow-[0_0_15px_#94a3b8]"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             
-                            <!-- القسم الأول: المكونات الداخلية (Block Diagram) -->
-                            <div id="view-internal" class="flex flex-col lg:flex-row gap-8 lg:gap-12 transition-opacity duration-500 opacity-100 relative z-40">
+                            <!-- القسم الثاني: المكونات الداخلية (Block Diagram) -->
+                            <div id="view-internal" class="hidden flex-col lg:flex-row gap-8 lg:gap-12 transition-opacity duration-500 opacity-0 relative z-40">
                                 
                                 <!-- الجزء الأيمن: قائمة الوحدات الهندسية -->
                                 <div class="w-full lg:w-5/12 flex flex-col gap-4 relative z-50">
                                     <div class="absolute right-8 lg:right-10 top-10 bottom-10 w-1.5 bg-slate-800 rounded-full z-0 hidden md:block"></div>
                                     
-                                    <!-- الوحدة 1 -->
-                                    <button onclick="showComponent('sld', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-cyan-950/50 border-2 border-cyan-500 shadow-[inset_-6px_0_0_#00f0ff] p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group">
+                                    <!-- هنا ضفنا الـ IDs المهمة جداً -->
+                                    <button id="btn-sld" onclick="showComponent('sld', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-cyan-950/50 border-2 border-cyan-500 shadow-[inset_-6px_0_0_#00f0ff] p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group">
                                         <div class="w-16 h-16 rounded-2xl bg-[#02050f] border-2 border-cyan-500 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(0,240,255,0.4)] shrink-0">💡</div>
                                         <div>
                                             <div class="text-xs md:text-sm font-mono text-cyan-300 font-bold tracking-widest mb-1 uppercase">Emission Unit</div>
@@ -198,8 +253,7 @@
                                         </div>
                                     </button>
 
-                                    <!-- الوحدة 2 -->
-                                    <button onclick="showComponent('optics', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-amber-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
+                                    <button id="btn-optics" onclick="showComponent('optics', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-amber-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
                                         <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-slate-700 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] shrink-0 transition-all">🔭</div>
                                         <div>
                                             <div class="text-xs md:text-sm font-mono text-slate-400 group-hover:text-amber-400 font-bold tracking-widest mb-1 uppercase transition-all">Optical Pathway</div>
@@ -207,8 +261,7 @@
                                         </div>
                                     </button>
 
-                                    <!-- الوحدة 3 -->
-                                    <button onclick="showComponent('sensor', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-purple-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
+                                    <button id="btn-sensor" onclick="showComponent('sensor', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-purple-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
                                         <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-slate-700 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] shrink-0 transition-all">📸</div>
                                         <div>
                                             <div class="text-xs md:text-sm font-mono text-slate-400 group-hover:text-purple-400 font-bold tracking-widest mb-1 uppercase transition-all">Sensing Unit</div>
@@ -216,8 +269,7 @@
                                         </div>
                                     </button>
 
-                                    <!-- الوحدة 4 -->
-                                    <button onclick="showComponent('dsp', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-green-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
+                                    <button id="btn-dsp" onclick="showComponent('dsp', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-green-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
                                         <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-slate-700 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)] shrink-0 transition-all">🧠</div>
                                         <div>
                                             <div class="text-xs md:text-sm font-mono text-slate-400 group-hover:text-green-400 font-bold tracking-widest mb-1 uppercase transition-all">DSP Engine</div>
@@ -237,7 +289,7 @@
                                             <div class="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-cyan-950 border-2 border-cyan-500 flex items-center justify-center text-4xl md:text-5xl shadow-[0_0_30px_rgba(0,240,255,0.4)] shrink-0 transition-all" id="comp-icon">💡</div>
                                             <div>
                                                 <h3 class="text-3xl md:text-4xl font-black text-cyan-400 mb-2" id="comp-title">مصدر الانبعاث (SLD)</h3>
-                                                <span class="text-slate-300 font-mono text-xs md:text-sm font-bold tracking-widest uppercase">Stage 1: Signal Generation</span>
+                                                <span class="text-slate-300 font-mono text-xs md:text-sm font-bold tracking-widest uppercase" id="comp-stage">Stage 1: Signal Generation</span>
                                             </div>
                                         </div>
                                         
@@ -261,73 +313,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- القسم الثاني: المكونات الخارجية (Infographic Callouts) -->
-                            <div id="view-external" class="hidden flex-col items-center justify-center bg-gradient-to-br from-[#050b14] to-[#010205] border-2 border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl transition-opacity duration-500 opacity-0 relative z-40 min-h-[600px]">
-                                
-                                <div class="relative w-full max-w-5xl flex justify-center items-center mt-10">
-                                    <!-- توهج خلفي للجهاز -->
-                                    <div class="absolute inset-0 bg-blue-500/20 blur-[80px] rounded-full z-0 pointer-events-none"></div>
-                                    
-                                    <!-- صورة الجهاز (NIDEK) -->
-                                    <img src="./images/pngwing.com.png" alt="Device Exterior" class="relative z-10 w-[70%] md:w-[50%] drop-shadow-[0_30px_40px_rgba(0,100,255,0.4)] opacity-100">
-
-                                    <!-- ========================================== -->
-                                    <!-- 1. مؤشر الشاشة (أعلى اليمين) -->
-                                    <!-- ========================================== -->
-                                    <div class="absolute top-[10%] right-[-10%] md:right-[2%] flex items-center z-20 group cursor-default">
-                                        <!-- صندوق النص (على اليمين) -->
-                                        <div class="bg-slate-950/95 border-2 border-blue-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(59,130,246,0.6)] relative z-30">
-                                            <h4 class="text-blue-400 font-black text-base md:text-xl mb-2">شاشة لمس (Touch UI)</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">واجهة رسومية قابلة للإمالة لضبط المحاذاة بسهولة.</p>
-                                        </div>
-                                        <!-- الخط يمتد لليسار باتجاه الشاشة -->
-                                        <div class="w-8 md:w-20 h-1 bg-blue-500 relative z-20">
-                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#3b82f6]"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ========================================== -->
-                                    <!-- 2. مؤشر عصا التحكم (أسفل اليمين) -->
-                                    <!-- ========================================== -->
-                                    <div class="absolute bottom-[20%] right-[-10%] md:right-[5%] flex items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-amber-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(245,158,11,0.6)] relative z-30">
-                                            <h4 class="text-amber-400 font-black text-base md:text-xl mb-2">عصا التوجيه (Joystick)</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">لتحريك الرأس البصري (3D) بدقة والتقاط القياس.</p>
-                                        </div>
-                                        <div class="w-16 md:w-32 h-1 bg-amber-500 relative z-20">
-                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-amber-400 shadow-[0_0_15px_#f59e0b]"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ========================================== -->
-                                    <!-- 3. مؤشر مسند المريض (أعلى اليسار) -->
-                                    <!-- ========================================== -->
-                                    <div class="absolute top-[30%] left-[-10%] md:left-[2%] flex flex-row-reverse items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-emerald-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(16,185,129,0.6)] relative z-30">
-                                            <h4 class="text-emerald-400 font-black text-base md:text-xl mb-2">مسند استقرار المريض</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">إطار هندسي لمنع حركة الرأس وضمان دقة الفحص.</p>
-                                        </div>
-                                        <div class="w-12 md:w-20 h-1 bg-emerald-500 relative z-20">
-                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_15px_#10b981]"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ========================================== -->
-                                    <!-- 4. مؤشر الطابعة (أسفل اليسار) -->
-                                    <!-- ========================================== -->
-                                    <div class="absolute bottom-[5%] md:bottom-[10%] left-[0%] md:left-[15%] flex flex-row-reverse items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-slate-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(148,163,184,0.6)] relative z-30">
-                                            <h4 class="text-slate-300 font-black text-base md:text-xl mb-2">وحدة الطباعة الفورية</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">طابعة حرارية مدمجة لإصدار التقرير الورقي.</p>
-                                        </div>
-                                        <div class="w-20 md:w-24 h-1 bg-slate-400 relative z-20">
-                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-slate-300 shadow-[0_0_15px_#94a3b8]"></div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
 
