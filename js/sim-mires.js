@@ -1,5 +1,6 @@
 // === MODULE: ADVANCED CORNEAL TOPOGRAPHY & MIRES SIMULATOR ===
 // BME Premium Edition - True Placido Physics
+// Fixed: HUD Updates, Physics Axis, and Dynamic Analysis
 
 const simMires = {
     initialized: false, 
@@ -9,11 +10,19 @@ const simMires = {
     showHeatmap: false, 
     
     init() { 
+        if(!this.canvas) return;
         this.ctx = this.canvas.getContext('2d'); 
         this.resize(); 
+        
+        // ربط مستمع الأحداث لضمان تحديث الشرح والأرقام فور تغيير النوع
+        const selector = document.getElementById('corneaSelect');
+        if(selector) {
+            selector.addEventListener('change', () => this.update());
+        }
+
         window.addEventListener('resize', () => { if(this.isRunning) this.resize(); });
         this.initialized = true; 
-        this.update(); 
+        this.update(); // تحديث أولي عند التشغيل
     },
     
     start() { 
@@ -27,7 +36,7 @@ const simMires = {
     },
     
     resize() { 
-        if(this.canvas.parentElement) {
+        if(this.canvas && this.canvas.parentElement) {
             this.canvas.width = this.canvas.parentElement.clientWidth; 
             this.canvas.height = this.canvas.parentElement.clientHeight; 
         }
@@ -43,32 +52,37 @@ const simMires = {
         if(state) {
             btnHeat.className = "bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1 rounded text-xs md:text-sm font-bold font-mono transition shadow-[0_0_15px_rgba(245,158,11,0.6)]";
             btnRings.className = "bg-slate-800/80 text-slate-400 px-3 py-1 rounded text-xs md:text-sm font-bold font-mono border border-slate-600 transition hover:text-white";
-            heatScale.classList.remove('hidden');
+            if(heatScale) heatScale.classList.remove('hidden');
         } else {
             btnRings.className = "bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-3 py-1 rounded text-xs md:text-sm font-bold font-mono transition shadow-[0_0_15px_rgba(0,240,255,0.6)]";
             btnHeat.className = "bg-slate-800/80 text-slate-400 px-3 py-1 rounded text-xs md:text-sm font-bold font-mono border border-slate-600 transition hover:text-white";
-            heatScale.classList.add('hidden');
+            if(heatScale) heatScale.classList.add('hidden');
         }
     },
 
-   // تحديث البيانات السريرية
+   // تحديث البيانات السريرية (HUD & Side Analysis)
     update() {
-        const type = document.getElementById('corneaSelect').value; 
+        const selectElement = document.getElementById('corneaSelect');
+        if(!selectElement) return;
+        
+        const type = selectElement.value; 
         const analysisBox = document.getElementById('mire-analysis');
         const hudR1 = document.getElementById('hud-r1'); 
         const hudR2 = document.getElementById('hud-r2');
         const hudWarn = document.getElementById('hud-warning');
         
+        if(!analysisBox || !hudR1 || !hudR2) return;
+
         hudWarn.classList.add('hidden');
 
-        // نصوص التحليل مصممة لتبدو كتقرير طبي
+        // نصوص التحليل مبرمجة لتتغير ديناميكياً مع كل حالة
         if(type === 'normal') {
             hudR1.innerText = "43.00D"; hudR1.className = "text-green-400";
             hudR2.innerText = "43.00D"; hudR2.className = "text-green-400";
             analysisBox.innerHTML = `
                 <span class="text-green-400 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">قرنية كروية (Normal)</span>
                 <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
-                الحلقات المنعكسة دائرية تماماً وبمسافات متساوية.<br><br>
+                الحلقات المنعكسة دائرية تماماً وبمسافات متساوية. السطح الكاسر منتظم.<br><br>
                 <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
                 تظهر بلون أخضر متجانس مما يعني أن التحدب طبيعي وموحد في كل المحاور.`;
         }
@@ -78,19 +92,19 @@ const simMires = {
             analysisBox.innerHTML = `
                 <span class="text-amber-400 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">استجماتيزم مع القاعدة (WTR)</span>
                 <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
-                المحور العمودي أكثر تحدباً، لذا تنضغط الحلقات من الأعلى والأسفل (كلما زاد التحدب، تقاربت الحلقات).<br><br>
+                المحور العمودي (90°) أكثر تحدباً، لذا تنضغط الحلقات عمودياً وتظهر بشكل بيضوي "واقف".<br><br>
                 <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
-                تشكل نمط "ربطة العنق" (Bowtie) العمودية باللونين الأحمر والأصفر.`;
+                تشكل نمط "ربطة العنق" (Bowtie) العمودية باللونين الأحمر والأصفر لتركيز القوة الكاسرة.`;
         }
         else if(type === 'astig_against') {
-            hudR1.innerText = "42.00D"; hudR1.className = "text-green-400";
-            hudR2.innerText = "46.50D"; hudR2.className = "text-amber-400";
+            hudR1.innerText = "46.50D"; hudR1.className = "text-amber-400";
+            hudR2.innerText = "42.00D"; hudR2.className = "text-green-400";
             analysisBox.innerHTML = `
                 <span class="text-amber-400 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">استجماتيزم ضد القاعدة (ATR)</span>
                 <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
-                المحور الأفقي هو الأكثر تحدباً في هذه الحالة النادرة، فتنضغط الحلقات من الجوانب.<br><br>
+                المحور الأفقي (180°) هو الأكثر تحدباً، فتنضغط الحلقات من الجوانب وتتوسع عمودياً.<br><br>
                 <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
-                نمط "ربطة العنق" (Bowtie) يظهر أفقياً.`;
+                نمط "ربطة العنق" (Bowtie) يظهر أفقياً نتيجة توزيع القوة غير المتماثل.`;
         }
         else if(type === 'keratoconus') {
             hudR1.innerText = "54.50D"; hudR1.className = "text-red-500 font-bold animate-pulse";
@@ -99,19 +113,19 @@ const simMires = {
             analysisBox.innerHTML = `
                 <span class="text-red-500 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">القرنية المخروطية (Keratoconus)</span>
                 <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
-                تشوه شديد وتقارب كثيف للحلقات في الجزء السفلي بسبب ترقق القرنية وبروزها.<br><br>
+                تشوه شديد وتقارب كثيف للحلقات في الجزء السفلي نتيجة بروز القرنية بشكل مخروطي.<br><br>
                 <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
-                بقعة حمراء شديدة الانحدار منزاحة للأسفل، وهو الدليل السريري القاطع للمرض.`;
+                بقعة حمراء شديدة الانحدار (Apex) منزاحة للأسفل، وهو الدليل السريري القاطع.`;
         }
         else if(type === 'dry_eye') {
             hudR1.innerText = "ERR"; hudR1.className = "text-amber-500";
             hudR2.innerText = "ERR"; hudR2.className = "text-amber-500";
             analysisBox.innerHTML = `
-                <span class="text-amber-500 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">جفاف العين (Tear Film Breakup)</span>
+                <span class="text-amber-500 font-bold text-lg block mb-3 border-b border-slate-700 pb-2">جفاف العين (TFBUT)</span>
                 <span class="text-cyan-300 font-mono text-xs tracking-widest block mb-1">PHYSICS ANALYSIS:</span>
-                تبخر الدموع يدمر سطح الانعكاس الأملس (المرايا) فتتكسر الحلقات هندسياً.<br><br>
+                تبخر الفيلم الدمعي يدمر السطح الأملس فتتكسر الحلقات هندسياً وتفشل المحاذاة.<br><br>
                 <span class="text-amber-300 font-mono text-xs tracking-widest block mb-1">HEATMAP RESULT:</span>
-                ظهور بقع عشوائية تمنع خوارزميات الـ DSP من أخذ قراءة موثوقة (False Astigmatism).`;
+                ظهور بقع عشوائية (Islands) تمنع نظام الـ DSP من معالجة البيانات بشكل دقيق.`;
         }
     },
     
@@ -121,7 +135,7 @@ const simMires = {
         const type = document.getElementById('corneaSelect').value;
         this.time += 0.03; 
         
-        // حركة طفيفة للعين (واقعية)
+        // حركة طفيفة للعين لزيادة الواقعية
         const cx = (w/2) + Math.sin(this.time * 2) * 2; 
         const cy = (h/2) + Math.cos(this.time * 1.5) * 2; 
 
@@ -150,40 +164,38 @@ const simMires = {
             c.globalCompositeOperation = "screen";
             let grd;
             
-            // قاعدة خضراء طبيعية لكل الحالات
+            // قاعدة خضراء طبيعية
             grd = c.createRadialGradient(cx, cy, 0, cx, cy, 140);
-            grd.addColorStop(0, "rgba(57, 255, 20, 0.4)"); // Green (Normal)
-            grd.addColorStop(0.6, "rgba(0, 240, 255, 0.3)"); // Cyan (Flatter)
-            grd.addColorStop(1, "rgba(0, 0, 255, 0.1)");     // Blue (Flattest)
+            grd.addColorStop(0, "rgba(57, 255, 20, 0.4)"); 
+            grd.addColorStop(0.6, "rgba(0, 240, 255, 0.3)"); 
+            grd.addColorStop(1, "rgba(0, 0, 255, 0.1)");     
             c.fillStyle = grd; c.beginPath(); c.arc(cx, cy, 140, 0, Math.PI*2); c.fill();
             
             if (type === 'astig_with' || type === 'astig_against') {
                 c.save();
                 c.translate(cx, cy);
+                // تدوير الخريطة بناءً على نوع الاستجماتيزم
                 if (type === 'astig_against') c.rotate(Math.PI / 2);
                 
-                // تدرج الباوتي (Bowtie)
                 let bowGrd = c.createRadialGradient(0, 0, 0, 0, 0, 120);
-                bowGrd.addColorStop(0, "rgba(255, 0, 0, 0.8)");      // Red (Steepest)
-                bowGrd.addColorStop(0.4, "rgba(255, 170, 0, 0.7)");  // Orange
-                bowGrd.addColorStop(0.8, "rgba(255, 255, 0, 0.4)");  // Yellow
+                bowGrd.addColorStop(0, "rgba(255, 0, 0, 0.8)");      
+                bowGrd.addColorStop(0.4, "rgba(255, 170, 0, 0.7)");  
+                bowGrd.addColorStop(0.8, "rgba(255, 255, 0, 0.4)");  
                 bowGrd.addColorStop(1, "rgba(0, 0, 0, 0)");
                 
-                c.scale(0.35, 1.2); // ضغط وتمديد لصنع شكل ربطة العنق
+                c.scale(0.35, 1.2); 
                 c.fillStyle = bowGrd; c.beginPath(); c.arc(0, 0, 120, 0, Math.PI*2); c.fill();
                 c.restore();
             }
             else if (type === 'keratoconus') {
-                // مخروط منزاح للأسفل (Inferior Cone)
                 let coneGrd = c.createRadialGradient(cx, cy + 45, 0, cx, cy + 45, 70);
-                coneGrd.addColorStop(0, "rgba(255, 0, 0, 0.95)");     // Deep Red
-                coneGrd.addColorStop(0.3, "rgba(255, 100, 0, 0.8)");  // Orange
-                coneGrd.addColorStop(0.6, "rgba(255, 255, 0, 0.5)");  // Yellow
+                coneGrd.addColorStop(0, "rgba(255, 0, 0, 0.95)");     
+                coneGrd.addColorStop(0.3, "rgba(255, 100, 0, 0.8)");  
+                coneGrd.addColorStop(0.6, "rgba(255, 255, 0, 0.5)");  
                 coneGrd.addColorStop(1, "rgba(0, 0, 0, 0)");
                 c.fillStyle = coneGrd; c.beginPath(); c.arc(cx, cy + 45, 80, 0, Math.PI*2); c.fill();
             }
             else if (type === 'dry_eye') {
-                // بقع جفاف عشوائية
                 c.fillStyle = 'rgba(255, 50, 0, 0.3)';
                 for(let i=0; i<10; i++) {
                     let bx = cx + (Math.random()-0.5)*150;
@@ -209,28 +221,26 @@ const simMires = {
                     let drawY = cy;
                     let drawX = cx;
                     
-                    // الفيزياء: التحدب العالي = نصف قطر (r) أصغر = حلقات متقاربة
+                    // الفيزياء: التحدب العالي = حلقات أقرب للمركز (r أصغر)
                     if(type === 'astig_with') { 
-                        // تقارب بالعمودي (a = 90, 270) وتباعد بالأفقي (a = 0, 180)
-                        r = baseRadius * (1 + 0.15 * Math.cos(2 * a)); 
+                        // With-the-rule: المحور العمودي حاد، الحلقات تنضغط عمودياً
+                        // نستخدم -cos لتقليل r عند زاوية 90 و 270
+                        r = baseRadius * (1 - 0.15 * Math.abs(Math.sin(a))); 
                     } 
                     else if(type === 'astig_against') { 
-                        // تقارب بالأفقي وتباعد بالعمودي
-                        r = baseRadius * (1 - 0.15 * Math.cos(2 * a)); 
+                        // Against-the-rule: المحور الأفقي حاد، الحلقات تنضغط أفقياً
+                        r = baseRadius * (1 - 0.15 * Math.abs(Math.cos(a))); 
                     } 
                     else if(type === 'keratoconus') { 
-                        // تشوه وتقارب شديد في الجزء السفلي
                         drawY += i * 5; 
-                        if (a > 0 && a < Math.PI) { r *= (1 - 0.2 * Math.sin(a)); } // انضغاط سفلي
-                        r += Math.sin(a * 4 + this.time * 5) * 1.5; // تعرج خفيف
+                        if (a > 0 && a < Math.PI) { r *= (1 - 0.2 * Math.sin(a)); } 
+                        r += Math.sin(a * 4 + this.time * 5) * 1.5; 
                     }
                     
                     let px = drawX + r * Math.cos(a); 
                     let py = drawY + r * Math.sin(a);
                     
-                    // فيزياء جفاف العين (TFBUT)
                     if(type === 'dry_eye') {
-                        // معادلة ضوضاء لانقطاع الحلقات
                         let noise = Math.sin(a * 15 + this.time * 8) + Math.cos(a * 10 - this.time * 3);
                         if(noise > 0.6) { c.moveTo(px, py); continue; }
                     }
