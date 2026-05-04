@@ -86,7 +86,7 @@ const simAI = {
         ctx.globalAlpha = 1;
     },
 
-   animate() {
+ animate() {
         if (!this.rawCanvas || !this.procCanvas) return;
 
         const rw = this.rawCanvas.width;
@@ -167,11 +167,8 @@ const simAI = {
 
         this.animationId = requestAnimationFrame(() => this.animate());
     }
+};
 
-// تهيئة المحاكي عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
-    // التأكد من تأخير التهيئة قليلاً حتى تكتمل أبعاد الشاشة
-    setTimeout(() => {
-        simAI.init();
-    }, 500);
+    setTimeout(() => { simAI.init(); }, 500);
 });
