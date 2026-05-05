@@ -12,40 +12,56 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS Override to ensure JS injected classes match the Light Theme perfectly -->
+    <style>
+        .nav-btn.text-slate-300 { color: #475569 !important; }
+        .nav-btn.text-white { color: #0284c7 !important; }
+        .nav-btn.bg-slate-800\/50 { background-color: #f1f5f9 !important; }
+        
+        #mire-analysis .text-green-400, #hud-r1.text-green-400, #hud-r2.text-green-400 { color: #16a34a !important; }
+        #mire-analysis .text-amber-400, #hud-r1.text-amber-400, #hud-r2.text-amber-400 { color: #d97706 !important; }
+        #mire-analysis .text-red-500, #hud-r1.text-red-500, #hud-r2.text-red-500 { color: #dc2626 !important; }
+        #mire-analysis .text-amber-300 { color: #d97706 !important; }
+        #mire-analysis .text-cyan-300 { color: #0284c7 !important; }
+        #mire-analysis .text-slate-200 { color: #334155 !important; }
+        #optics-result.text-cyan-400 { color: #0284c7 !important; }
+        #optics-desc.text-slate-300 { color: #475569 !important; }
+    </style>
 </head>
-<body class="flex flex-col md:flex-row h-screen text-base md:text-lg bg-[#02040a] overflow-hidden">
+<body class="flex flex-col md:flex-row h-screen text-base md:text-lg bg-slate-50 overflow-hidden">
 
     <!-- القائمة الجانبية (متجاوبة للموبايل) -->
-    <nav class="w-full md:w-80 bg-slate-900 border-b md:border-b-0 md:border-l border-slate-800 flex flex-col z-40 shadow-2xl h-auto md:h-full flex-shrink-0">
-        <div class="p-4 md:p-6 border-b border-slate-800 relative bg-slate-950">
+    <nav class="w-full md:w-80 bg-white border-b md:border-b-0 md:border-l border-slate-200 flex flex-col z-40 shadow-2xl h-auto md:h-full flex-shrink-0">
+        <div class="p-4 md:p-6 border-b border-slate-200 relative bg-slate-50">
             <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-600"></div>
-            <h1 class="text-3xl md:text-4xl font-black text-white mb-1 md:mb-2 tracking-tight">AR/AK <span class="text-cyan-500">Core</span></h1>
-            <p class="text-xs md:text-sm text-slate-300 font-medium leading-relaxed hidden md:block">الدمج بين الهندسة الدقيقة والقرار السريري</p>
-            <div class="mt-3 md:mt-4 flex items-center text-xs font-mono font-bold text-green-400 bg-green-900/30 p-2 rounded border border-green-500/50 w-max">
-                <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full ml-2" style="box-shadow: 0 0 10px #39ff14;"></span> SYSTEMS ONLINE
+            <h1 class="text-3xl md:text-4xl font-black text-slate-900 mb-1 md:mb-2 tracking-tight">AR/AK <span class="text-cyan-600">Core</span></h1>
+            <p class="text-xs md:text-sm text-slate-600 font-medium leading-relaxed hidden md:block">الدمج بين الهندسة الدقيقة والقرار السريري</p>
+            <div class="mt-3 md:mt-4 flex items-center text-xs font-mono font-bold text-green-700 bg-green-100 p-2 rounded border border-green-300 w-max">
+                <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full ml-2" style="box-shadow: 0 0 10px #22c55e;"></span> SYSTEMS ONLINE
             </div>
         </div>
         
        <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-grow p-2 md:p-4 space-y-0 md:space-y-2 space-x-2 md:space-x-0 rtl:space-x-reverse scrollbar-hide" id="nav-container">
             
             <button onclick="nav('sec-hero', event)" class="nav-btn active flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎯</span> النظرة الشاملة</button>
-            <button onclick="nav('sec-multi', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🌌</span> الاندماج الوظيفي</button>
-            <button onclick="nav('sec-sim-optics', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🔬</span> مختبر البصريات</button>
-            <button onclick="nav('sec-limitations', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">⚠️</span> التحديات والحلول</button>
+            <button onclick="nav('sec-multi', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-600 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🌌</span> الاندماج الوظيفي</button>
+            <button onclick="nav('sec-sim-optics', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-600 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🔬</span> مختبر البصريات</button>
+            <button onclick="nav('sec-limitations', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-600 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">⚠️</span> التحديات والحلول</button>
             
             <!-- فاصل المحاكيات -->
-            <div class="w-full h-px bg-slate-700 my-4 hidden md:block relative">
-                <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-3 text-xs text-cyan-400 font-mono font-bold tracking-widest">INTERACTIVE DEMOS</span>
+            <div class="w-full h-px bg-slate-200 my-4 hidden md:block relative">
+                <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs text-cyan-600 font-mono font-bold tracking-widest">INTERACTIVE DEMOS</span>
             </div>
 
-            <button onclick="nav('sec-sim-light', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-300 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: التضبيب</button>
-            <button onclick="nav('sec-sim-kerato', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-300 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: القرنية</button>
-            <button onclick="nav('sec-sim-ai', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-300 hover:text-cyan-400 hover:bg-slate-800/50 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: التتبع 3D</button>
+            <button onclick="nav('sec-sim-light', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-700 hover:text-cyan-800 hover:bg-slate-100 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: التضبيب</button>
+            <button onclick="nav('sec-sim-kerato', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-700 hover:text-cyan-800 hover:bg-slate-100 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: القرنية</button>
+            <button onclick="nav('sec-sim-ai', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-cyan-700 hover:text-cyan-800 hover:bg-slate-100 transition text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🎮</span> محاكي: التتبع 3D</button>
             
             <!-- فاصل الهاردوير والبيانات -->
-            <div class="w-full h-px bg-slate-700 my-4 hidden md:block"></div>
-            <button onclick="nav('sec-components', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">⚙️</span> مكونات الجهاز</button>
-            <button onclick="nav('sec-printout', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-200 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🧾</span> البيانات (EMR)</button>
+            <div class="w-full h-px bg-slate-200 my-4 hidden md:block"></div>
+            <button onclick="nav('sec-components', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-600 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">⚙️</span> مكونات الجهاز</button>
+            <button id="nav-btn-emr" onclick="nav('sec-printout', event)" class="nav-btn flex-shrink-0 md:w-full text-right p-3 md:p-4 rounded-xl flex items-center whitespace-nowrap font-bold text-slate-600 text-sm md:text-lg"><span class="text-xl md:text-2xl ml-2 md:ml-3">🧾</span> البيانات (EMR)</button>
         </div>
     </nav>
 
@@ -53,50 +69,49 @@
     <main class="flex-grow overflow-y-auto relative p-4 md:p-8 scroll-smooth" id="main-content">
         
         <!-- نظام الإقلاع السينمائي -->
-        <div id="loading-overlay" class="fixed inset-0 bg-[#02040a] z-[100] flex flex-col items-center justify-center transition-opacity duration-1000">
-            <div class="w-[90%] md:w-full max-w-2xl p-6 md:p-8 rounded border border-cyan-900/50 bg-black/80 shadow-[0_0_50px_rgba(0,240,255,0.1)] relative overflow-hidden">
+        <div id="loading-overlay" class="fixed inset-0 bg-slate-50 z-[100] flex flex-col items-center justify-center transition-opacity duration-1000">
+            <div class="w-[90%] md:w-full max-w-2xl p-6 md:p-8 rounded border border-cyan-300 bg-white/90 shadow-xl relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent animate-pulse"></div>
-                <div class="text-cyan-500 font-mono text-sm md:text-base font-bold leading-relaxed tracking-widest" id="boot-text"></div>
-                <div class="mt-4 md:mt-6 h-2 w-full bg-slate-800 rounded overflow-hidden">
-                    <div id="boot-progress" class="h-full bg-cyan-400 w-0 transition-all duration-300"></div>
+                <div class="text-cyan-600 font-mono text-sm md:text-base font-bold leading-relaxed tracking-widest" id="boot-text"></div>
+                <div class="mt-4 md:mt-6 h-2 w-full bg-slate-200 rounded overflow-hidden">
+                    <div id="boot-progress" class="h-full bg-cyan-500 w-0 transition-all duration-300"></div>
                 </div>
             </div>
         </div>
 
         <!-- حاوية التوسيط الشامل والعرض المكبر جداً للسمنر -->
         <div class="flex flex-col justify-center min-h-full w-full">
-            <!-- استخدمنا max-w-[96%] و 2xl:max-w-[1400px] حتى ياخذ الشاشة كلها -->
             <div class="w-full max-w-[96%] 2xl:max-w-[1400px] mx-auto">
 
                 <!-- 1. شاشة الغلاف (Hero Section) -->
                 <section id="sec-hero" class="content-sec block fade-in w-full">
-                    <div class="relative rounded-2xl md:rounded-[2rem] p-8 md:p-12 mb-8 overflow-hidden bg-[#0a0f1c] border border-white/10 shadow-2xl">
-                        <div class="absolute top-0 right-0 w-[200px] md:w-[600px] h-[200px] md:h-[600px] bg-cyan-600/20 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
-                        <div class="absolute bottom-0 left-0 w-[200px] md:w-[600px] h-[200px] md:h-[600px] bg-purple-600/20 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
-                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
+                    <div class="relative rounded-2xl md:rounded-[2rem] p-8 md:p-12 mb-8 overflow-hidden bg-white border border-slate-200 shadow-2xl">
+                        <div class="absolute top-0 right-0 w-[200px] md:w-[600px] h-[200px] md:h-[600px] bg-cyan-200/40 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
+                        <div class="absolute bottom-0 left-0 w-[200px] md:w-[600px] h-[200px] md:h-[600px] bg-purple-200/40 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz48L3N2Zz4=')] opacity-50"></div>
 
                         <div class="relative z-10 flex flex-col lg:flex-row items-center gap-10 md:gap-16">
                             <div class="w-full lg:w-3/5 flex flex-col justify-center text-center lg:text-right">
-                                <div class="inline-flex mx-auto lg:mx-0 items-center gap-3 px-4 py-2 md:px-5 md:py-3 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-mono text-xs md:text-sm font-bold tracking-widest mb-6 md:mb-8 w-max">
+                                <div class="inline-flex mx-auto lg:mx-0 items-center gap-3 px-4 py-2 md:px-5 md:py-3 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-700 font-mono text-xs md:text-sm font-bold tracking-widest mb-6 md:mb-8 w-max">
                                     <span class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_#00f0ff]"></span>
                                     BIOMEDICAL ENGINEERING (BME)
                                 </div>
                                 
-                                <h1 class="text-5xl md:text-6xl lg:text-8xl font-black text-white mb-6 leading-tight tracking-tight drop-shadow-lg">
+                                <h1 class="text-5xl md:text-6xl lg:text-8xl font-black text-slate-900 mb-6 leading-tight tracking-tight drop-shadow-sm">
                                     الانكسار الآلي <br>
-                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 text-4xl md:text-6xl lg:text-7xl mt-2 block">Auto Kerato-Refractometer</span>
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 text-4xl md:text-6xl lg:text-7xl mt-2 block">Auto Kerato-Refractometer</span>
                                 </h1>
                                 
-                                <p class="text-slate-200 text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto lg:mx-0 font-medium">
-                                    ليس مجرد أداة فحص؛ بل هو منظومة ميكاترونكس متكاملة. نحن لا نصمم الجهاز ليعمل فقط، بل ليكون <strong class="text-white font-black bg-white/10 px-2 rounded">نقطة البداية الأدق</strong> التي تسرّع قرارك السريري وتحمي سمعة عيادتك.
+                                <p class="text-slate-600 text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto lg:mx-0 font-medium">
+                                    ليس مجرد أداة فحص؛ بل هو منظومة ميكاترونكس متكاملة. نحن لا نصمم الجهاز ليعمل فقط، بل ليكون <strong class="text-slate-900 font-black bg-slate-100 px-2 rounded">نقطة البداية الأدق</strong> التي تسرّع قرارك السريري وتحمي سمعة عيادتك.
                                 </p>
                             </div>
 
                             <div class="w-full lg:w-2/5 relative flex justify-center items-center">
-                                <div class="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-cyan-900/60 to-transparent blur-2xl rounded-full"></div>
-                                <div class="relative z-10 w-full max-w-[320px] md:max-w-[500px] aspect-[4/5] rounded-3xl bg-gradient-to-br from-white/10 to-transparent border border-white/20 backdrop-blur-md flex flex-col items-center justify-center p-8 md:p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.6)] group overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                    <img src="./images/fa-100-auto-kerato-refractometer55003979528-removebg-preview.png" alt="Auto Kerato-Refractometer Device" class="w-full md:w-[125%] h-auto object-contain relative z-10 drop-shadow-[0_25px_35px_rgba(0,240,255,0.4)] scale-110 md:scale-125 group-hover:scale-125 md:group-hover:scale-[1.40] transition-transform duration-700 ease-out">
+                                <div class="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-cyan-100 to-transparent blur-2xl rounded-full"></div>
+                                <div class="relative z-10 w-full max-w-[320px] md:max-w-[500px] aspect-[4/5] rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-200 backdrop-blur-md flex flex-col items-center justify-center p-8 md:p-10 text-center shadow-2xl group overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                    <img src="./images/fa-100-auto-kerato-refractometer55003979528-removebg-preview.png" alt="Auto Kerato-Refractometer Device" class="w-full md:w-[125%] h-auto object-contain relative z-10 drop-shadow-2xl scale-110 md:scale-125 group-hover:scale-125 md:group-hover:scale-[1.40] transition-transform duration-700 ease-out">
                                 </div>
                             </div>
                         </div>
@@ -106,57 +121,57 @@
                 <!-- 2. الاندماج الوظيفي (Bento Grid) -->
                 <section id="sec-multi" class="content-sec hidden fade-in w-full">
                     <div class="mb-8">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-4 md:mb-6">محطة الفحص الشاملة <span class="text-cyan-400 block md:inline text-3xl md:text-5xl">(5 في 1)</span></h2>
-                        <p class="text-slate-200 text-lg md:text-xl font-medium mb-8 max-w-4xl leading-relaxed">هندسيًا، دمجنا عدة تقنيات في هيكل واحد. سريريًا وتجاريًا، هذا يعني <strong class="text-white bg-white/10 px-2 rounded">عائد استثمار أسرع (ROI)</strong>، ومساحة عيادة أوفر.</p>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 md:mb-6">محطة الفحص الشاملة <span class="text-cyan-600 block md:inline text-3xl md:text-5xl">(5 في 1)</span></h2>
+                        <p class="text-slate-600 text-lg md:text-xl font-medium mb-8 max-w-4xl leading-relaxed">هندسيًا، دمجنا عدة تقنيات في هيكل واحد. سريريًا وتجاريًا، هذا يعني <strong class="text-slate-900 bg-slate-100 px-2 rounded font-black">عائد استثمار أسرع (ROI)</strong>، ومساحة عيادة أوفر.</p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col justify-between shadow-xl">
-                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-cyan-900/50 flex items-center justify-center mb-6 text-cyan-400 border border-cyan-500/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                            <div class="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col justify-between shadow-xl">
+                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-cyan-50 flex items-center justify-center mb-6 text-cyan-600 border border-cyan-200 shadow-sm">
                                     <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-3">1. الانكسار (AR)</h3>
-                                    <p class="text-slate-200 text-base md:text-lg font-medium leading-relaxed">قياس الخطأ الانكساري آليًا بدقة عالية.</p>
+                                    <h3 class="text-2xl md:text-3xl font-black text-slate-900 mb-3">1. الانكسار (AR)</h3>
+                                    <p class="text-slate-600 text-base md:text-lg font-medium leading-relaxed">قياس الخطأ الانكساري آليًا بدقة عالية.</p>
                                 </div>
                             </div>
 
-                            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col justify-between shadow-xl">
-                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-purple-900/50 flex items-center justify-center mb-6 text-purple-400 border border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                            <div class="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col justify-between shadow-xl">
+                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-purple-50 flex items-center justify-center mb-6 text-purple-600 border border-purple-200 shadow-sm">
                                     <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-3">2. تحدب القرنية (AK)</h3>
-                                    <p class="text-slate-200 text-base md:text-lg font-medium leading-relaxed">حساب انحناء القرنية المركزي لاكتشاف الاستجماتيزم.</p>
+                                    <h3 class="text-2xl md:text-3xl font-black text-slate-900 mb-3">2. تحدب القرنية (AK)</h3>
+                                    <p class="text-slate-600 text-base md:text-lg font-medium leading-relaxed">حساب انحناء القرنية المركزي لاكتشاف الاستجماتيزم.</p>
                                 </div>
                             </div>
 
-                            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col justify-between shadow-xl">
-                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-emerald-900/50 flex items-center justify-center mb-6 text-emerald-400 border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                            <div class="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col justify-between shadow-xl">
+                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6 text-emerald-600 border border-emerald-200 shadow-sm">
                                     <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-3">3. ضغط العين (NCT)</h3>
-                                    <p class="text-slate-200 text-base md:text-lg font-medium leading-relaxed">نفخة هواء ذكية لقياس الضغط بدون تلامس.</p>
+                                    <h3 class="text-2xl md:text-3xl font-black text-slate-900 mb-3">3. ضغط العين (NCT)</h3>
+                                    <p class="text-slate-600 text-base md:text-lg font-medium leading-relaxed">نفخة هواء ذكية لقياس الضغط بدون تلامس.</p>
                                 </div>
                             </div>
 
-                            <div class="bg-gradient-to-br from-slate-900 to-black border border-slate-700 rounded-3xl p-8 md:col-span-2 lg:col-span-2 flex items-center justify-between overflow-hidden relative shadow-xl">
-                                <div class="absolute right-0 top-0 w-48 md:w-80 h-48 md:h-80 bg-cyan-500/10 rounded-full blur-[60px]"></div>
+                            <div class="bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-3xl p-8 md:col-span-2 lg:col-span-2 flex items-center justify-between overflow-hidden relative shadow-xl">
+                                <div class="absolute right-0 top-0 w-48 md:w-80 h-48 md:h-80 bg-cyan-200/30 rounded-full blur-[60px]"></div>
                                 <div class="relative z-10 w-full flex flex-col sm:flex-row sm:items-center justify-between gap-6 md:gap-8">
                                     <div>
-                                        <div class="text-cyan-400 font-mono text-xs md:text-sm font-bold tracking-widest mb-2">ADVANCED IMAGING</div>
-                                        <h3 class="text-2xl md:text-4xl font-black text-white mb-3">4+5. تضاريس و سماكة</h3>
-                                        <p class="text-slate-200 text-base md:text-lg font-medium leading-relaxed max-w-xl">إضاءة خلفية (Retro-illumination) لاكتشاف المياه البيضاء، وطوبوغرافيا لسطح العين الأمامي.</p>
+                                        <div class="text-cyan-600 font-mono text-xs md:text-sm font-bold tracking-widest mb-2">ADVANCED IMAGING</div>
+                                        <h3 class="text-2xl md:text-4xl font-black text-slate-900 mb-3">4+5. تضاريس و سماكة</h3>
+                                        <p class="text-slate-600 text-base md:text-lg font-medium leading-relaxed max-w-xl">إضاءة خلفية (Retro-illumination) لاكتشاف المياه البيضاء، وطوبوغرافيا لسطح العين الأمامي.</p>
                                     </div>
-                                    <div class="hidden sm:flex w-20 h-20 md:w-24 md:h-24 rounded-full bg-cyan-900/50 border border-cyan-500/50 items-center justify-center text-cyan-400 flex-shrink-0 shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+                                    <div class="hidden sm:flex w-20 h-20 md:w-24 md:h-24 rounded-full bg-cyan-50 border border-cyan-200 items-center justify-center text-cyan-600 flex-shrink-0 shadow-sm">
                                         <svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="bg-cyan-950/40 border border-cyan-500/30 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-xl">
-                                <span class="text-5xl md:text-6xl font-black text-cyan-400 mb-2">1</span>
-                                <span class="text-slate-200 font-mono text-sm md:text-base font-bold tracking-widest uppercase">Single <br> Position</span>
+                            <div class="bg-cyan-50 border border-cyan-200 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-xl">
+                                <span class="text-5xl md:text-6xl font-black text-cyan-600 mb-2">1</span>
+                                <span class="text-slate-900 font-mono text-sm md:text-base font-bold tracking-widest uppercase">Single <br> Position</span>
                             </div>
                         </div>
                     </div>
@@ -165,15 +180,15 @@
                 <!-- 3. مكونات الجهاز (الخارجية ثم الداخلية) -->
                 <section id="sec-components" class="content-sec hidden fade-in w-full">
                     <div class="mb-8 w-full">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 md:mb-8">مكونات الجهاز <span class="text-cyan-400 text-2xl md:text-3xl font-medium block md:inline">(System Components)</span></h2>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 md:mb-8">مكونات الجهاز <span class="text-cyan-600 text-2xl md:text-3xl font-medium block md:inline">(System Components)</span></h2>
                         
                         <!-- أزرار التبديل (التصميم الخارجي هو الافتراضي الآن) -->
                         <div class="flex justify-center mb-8 md:mb-10 relative z-50">
-                            <div class="bg-slate-900 border-2 border-cyan-900 p-2 rounded-2xl flex gap-3 shadow-2xl">
-                                <button onclick="switchComponentView('external')" id="tab-external" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all bg-cyan-600 text-black shadow-[0_0_20px_rgba(0,240,255,0.5)]">
+                            <div class="bg-white border-2 border-cyan-200 p-2 rounded-2xl flex gap-3 shadow-xl">
+                                <button onclick="switchComponentView('external')" id="tab-external" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all bg-cyan-500 text-white shadow-lg">
                                     التصميم الخارجي (واجهة الاستخدام)
                                 </button>
-                                <button onclick="switchComponentView('internal')" id="tab-internal" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all text-slate-400 hover:text-white bg-transparent">
+                                <button onclick="switchComponentView('internal')" id="tab-internal" class="px-8 py-3 rounded-xl font-black text-base md:text-xl transition-all text-slate-500 hover:text-slate-900 bg-transparent">
                                     المكونات الداخلية (معالجة الإشارة)
                                 </button>
                             </div>
@@ -183,53 +198,53 @@
                         <div class="relative w-full">
 
                             <!-- القسم الأول الافتراضي: المكونات الخارجية (Infographic Callouts) -->
-                            <div id="view-external" class="flex flex-col items-center justify-center bg-gradient-to-br from-[#050b14] to-[#010205] border-2 border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl transition-opacity duration-500 opacity-100 relative z-40 min-h-[600px]">
+                            <div id="view-external" class="flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 rounded-[2.5rem] p-8 md:p-16 shadow-2xl transition-opacity duration-500 opacity-100 relative z-40 min-h-[600px]">
                                 
                                 <div class="relative w-full max-w-5xl flex justify-center items-center mt-10">
-                                    <div class="absolute inset-0 bg-blue-500/20 blur-[80px] rounded-full z-0 pointer-events-none"></div>
-                                    <img src="./images/pngwing.com.png" alt="Device Exterior" class="relative z-10 w-[70%] md:w-[50%] drop-shadow-[0_30px_40px_rgba(0,100,255,0.4)] opacity-100">
+                                    <div class="absolute inset-0 bg-blue-200/50 blur-[80px] rounded-full z-0 pointer-events-none"></div>
+                                    <img src="./images/pngwing.com.png" alt="Device Exterior" class="relative z-10 w-[70%] md:w-[50%] drop-shadow-2xl opacity-100">
 
                                     <!-- 1. الشاشة -->
                                     <div class="absolute top-[10%] right-[-10%] md:right-[2%] flex items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-blue-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(59,130,246,0.6)] relative z-30">
-                                            <h4 class="text-blue-400 font-black text-base md:text-xl mb-2">شاشة لمس (Touch UI)</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">واجهة رسومية قابلة للإمالة لضبط المحاذاة بسهولة.</p>
+                                        <div class="bg-white/95 border-2 border-blue-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(59,130,246,0.2)] relative z-30">
+                                            <h4 class="text-blue-600 font-black text-base md:text-xl mb-2">شاشة لمس (Touch UI)</h4>
+                                            <p class="text-slate-700 text-sm md:text-base font-medium leading-tight">واجهة رسومية قابلة للإمالة لضبط المحاذاة بسهولة.</p>
                                         </div>
-                                        <div class="w-8 md:w-20 h-1 bg-blue-500 relative z-20">
-                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#3b82f6]"></div>
+                                        <div class="w-8 md:w-20 h-1 bg-blue-400 relative z-20">
+                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-500 shadow-sm"></div>
                                         </div>
                                     </div>
 
                                     <!-- 2. عصا التحكم -->
                                     <div class="absolute bottom-[20%] right-[-10%] md:right-[5%] flex items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-amber-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(245,158,11,0.6)] relative z-30">
-                                            <h4 class="text-amber-400 font-black text-base md:text-xl mb-2">عصا التوجيه (Joystick)</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">لتحريك الرأس البصري (3D) بدقة والتقاط القياس.</p>
+                                        <div class="bg-white/95 border-2 border-amber-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(245,158,11,0.2)] relative z-30">
+                                            <h4 class="text-amber-600 font-black text-base md:text-xl mb-2">عصا التوجيه (Joystick)</h4>
+                                            <p class="text-slate-700 text-sm md:text-base font-medium leading-tight">لتحريك الرأس البصري (3D) بدقة والتقاط القياس.</p>
                                         </div>
-                                        <div class="w-16 md:w-32 h-1 bg-amber-500 relative z-20">
-                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-amber-400 shadow-[0_0_15px_#f59e0b]"></div>
+                                        <div class="w-16 md:w-32 h-1 bg-amber-400 relative z-20">
+                                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-amber-500 shadow-sm"></div>
                                         </div>
                                     </div>
 
                                     <!-- 3. مسند المريض -->
                                     <div class="absolute top-[30%] left-[-10%] md:left-[2%] flex flex-row-reverse items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-emerald-500 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(16,185,129,0.6)] relative z-30">
-                                            <h4 class="text-emerald-400 font-black text-base md:text-xl mb-2">مسند استقرار المريض</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">إطار هندسي لمنع حركة الرأس وضمان دقة الفحص.</p>
+                                        <div class="bg-white/95 border-2 border-emerald-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(16,185,129,0.2)] relative z-30">
+                                            <h4 class="text-emerald-600 font-black text-base md:text-xl mb-2">مسند استقرار المريض</h4>
+                                            <p class="text-slate-700 text-sm md:text-base font-medium leading-tight">إطار هندسي لمنع حركة الرأس وضمان دقة الفحص.</p>
                                         </div>
-                                        <div class="w-12 md:w-20 h-1 bg-emerald-500 relative z-20">
-                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_15px_#10b981]"></div>
+                                        <div class="w-12 md:w-20 h-1 bg-emerald-400 relative z-20">
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-500 shadow-sm"></div>
                                         </div>
                                     </div>
 
                                     <!-- 4. الطابعة -->
                                     <div class="absolute bottom-[5%] md:bottom-[10%] left-[0%] md:left-[15%] flex flex-row-reverse items-center z-20 group cursor-default">
-                                        <div class="bg-slate-950/95 border-2 border-slate-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(148,163,184,0.6)] relative z-30">
-                                            <h4 class="text-slate-300 font-black text-base md:text-xl mb-2">وحدة الطباعة الفورية</h4>
-                                            <p class="text-white text-sm md:text-base font-medium leading-tight">طابعة حرارية مدمجة لإصدار التقرير الورقي.</p>
+                                        <div class="bg-white/95 border-2 border-slate-400 p-4 md:p-5 rounded-2xl text-right w-44 md:w-64 shadow-[0_0_25px_rgba(148,163,184,0.2)] relative z-30">
+                                            <h4 class="text-slate-700 font-black text-base md:text-xl mb-2">وحدة الطباعة الفورية</h4>
+                                            <p class="text-slate-700 text-sm md:text-base font-medium leading-tight">طابعة حرارية مدمجة لإصدار التقرير الورقي.</p>
                                         </div>
-                                        <div class="w-20 md:w-24 h-1 bg-slate-400 relative z-20">
-                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-slate-300 shadow-[0_0_15px_#94a3b8]"></div>
+                                        <div class="w-20 md:w-24 h-1 bg-slate-300 relative z-20">
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-slate-400 shadow-sm"></div>
                                         </div>
                                     </div>
 
@@ -241,69 +256,69 @@
                                 
                                 <!-- الجزء الأيمن: قائمة الوحدات الهندسية -->
                                 <div class="w-full lg:w-5/12 flex flex-col gap-4 relative z-50">
-                                    <div class="absolute right-8 lg:right-10 top-10 bottom-10 w-1.5 bg-slate-800 rounded-full z-0 hidden md:block"></div>
+                                    <div class="absolute right-8 lg:right-10 top-10 bottom-10 w-1.5 bg-slate-200 rounded-full z-0 hidden md:block"></div>
                                     
-                                    <button id="btn-sld" onclick="showComponent('sld', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-cyan-950/50 border-2 border-cyan-500 shadow-[inset_-6px_0_0_#00f0ff] p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group">
-                                        <div class="w-16 h-16 rounded-2xl bg-[#02050f] border-2 border-cyan-500 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(0,240,255,0.4)] shrink-0">💡</div>
+                                    <button id="btn-sld" onclick="showComponent('sld', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-cyan-50 border-2 border-cyan-400 shadow-[inset_-6px_0_0_#06b6d4] p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group">
+                                        <div class="w-16 h-16 rounded-2xl bg-white border-2 border-cyan-400 flex items-center justify-center text-3xl shadow-sm shrink-0">💡</div>
                                         <div>
-                                            <div class="text-xs md:text-sm font-mono text-cyan-300 font-bold tracking-widest mb-1 uppercase">Emission Unit</div>
-                                            <h3 class="text-white font-black text-lg md:text-xl">وحدة الانبعاث الضوئي</h3>
+                                            <div class="text-xs md:text-sm font-mono text-cyan-600 font-bold tracking-widest mb-1 uppercase">Emission Unit</div>
+                                            <h3 class="text-slate-900 font-black text-lg md:text-xl">وحدة الانبعاث الضوئي</h3>
                                         </div>
                                     </button>
 
-                                    <button id="btn-optics" onclick="showComponent('optics', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-amber-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
-                                        <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-slate-700 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] shrink-0 transition-all">🔭</div>
+                                    <button id="btn-optics" onclick="showComponent('optics', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-white border-2 border-slate-200 hover:border-amber-400 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
+                                        <div class="w-16 h-16 rounded-2xl bg-slate-50 border-2 border-slate-200 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] shrink-0 transition-all">🔭</div>
                                         <div>
-                                            <div class="text-xs md:text-sm font-mono text-slate-400 group-hover:text-amber-400 font-bold tracking-widest mb-1 uppercase transition-all">Optical Pathway</div>
-                                            <h3 class="text-slate-300 group-hover:text-white font-black text-lg md:text-xl transition-all">وحدة المسار البصري</h3>
+                                            <div class="text-xs md:text-sm font-mono text-slate-500 group-hover:text-amber-600 font-bold tracking-widest mb-1 uppercase transition-all">Optical Pathway</div>
+                                            <h3 class="text-slate-700 group-hover:text-slate-900 font-black text-lg md:text-xl transition-all">وحدة المسار البصري</h3>
                                         </div>
                                     </button>
 
-                                    <button id="btn-sensor" onclick="showComponent('sensor', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-purple-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
-                                        <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-slate-700 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] shrink-0 transition-all">📸</div>
+                                    <button id="btn-sensor" onclick="showComponent('sensor', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-white border-2 border-slate-200 hover:border-purple-400 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
+                                        <div class="w-16 h-16 rounded-2xl bg-slate-50 border-2 border-slate-200 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] shrink-0 transition-all">📸</div>
                                         <div>
-                                            <div class="text-xs md:text-sm font-mono text-slate-400 group-hover:text-purple-400 font-bold tracking-widest mb-1 uppercase transition-all">Sensing Unit</div>
-                                            <h3 class="text-slate-300 group-hover:text-white font-black text-lg md:text-xl transition-all">وحدة الالتقاط الرقمي</h3>
+                                            <div class="text-xs md:text-sm font-mono text-slate-500 group-hover:text-purple-600 font-bold tracking-widest mb-1 uppercase transition-all">Sensing Unit</div>
+                                            <h3 class="text-slate-700 group-hover:text-slate-900 font-black text-lg md:text-xl transition-all">وحدة الالتقاط الرقمي</h3>
                                         </div>
                                     </button>
 
-                                    <button id="btn-dsp" onclick="showComponent('dsp', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-slate-900 border-2 border-slate-700 hover:border-green-500/50 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
-                                        <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-slate-700 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)] shrink-0 transition-all">🧠</div>
+                                    <button id="btn-dsp" onclick="showComponent('dsp', this)" class="module-btn relative z-50 cursor-pointer w-full text-right bg-white border-2 border-slate-200 hover:border-green-400 p-5 md:p-6 rounded-3xl flex items-center gap-5 transition-all group opacity-70 hover:opacity-100">
+                                        <div class="w-16 h-16 rounded-2xl bg-slate-50 border-2 border-slate-200 flex items-center justify-center text-3xl group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] shrink-0 transition-all">🧠</div>
                                         <div>
-                                            <div class="text-xs md:text-sm font-mono text-slate-400 group-hover:text-green-400 font-bold tracking-widest mb-1 uppercase transition-all">DSP Engine</div>
-                                            <h3 class="text-slate-300 group-hover:text-white font-black text-lg md:text-xl transition-all">وحدة المعالجة المركزية</h3>
+                                            <div class="text-xs md:text-sm font-mono text-slate-500 group-hover:text-green-600 font-bold tracking-widest mb-1 uppercase transition-all">DSP Engine</div>
+                                            <h3 class="text-slate-700 group-hover:text-slate-900 font-black text-lg md:text-xl transition-all">وحدة المعالجة المركزية</h3>
                                         </div>
                                     </button>
                                 </div>
 
                                 <!-- الجزء الأيسر: اللوحة التفصيلية -->
                                 <div class="w-full lg:w-7/12 relative flex z-40">
-                                    <div class="absolute -right-5 top-0 w-1.5 h-full bg-cyan-500 shadow-[0_0_20px_#00f0ff] rounded-full hidden lg:block transition-all" id="comp-indicator"></div>
+                                    <div class="absolute -right-5 top-0 w-1.5 h-full bg-cyan-500 shadow-sm rounded-full hidden lg:block transition-all" id="comp-indicator"></div>
                                     
-                                    <div id="comp-panel" class="w-full bg-slate-900 border-2 border-cyan-500/50 rounded-[2rem] p-8 md:p-12 shadow-2xl transition-opacity duration-300 flex flex-col justify-center relative overflow-hidden">
-                                        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-cyan-900/30 via-transparent to-transparent pointer-events-none" id="comp-glow"></div>
+                                    <div id="comp-panel" class="w-full bg-white border-2 border-cyan-300 rounded-[2rem] p-8 md:p-12 shadow-2xl transition-opacity duration-300 flex flex-col justify-center relative overflow-hidden">
+                                        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-cyan-100 via-transparent to-transparent pointer-events-none" id="comp-glow"></div>
                                         
                                         <div class="flex items-center gap-6 mb-8 md:mb-10 relative z-10">
-                                            <div class="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-cyan-950 border-2 border-cyan-500 flex items-center justify-center text-4xl md:text-5xl shadow-[0_0_30px_rgba(0,240,255,0.4)] shrink-0 transition-all" id="comp-icon">💡</div>
+                                            <div class="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-cyan-50 border-2 border-cyan-400 flex items-center justify-center text-4xl md:text-5xl shadow-sm shrink-0 transition-all" id="comp-icon">💡</div>
                                             <div>
-                                                <h3 class="text-3xl md:text-4xl font-black text-cyan-400 mb-2" id="comp-title">مصدر الانبعاث (SLD)</h3>
-                                                <span class="text-slate-300 font-mono text-xs md:text-sm font-bold tracking-widest uppercase" id="comp-stage">Stage 1: Signal Generation</span>
+                                                <h3 class="text-3xl md:text-4xl font-black text-cyan-600 mb-2" id="comp-title">مصدر الانبعاث (SLD)</h3>
+                                                <span class="text-slate-500 font-mono text-xs md:text-sm font-bold tracking-widest uppercase" id="comp-stage">Stage 1: Signal Generation</span>
                                             </div>
                                         </div>
                                         
                                         <div class="space-y-8 md:space-y-10 relative z-10">
                                             <div>
-                                                <h4 class="text-white text-base md:text-lg font-black border-b-2 border-slate-700 pb-3 mb-4 font-mono uppercase tracking-widest flex items-center gap-3">
+                                                <h4 class="text-slate-900 text-base md:text-lg font-black border-b-2 border-slate-200 pb-3 mb-4 font-mono uppercase tracking-widest flex items-center gap-3">
                                                     <span class="w-3 h-3 rounded-full bg-slate-400"></span> Engineering Function
                                                 </h4>
-                                                <p class="text-white text-lg md:text-xl font-medium leading-relaxed" id="comp-eng">توليد حزمة ضوئية تحت حمراء (840nm). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة على الصورة.</p>
+                                                <p class="text-slate-700 text-lg md:text-xl font-medium leading-relaxed" id="comp-eng">توليد حزمة ضوئية تحت حمراء (840nm). يتميز الـ SLD بأنه يجمع بين التوجيه الدقيق لليزر والأمان العالي لمصابيح الـ LED، مما يمنع تكوّن ضوضاء الشوشرة على الصورة.</p>
                                             </div>
                                             <div>
-                                                <h4 class="text-white text-base md:text-lg font-black border-b-2 border-slate-700 pb-3 mb-4 font-mono uppercase tracking-widest flex items-center gap-3">
-                                                    <span class="w-3 h-3 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]"></span> Clinical Edge
+                                                <h4 class="text-slate-900 text-base md:text-lg font-black border-b-2 border-slate-200 pb-3 mb-4 font-mono uppercase tracking-widest flex items-center gap-3">
+                                                    <span class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#4ade80]"></span> Clinical Edge
                                                 </h4>
-                                                <div class="bg-green-950/40 border-2 border-green-500/50 p-5 rounded-2xl">
-                                                    <p class="text-green-300 font-bold text-lg md:text-xl leading-relaxed flex items-start gap-4">
+                                                <div class="bg-green-50 border-2 border-green-300 p-5 rounded-2xl">
+                                                    <p class="text-green-700 font-bold text-lg md:text-xl leading-relaxed flex items-start gap-4">
                                                         <span class="mt-1 text-2xl">✓</span>
                                                         <span id="comp-clin">الطول الموجي غير مرئي، فلا يتسبب بتقلص بؤبؤ المريض بسبب الوهج المزعج، ويخترق عتامة المياه البيضاء بكفاءة عالية.</span>
                                                     </p>
@@ -321,58 +336,58 @@
                 <!-- 4. التحديات السريرية والفسيولوجية -->
                 <section id="sec-limitations" class="content-sec hidden fade-in w-full">
                     <div class="mb-8 w-full">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-4">التحديات الفسيولوجية</h2>
-                        <p class="text-slate-200 text-lg md:text-xl mb-10 font-medium max-w-4xl leading-relaxed">حجم العين ليس المتغير الوحيد. العادات اليومية والتقدم بالعمر يغيران فسيولوجيا العدسة. الأجهزة العادية تفشل هنا، لكن هندستنا توفر الحلول:</p>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">التحديات الفسيولوجية</h2>
+                        <p class="text-slate-600 text-lg md:text-xl mb-10 font-medium max-w-4xl leading-relaxed">حجم العين ليس المتغير الوحيد. العادات اليومية والتقدم بالعمر يغيران فسيولوجيا العدسة. الأجهزة العادية تفشل هنا، لكن هندستنا توفر الحلول:</p>
                         
                         <div class="space-y-8">
                             
                             <!-- 1. إجهاد الشاشات -->
-                            <div class="bg-slate-900 border-2 border-red-500/50 rounded-3xl p-8 flex flex-col md:flex-row gap-8 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
-                                <div class="md:w-1/4 border-b md:border-b-0 md:border-l border-red-500/30 pb-6 md:pb-0 md:pl-6 flex flex-col justify-center">
+                            <div class="bg-white border-2 border-red-300 rounded-3xl p-8 flex flex-col md:flex-row gap-8 shadow-xl">
+                                <div class="md:w-1/4 border-b md:border-b-0 md:border-l border-red-200 pb-6 md:pb-0 md:pl-6 flex flex-col justify-center">
                                     <div class="text-5xl mb-3 drop-shadow-md">📱</div>
-                                    <h4 class="font-black text-white text-3xl mb-1">إجهاد الشاشات</h4>
-                                    <span class="text-base font-mono text-red-400 font-bold tracking-widest">PSEUDOMYOPIA</span>
+                                    <h4 class="font-black text-slate-900 text-3xl mb-1">إجهاد الشاشات</h4>
+                                    <span class="text-base font-mono text-red-600 font-bold tracking-widest">PSEUDOMYOPIA</span>
                                 </div>
                                 <div class="md:w-3/4 flex flex-col justify-center gap-4">
-                                    <p class="text-white text-xl font-medium leading-relaxed">
-                                        التركيز المستمر يسبب تشنج العضلة الهدبية، مما يعطي قراءة <span class="text-red-400 font-black">قصر نظر وهمي</span>.
+                                    <p class="text-slate-700 text-xl font-medium leading-relaxed">
+                                        التركيز المستمر يسبب تشنج العضلة الهدبية، مما يعطي قراءة <span class="text-red-600 font-black">قصر نظر وهمي</span>.
                                     </p>
-                                    <div class="bg-red-950/40 p-4 rounded-xl border border-red-900/50">
-                                        <p class="text-white text-lg"><strong class="text-red-400 font-black text-xl">الحل الهندسي:</strong> تفعيل نظام (Auto-fogging) لدفع الهدف وإرخاء العضلة تماماً قبل القياس.</p>
+                                    <div class="bg-red-50 p-4 rounded-xl border border-red-200">
+                                        <p class="text-slate-800 text-lg"><strong class="text-red-600 font-black text-xl">الحل الهندسي:</strong> تفعيل نظام (Auto-fogging) لدفع الهدف وإرخاء العضلة تماماً قبل القياس.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- 2. الشيخوخة -->
-                            <div class="bg-slate-900 border-2 border-purple-500/50 rounded-3xl p-8 flex flex-col md:flex-row gap-8 shadow-[0_0_30px_rgba(168,85,247,0.2)]">
-                                <div class="md:w-1/4 border-b md:border-b-0 md:border-l border-purple-500/30 pb-6 md:pb-0 md:pl-6 flex flex-col justify-center">
+                            <div class="bg-white border-2 border-purple-300 rounded-3xl p-8 flex flex-col md:flex-row gap-8 shadow-xl">
+                                <div class="md:w-1/4 border-b md:border-b-0 md:border-l border-purple-200 pb-6 md:pb-0 md:pl-6 flex flex-col justify-center">
                                     <div class="text-5xl mb-3 drop-shadow-md">👴</div>
-                                    <h4 class="font-black text-white text-3xl mb-1">تصلب العدسة</h4>
-                                    <span class="text-base font-mono text-purple-400 font-bold tracking-widest">PRESBYOPIA</span>
+                                    <h4 class="font-black text-slate-900 text-3xl mb-1">تصلب العدسة</h4>
+                                    <span class="text-base font-mono text-purple-600 font-bold tracking-widest">PRESBYOPIA</span>
                                 </div>
                                 <div class="md:w-3/4 flex flex-col justify-center gap-4">
-                                    <p class="text-white text-xl font-medium leading-relaxed">
+                                    <p class="text-slate-700 text-xl font-medium leading-relaxed">
                                         فقدان مرونة العدسة الداخلية بعد سن الـ 40 يمنع قدرة العين على التركيز للقريب.
                                     </p>
-                                    <div class="bg-purple-950/40 p-4 rounded-xl border border-purple-900/50">
-                                        <p class="text-white text-lg"><strong class="text-purple-400 font-black text-xl">النتيجة السريرية:</strong> الجهاز يقيس للمسافات البعيدة بدقة، لكن المريض سيحتاج حتماً <span class="text-white font-black">لنظارة قراءة (+D)</span>.</p>
+                                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                                        <p class="text-slate-800 text-lg"><strong class="text-purple-600 font-black text-xl">النتيجة السريرية:</strong> الجهاز يقيس للمسافات البعيدة بدقة، لكن المريض سيحتاج حتماً <span class="text-slate-900 font-black">لنظارة قراءة (+D)</span>.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- 3. المياه البيضاء -->
-                            <div class="bg-slate-900 border-2 border-amber-500/50 rounded-3xl p-8 flex flex-col md:flex-row gap-8 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
-                                <div class="md:w-1/4 border-b md:border-b-0 md:border-l border-amber-500/30 pb-6 md:pb-0 md:pl-6 flex flex-col justify-center">
+                            <div class="bg-white border-2 border-amber-300 rounded-3xl p-8 flex flex-col md:flex-row gap-8 shadow-xl">
+                                <div class="md:w-1/4 border-b md:border-b-0 md:border-l border-amber-200 pb-6 md:pb-0 md:pl-6 flex flex-col justify-center">
                                     <div class="text-5xl mb-3 drop-shadow-md">🌫️</div>
-                                    <h4 class="font-black text-white text-3xl mb-1">المياه البيضاء</h4>
-                                    <span class="text-base font-mono text-amber-400 font-bold tracking-widest">CATARACT</span>
+                                    <h4 class="font-black text-slate-900 text-3xl mb-1">المياه البيضاء</h4>
+                                    <span class="text-base font-mono text-amber-600 font-bold tracking-widest">CATARACT</span>
                                 </div>
                                 <div class="md:w-3/4 flex flex-col justify-center gap-4">
-                                    <p class="text-white text-xl font-medium leading-relaxed">
+                                    <p class="text-slate-700 text-xl font-medium leading-relaxed">
                                         إعتام العدسة يشتت أشعة القياس ويضعف إشارة الكاميرا بشكل كبير.
                                     </p>
-                                    <div class="bg-amber-950/40 p-4 rounded-xl border border-amber-900/50">
-                                        <p class="text-white text-lg"><strong class="text-amber-400 font-black text-xl">الحل الهندسي:</strong> استخدام مصدر ضوء (SLD 840nm) يخترق العتامة، مع تفعيل (Cataract Mode) لرفع حساسية الكاميرا.</p>
+                                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                                        <p class="text-slate-800 text-lg"><strong class="text-amber-600 font-black text-xl">الحل الهندسي:</strong> استخدام مصدر ضوء (SLD 840nm) يخترق العتامة، مع تفعيل (Cataract Mode) لرفع حساسية الكاميرا.</p>
                                     </div>
                                 </div>
                             </div>
@@ -384,78 +399,78 @@
                 <!-- 5. مختبر الفيزياء البصرية -->
                 <section id="sec-sim-optics" class="content-sec hidden fade-in w-full">
                     <div class="mb-8">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-4 md:mb-6">مختبر الفيزياء البصرية <span class="text-cyan-400 font-medium text-2xl md:text-3xl block md:inline">(Optics Lab)</span></h2>
-                        <p class="text-slate-200 text-lg md:text-xl font-medium mb-8 max-w-4xl leading-relaxed">سريريًا، أنت تبحث عن القراءة الدقيقة. هندسيًا، نحن نحسب انزياح الطور للضوء العائد من الشبكية تبعًا للطول المحوري. جرب التغيير وشاهد الخوارزمية.</p>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 md:mb-6">مختبر الفيزياء البصرية <span class="text-cyan-600 font-medium text-2xl md:text-3xl block md:inline">(Optics Lab)</span></h2>
+                        <p class="text-slate-600 text-lg md:text-xl font-medium mb-8 max-w-4xl leading-relaxed">سريريًا، أنت تبحث عن القراءة الدقيقة. هندسيًا، نحن نحسب انزياح الطور للضوء العائد من الشبكية تبعًا للطول المحوري. جرب التغيير وشاهد الخوارزمية.</p>
 
                         <div class="flex flex-col lg:flex-row gap-8">
                             
                             <!-- Canvas -->
-                            <div class="w-full lg:w-2/3 sim-container h-[400px] md:h-[550px] rounded-[2rem] border-2 border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative bg-[#02050f] overflow-hidden group">
+                            <div class="w-full lg:w-2/3 sim-container h-[400px] md:h-[550px] rounded-[2rem] border-2 border-slate-300 shadow-2xl relative bg-slate-900 overflow-hidden group">
                                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
                                 <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-40 bg-cyan-500/20 blur-[80px] pointer-events-none transition-opacity group-hover:opacity-100 opacity-60"></div>
                                 <div class="scanline"></div>
                                 <canvas id="opticsCanvas" class="relative z-10 w-full h-full"></canvas>
-                                <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 text-white/10 font-black text-3xl md:text-5xl pointer-events-none font-mono tracking-widest">OPTICS-ENGINE</div>
+                                <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 text-white/20 font-black text-3xl md:text-5xl pointer-events-none font-mono tracking-widest">OPTICS-ENGINE</div>
                             </div>
 
                             <!-- Controls -->
-                            <div class="w-full lg:w-1/3 bg-slate-900 p-6 md:p-8 rounded-[2rem] border-2 border-white/10 backdrop-blur-md flex flex-col shadow-2xl relative overflow-hidden">
+                            <div class="w-full lg:w-1/3 bg-white p-6 md:p-8 rounded-[2rem] border-2 border-slate-200 flex flex-col shadow-2xl relative overflow-hidden">
                                 <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
                                 
                                 <div class="mb-8 md:mb-10 relative z-10 mt-4">
-                                    <label class="flex justify-between items-center text-cyan-400 font-black mb-4 md:mb-6 uppercase tracking-widest text-sm md:text-base font-mono">
+                                    <label class="flex justify-between items-center text-cyan-700 font-black mb-4 md:mb-6 uppercase tracking-widest text-sm md:text-base font-mono">
                                         <span>Axial Length</span>
-                                        <span class="text-white border-2 border-slate-700 px-3 py-1 rounded-md text-xs md:text-sm bg-slate-950">الطول المحوري</span>
+                                        <span class="text-slate-800 border-2 border-slate-300 px-3 py-1 rounded-md text-xs md:text-sm bg-slate-100">الطول المحوري</span>
                                     </label>
                                     
                                     <div dir="ltr" class="w-full">
-                                        <div class="relative w-full h-3 bg-slate-950 rounded-full border-2 border-slate-800 shadow-inner mb-3 md:mb-4">
+                                        <div class="relative w-full h-3 bg-slate-200 rounded-full border-2 border-slate-300 shadow-inner mb-3 md:mb-4">
                                             <input type="range" id="refractSlider" min="-8" max="8" value="0" step="0.5" 
                                                    class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-20"
                                                    oninput="document.getElementById('slider-track').style.width = ((this.value - this.min) / (this.max - this.min)) * 100 + '%'">
-                                            <div id="slider-track" class="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full w-1/2 pointer-events-none shadow-[0_0_15px_rgba(0,240,255,0.6)] transition-all duration-75"></div>
-                                            <div class="absolute top-1/2 left-1/2 w-1.5 h-5 bg-white/50 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full"></div>
+                                            <div id="slider-track" class="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full w-1/2 pointer-events-none shadow-sm transition-all duration-75"></div>
+                                            <div class="absolute top-1/2 left-1/2 w-1.5 h-5 bg-slate-600/50 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full"></div>
                                         </div>
-                                        <div class="flex justify-between text-xs md:text-sm text-slate-300 font-mono font-bold uppercase tracking-wider">
-                                            <span class="hover:text-cyan-300 transition-colors">(-D) قصر نظر</span>
-                                            <span class="text-cyan-400">مثالي (0)</span>
-                                            <span class="hover:text-cyan-300 transition-colors">طول نظر (+D)</span>
+                                        <div class="flex justify-between text-xs md:text-sm text-slate-500 font-mono font-bold uppercase tracking-wider">
+                                            <span class="hover:text-cyan-600 transition-colors">(-D) قصر نظر</span>
+                                            <span class="text-cyan-600">مثالي (0)</span>
+                                            <span class="hover:text-cyan-600 transition-colors">طول نظر (+D)</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mb-6 md:mb-8 relative z-10">
-                                    <label class="block text-red-400 font-black mb-3 md:mb-4 uppercase tracking-widest text-sm md:text-base font-mono text-right">
+                                    <label class="block text-red-600 font-black mb-3 md:mb-4 uppercase tracking-widest text-sm md:text-base font-mono text-right">
                                         CLINICAL ERROR MODE:
                                     </label>
                                     <div class="relative">
-                                        <select id="patientCondition" class="w-full bg-slate-950 text-white font-bold border-2 border-slate-700 rounded-xl p-4 md:p-5 outline-none focus:border-cyan-500 shadow-inner font-mono text-sm md:text-base appearance-none cursor-pointer">
+                                        <select id="patientCondition" class="w-full bg-slate-50 text-slate-900 font-bold border-2 border-slate-300 rounded-xl p-4 md:p-5 outline-none focus:border-cyan-500 shadow-inner font-mono text-sm md:text-base appearance-none cursor-pointer">
                                             <option value="normal">NORMAL : مريض طبيعي</option>
                                             <option value="phone_strain">SCREEN STRAIN : إجهاد الشاشات</option>
                                             <option value="presbyopia">PRESBYOPIA : شيخوخة العدسة</option>
                                             <option value="cataract">CATARACT : مياه بيضاء</option>
                                             <option value="shake">TREMOR : عدم استقرار المريض</option>
                                         </select>
-                                        <div class="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500 text-lg">▼</div>
+                                        <div class="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-600 text-lg">▼</div>
                                     </div>
                                 </div>
 
-                                <button id="btn-correction" onclick="simOptics.toggleCorrection()" class="w-full relative group overflow-hidden bg-slate-950 hover:bg-slate-900 text-white font-black py-4 md:py-5 rounded-xl border-2 border-slate-700 hover:border-cyan-500 transition-all flex items-center justify-center gap-3 md:gap-4 mb-6 md:mb-8 z-10 shadow-xl text-base md:text-lg">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                                    <span class="text-2xl md:text-3xl drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">👓</span> 
+                                <button id="btn-correction" onclick="simOptics.toggleCorrection()" class="w-full relative group overflow-hidden bg-slate-100 hover:bg-slate-200 text-slate-900 font-black py-4 md:py-5 rounded-xl border-2 border-slate-300 hover:border-cyan-500 transition-all flex items-center justify-center gap-3 md:gap-4 mb-6 md:mb-8 z-10 shadow-sm text-base md:text-lg">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                                    <span class="text-2xl md:text-3xl drop-shadow-sm">👓</span> 
                                     <span class="tracking-wide">تطبيق عدسة تصحيحية</span>
                                 </button>
 
-                                <div class="bg-black p-5 md:p-6 rounded-2xl border-2 border-white/10 relative overflow-hidden shadow-inner mt-auto">
+                                <div class="bg-slate-50 p-5 md:p-6 rounded-2xl border-2 border-slate-200 relative overflow-hidden shadow-inner mt-auto">
                                     <div class="absolute top-0 left-0 w-2 h-full bg-cyan-500 shadow-[0_0_15px_#00f0ff]" id="dsp-indicator"></div>
-                                    <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDBMMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9zdmc+')]"></div>
+                                    <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDBMMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9zdmc+')]"></div>
                                     <div class="relative z-10 pl-4">
                                         <div class="flex justify-between items-center mb-2 md:mb-3">
-                                            <h4 class="text-xs md:text-sm text-slate-400 font-mono font-bold uppercase tracking-widest">DSP Telemetry Readout</h4>
-                                            <span class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-400 animate-pulse shadow-[0_0_10px_#4ade80]" id="dsp-status-dot"></span>
+                                            <h4 class="text-xs md:text-sm text-slate-500 font-mono font-bold uppercase tracking-widest">DSP Telemetry Readout</h4>
+                                            <span class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500 animate-pulse shadow-sm" id="dsp-status-dot"></span>
                                         </div>
-                                        <div id="optics-result" class="text-4xl md:text-5xl font-mono text-cyan-400 font-black mb-2 md:mb-3 tracking-tighter drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">SPH: 0.00 D</div>
-                                        <p id="optics-desc" class="text-xs md:text-sm text-slate-300 font-mono font-bold uppercase border-t border-white/20 pt-2 md:pt-3 mt-2 md:mt-3 leading-relaxed">SYSTEM NOMINAL. PERFECT FOCUS.</p>
+                                        <div id="optics-result" class="text-4xl md:text-5xl font-mono text-cyan-600 font-black mb-2 md:mb-3 tracking-tighter drop-shadow-sm">SPH: 0.00 D</div>
+                                        <p id="optics-desc" class="text-xs md:text-sm text-slate-600 font-mono font-bold uppercase border-t border-slate-300 pt-2 md:pt-3 mt-2 md:mt-3 leading-relaxed">SYSTEM NOMINAL. PERFECT FOCUS.</p>
                                     </div>
                                 </div>
                             </div>
@@ -466,21 +481,21 @@
                 <!-- 6. محاكي التضبيب -->
                 <section id="sec-sim-light" class="content-sec hidden fade-in w-full">
                     <div class="mb-8">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 md:mb-8">محاكي: التضبيب الآلي</h2>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 md:mb-8">محاكي: التضبيب الآلي</h2>
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <div class="w-full lg:w-2/3 sim-container h-[400px] md:h-[550px] border-2 border-cyan-900/60 bg-slate-950 rounded-[2rem] overflow-hidden shadow-2xl">
+                            <div class="w-full lg:w-2/3 sim-container h-[400px] md:h-[550px] border-2 border-cyan-300 bg-slate-900 rounded-[2rem] overflow-hidden shadow-2xl">
                                 <canvas id="lightPathCanvas" class="w-full h-full"></canvas>
                             </div>
-                            <div class="w-full lg:w-1/3 bg-slate-900 p-6 md:p-8 rounded-[2rem] border-2 border-cyan-800/50 shadow-2xl flex flex-col justify-center">
-                                <button onclick="simLight.toggleFogging()" class="w-full mb-4 md:mb-6 bg-slate-950 text-white font-black px-6 py-4 rounded-xl border-2 border-slate-700 text-lg md:text-xl transition-all hover:border-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)]">
-                                    نظام التضبيب: <span id="btn-fogging" class="text-red-400">مغلق</span>
+                            <div class="w-full lg:w-1/3 bg-white p-6 md:p-8 rounded-[2rem] border-2 border-cyan-200 shadow-2xl flex flex-col justify-center">
+                                <button onclick="simLight.toggleFogging()" class="w-full mb-4 md:mb-6 bg-slate-50 text-slate-900 font-black px-6 py-4 rounded-xl border-2 border-slate-300 text-lg md:text-xl transition-all hover:border-amber-400 hover:shadow-lg">
+                                    نظام التضبيب: <span id="btn-fogging" class="text-red-600">مغلق</span>
                                 </button>
-                                <button onclick="simLight.fireLaser()" class="w-full bg-cyan-950 text-white font-black px-6 py-4 rounded-xl border-2 border-cyan-500 text-lg md:text-xl transition-all shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:bg-cyan-900">
+                                <button onclick="simLight.fireLaser()" class="w-full bg-cyan-500 text-white font-black px-6 py-4 rounded-xl border-2 border-cyan-600 text-lg md:text-xl transition-all shadow-md hover:bg-cyan-600">
                                     إطلاق نبضة القياس ▶
                                 </button>
-                                <div class="mt-6 md:mt-8 p-6 border-2 border-amber-500/50 rounded-xl bg-slate-950 shadow-inner">
-                                    <h5 class="text-sm md:text-base text-amber-400 mb-3 font-black uppercase tracking-widest font-mono">التأثير الفسيولوجي:</h5>
-                                    <div id="physio-status" class="text-base md:text-lg font-bold text-white leading-relaxed">عضلة العين متشنجة (Accommodation).</div>
+                                <div class="mt-6 md:mt-8 p-6 border-2 border-amber-300 rounded-xl bg-amber-50 shadow-inner">
+                                    <h5 class="text-sm md:text-base text-amber-700 mb-3 font-black uppercase tracking-widest font-mono">التأثير الفسيولوجي:</h5>
+                                    <div id="physio-status" class="text-base md:text-lg font-bold text-slate-900 leading-relaxed">عضلة العين متشنجة (Accommodation).</div>
                                 </div>
                             </div>
                         </div>
@@ -490,32 +505,32 @@
                 <!-- 7. محاكي تضاريس القرنية -->
                 <section id="sec-sim-kerato" class="content-sec hidden fade-in w-full">
                     <div class="mb-8">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 md:mb-8">محاكي: تضاريس القرنية</h2>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 md:mb-8">محاكي: تضاريس القرنية</h2>
                         <div class="flex flex-col lg:flex-row gap-8">
                             
                             <!-- الجزء الأيمن: المحاكي -->
                             <div class="w-full lg:w-1/2 flex flex-col shadow-2xl">
-                                <div class="sim-container h-[400px] md:h-[500px] border-2 border-cyan-900/60 bg-[#010205] rounded-t-[2rem] overflow-hidden relative">
+                                <div class="sim-container h-[400px] md:h-[500px] border-2 border-cyan-300 bg-slate-900 rounded-t-[2rem] overflow-hidden relative">
                                     
-                                    <div class="absolute top-4 left-4 md:top-6 md:left-6 z-20 bg-slate-950/90 border-l-4 border-cyan-500 p-3 md:p-4 rounded-xl text-sm md:text-lg shadow-lg">
-                                        <div class="font-mono text-white font-bold mb-1">R1: <span id="hud-r1" class="text-green-400">43.00D</span></div>
-                                        <div class="font-mono text-white font-bold">R2: <span id="hud-r2" class="text-green-400">43.00D</span></div>
+                                    <div class="absolute top-4 left-4 md:top-6 md:left-6 z-20 bg-white/90 border-l-4 border-cyan-400 p-3 md:p-4 rounded-xl text-sm md:text-lg shadow-lg">
+                                        <div class="font-mono text-slate-900 font-bold mb-1">R1: <span id="hud-r1" class="text-green-600">43.00D</span></div>
+                                        <div class="font-mono text-slate-900 font-bold">R2: <span id="hud-r2" class="text-green-600">43.00D</span></div>
                                     </div>
                                     
                                     <div class="absolute top-4 right-4 md:top-6 md:right-6 z-20 flex flex-col md:flex-row gap-2 md:gap-3">
-                                        <button onclick="simMires.toggleHeatmap(false)" id="btn-rings" class="bg-cyan-500 text-black px-4 py-2 rounded-lg text-xs md:text-sm font-black transition-all shadow-[0_0_15px_rgba(0,240,255,0.4)]">RINGS</button>
-                                        <button onclick="simMires.toggleHeatmap(true)" id="btn-heat" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs md:text-sm border-2 border-slate-700 font-black transition-all hover:bg-slate-800">HEATMAP</button>
+                                        <button onclick="simMires.toggleHeatmap(false)" id="btn-rings" class="bg-cyan-500 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-black transition-all shadow-md">RINGS</button>
+                                        <button onclick="simMires.toggleHeatmap(true)" id="btn-heat" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-xs md:text-sm border-2 border-slate-300 font-black transition-all hover:bg-slate-200">HEATMAP</button>
                                     </div>
                                     
-                                    <div id="heat-scale" class="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 h-40 md:h-56 w-5 md:w-8 rounded-full border-2 border-slate-700 hidden shadow-xl" style="background: linear-gradient(to top, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000);"></div>
+                                    <div id="heat-scale" class="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 h-40 md:h-56 w-5 md:w-8 rounded-full border-2 border-slate-300 hidden shadow-xl" style="background: linear-gradient(to top, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000);"></div>
                                     
-                                    <div id="hud-warning" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 bg-red-950/90 border-2 border-red-500 text-red-400 px-6 py-2 rounded-xl text-sm md:text-base font-mono font-black tracking-widest hidden animate-pulse backdrop-blur-sm shadow-[0_0_20px_rgba(239,68,68,0.5)]">IRREGULARITY DETECTED</div>
+                                    <div id="hud-warning" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 bg-red-100 border-2 border-red-400 text-red-700 px-6 py-2 rounded-xl text-sm md:text-base font-mono font-black tracking-widest hidden animate-pulse shadow-md">IRREGULARITY DETECTED</div>
                                     
                                     <canvas id="miresCanvas" class="relative z-10 w-full h-full"></canvas>
                                 </div>
                                 
-                                <div class="bg-slate-900 p-4 md:p-6 border-2 border-t-0 border-cyan-900/60 rounded-b-[2rem]">
-                                    <select id="corneaSelect" class="bg-slate-950 text-cyan-400 font-black border-2 border-cyan-800 rounded-xl px-4 md:px-6 py-3 md:py-4 w-full outline-none text-base md:text-lg appearance-none cursor-pointer text-center shadow-inner">
+                                <div class="bg-slate-50 p-4 md:p-6 border-2 border-t-0 border-cyan-300 rounded-b-[2rem]">
+                                    <select id="corneaSelect" class="bg-white text-cyan-700 font-black border-2 border-cyan-300 rounded-xl px-4 md:px-6 py-3 md:py-4 w-full outline-none text-base md:text-lg appearance-none cursor-pointer text-center shadow-sm">
                                         <option value="normal">قرنية كروية مثالية (Normal)</option>
                                         <option value="astig_with">استجماتيزم مع القاعدة (WTR)</option>
                                         <option value="astig_against">استجماتيزم ضد القاعدة (ATR)</option>
@@ -526,11 +541,11 @@
                             </div>
                             
                             <!-- الجزء الأيسر: التحليل المباشر -->
-                            <div class="w-full lg:w-1/2 bg-slate-900 p-6 md:p-10 rounded-[2rem] border-r-8 border-amber-500 shadow-2xl flex flex-col">
-                                <h3 class="text-amber-400 font-black mb-6 text-2xl md:text-3xl flex items-center gap-3">
+                            <div class="w-full lg:w-1/2 bg-white p-6 md:p-10 rounded-[2rem] border-r-8 border-amber-400 shadow-2xl flex flex-col">
+                                <h3 class="text-amber-600 font-black mb-6 text-2xl md:text-3xl flex items-center gap-3">
                                     <span>💡</span> التحليل المباشر
                                 </h3>
-                                <div id="mire-analysis" class="text-white text-base md:text-xl font-medium leading-relaxed bg-slate-950 p-6 md:p-8 rounded-2xl border-2 border-slate-700 flex-grow shadow-inner">
+                                <div id="mire-analysis" class="text-slate-800 text-base md:text-xl font-medium leading-relaxed bg-slate-50 p-6 md:p-8 rounded-2xl border-2 border-slate-200 flex-grow shadow-inner">
                                     <!-- سيتم حقن النص هنا -->
                                 </div>
                             </div>
@@ -542,27 +557,27 @@
               <!-- 8. محاكي التتبع الآلي -->
                 <section id="sec-sim-ai" class="content-sec hidden fade-in w-full">
                     <div class="mb-8">
-                        <h2 class="text-3xl md:text-4xl font-black text-white mb-3 md:mb-4">التتبع الآلي <span class="text-cyan-500 font-light block md:inline text-xl md:text-2xl">(AI Auto-Tracking)</span></h2>
+                        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-3 md:mb-4">التتبع الآلي <span class="text-cyan-600 font-light block md:inline text-xl md:text-2xl">(AI Auto-Tracking)</span></h2>
                         
                         <!-- إضافة dir="ltr" هنا مهم جداً لعكس اتجاه الشاشات -->
                         <div class="flex flex-col lg:flex-row gap-6" dir="ltr">
                             
                             <!-- الشاشة اليسرى: الكاميرا الخام (Raw Camera) -->
                             <div class="w-full lg:w-1/2 flex flex-col gap-3 md:gap-4">
-                                <div class="bg-slate-900 p-3 md:p-4 rounded-xl border border-slate-700 text-center shadow-lg relative">
+                                <div class="bg-white p-3 md:p-4 rounded-xl border border-slate-200 text-center shadow-lg relative">
                                     <div class="absolute top-2 left-4 text-slate-500 font-mono text-xs z-20">RAW CAMERA</div>
-                                    <div class="sim-container h-[200px] md:h-[250px] bg-black rounded-lg"><canvas id="aiRawCanvas" class="w-full h-full"></canvas></div>
+                                    <div class="sim-container h-[200px] md:h-[250px] bg-slate-900 rounded-lg"><canvas id="aiRawCanvas" class="w-full h-full"></canvas></div>
                                 </div>
-                                <button id="btn-track" onclick="simAI.toggleTracking()" class="w-full bg-slate-800 text-slate-300 font-black text-xl md:text-3xl py-4 md:py-6 rounded-2xl border-2 border-slate-600 transition-all hover:border-cyan-500">
+                                <button id="btn-track" onclick="simAI.toggleTracking()" class="w-full bg-slate-100 text-slate-700 font-black text-xl md:text-3xl py-4 md:py-6 rounded-2xl border-2 border-slate-300 transition-all hover:border-cyan-400">
                                     تفعيل التتبع الآلي
                                 </button>
                             </div>
 
                             <!-- الشاشة اليمنى: شاشة المعالجة (Processed DSP) -->
                             <div class="w-full lg:w-1/2 flex flex-col gap-3 md:gap-4">
-                                <div class="bg-black p-3 md:p-4 rounded-xl border border-cyan-800 text-center shadow-lg relative">
+                                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-cyan-300 text-center shadow-lg relative">
                                     <div class="absolute top-2 right-4 text-cyan-700 font-mono text-xs z-20">DSP PROCESSOR</div>
-                                    <div class="sim-container h-[200px] md:h-[250px]"><canvas id="aiProcessedCanvas" class="w-full h-full"></canvas></div>
+                                    <div class="sim-container h-[200px] md:h-[250px] bg-slate-900 rounded-lg"><canvas id="aiProcessedCanvas" class="w-full h-full"></canvas></div>
                                 </div>
                             </div>
                             
@@ -571,26 +586,26 @@
                 </section>
                 <!-- 9. الخلاصة والبيانات (EMR) -->
                 <section id="sec-printout" class="content-sec hidden fade-in w-full">
-                    <div class="relative rounded-[3rem] p-10 md:p-20 mb-8 overflow-hidden bg-gradient-to-b from-[#0a0f1c] to-black border-2 border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center text-center min-h-[60vh] md:min-h-[75vh]">
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-cyan-600/10 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
+                    <div class="relative rounded-[3rem] p-10 md:p-20 mb-8 overflow-hidden bg-gradient-to-b from-slate-50 to-white border-2 border-slate-200 shadow-2xl flex flex-col items-center justify-center text-center min-h-[60vh] md:min-h-[75vh]">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-cyan-100/50 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
                         
-                        <div class="relative z-10 w-24 h-24 md:w-32 md:h-32 rounded-full bg-cyan-950 border-2 border-cyan-500 flex items-center justify-center mb-8 md:mb-12 shadow-[0_0_50px_rgba(0,240,255,0.3)]">
-                            <svg class="w-12 h-12 md:w-16 md:h-16 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="relative z-10 w-24 h-24 md:w-32 md:h-32 rounded-full bg-cyan-50 border-2 border-cyan-400 flex items-center justify-center mb-8 md:mb-12 shadow-sm">
+                            <svg class="w-12 h-12 md:w-16 md:h-16 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                             </svg>
                         </div>
 
-                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 md:mb-8 relative z-10 drop-shadow-lg">التكامل مع السجلات الطبية (EMR)</h2>
-                        <p class="text-xl md:text-2xl text-slate-300 mb-10 md:mb-16 max-w-3xl mx-auto relative z-10 font-medium px-4 leading-relaxed">
-                            الجهاز لا يطبع ورقة حرارية فحسب، بل يصدر البيانات مهندسياً بصيغة <span class="text-white font-mono font-bold bg-white/20 px-3 py-1 rounded-lg">XML</span> عبر بروتوكولات HL7/DICOM.
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 md:mb-8 relative z-10 drop-shadow-sm">التكامل مع السجلات الطبية (EMR)</h2>
+                        <p class="text-xl md:text-2xl text-slate-600 mb-10 md:mb-16 max-w-3xl mx-auto relative z-10 font-medium px-4 leading-relaxed">
+                            الجهاز لا يطبع ورقة حرارية فحسب، بل يصدر البيانات مهندسياً بصيغة <span class="text-slate-900 font-mono font-bold bg-slate-200 px-3 py-1 rounded-lg">XML</span> عبر بروتوكولات HL7/DICOM.
                         </p>
                         
-                        <div class="w-[90%] max-w-4xl h-1.5 bg-gradient-to-r from-transparent via-slate-700 to-transparent my-8 md:my-12 relative z-10 rounded-full"></div>
+                        <div class="w-[90%] max-w-4xl h-1.5 bg-gradient-to-r from-transparent via-slate-300 to-transparent my-8 md:my-12 relative z-10 rounded-full"></div>
                         
-                        <h2 class="text-xl md:text-3xl font-mono font-bold text-cyan-500 tracking-widest mb-6 md:mb-8 relative z-10 uppercase">The Conclusion</h2>
-                        <p class="text-3xl md:text-5xl lg:text-6xl text-white font-black max-w-5xl mx-auto leading-tight relative z-10 px-4 drop-shadow-xl">
+                        <h2 class="text-xl md:text-3xl font-mono font-bold text-cyan-600 tracking-widest mb-6 md:mb-8 relative z-10 uppercase">The Conclusion</h2>
+                        <p class="text-3xl md:text-5xl lg:text-6xl text-slate-900 font-black max-w-5xl mx-auto leading-tight relative z-10 px-4 drop-shadow-md">
                             "التكنولوجيا لا تلغي براعة الطبيب... <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mt-4 block">بل تختصر وقته، وتحميه من الأخطاء."</span>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-emerald-600 mt-4 block">بل تختصر وقته، وتحميه من الأخطاء."</span>
                         </p>
                     </div>
                 </section>
@@ -601,17 +616,17 @@
 
     <!-- نافذة المصطلحات (غير مستخدمة الآن تقريباً، لكن بقيت للسلامة البرمجية) -->
     <div id="comp-modal" class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4 opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeComp()"></div>
-        <div class="bg-slate-950 border-2 border-cyan-500 rounded-3xl w-full max-w-3xl shadow-[0_0_60px_rgba(0,240,255,0.4)] relative z-10 flex flex-col overflow-hidden">
-            <div class="bg-slate-900 p-6 md:p-8 border-b-2 border-slate-800 flex justify-between items-center">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onclick="closeComp()"></div>
+        <div class="bg-white border-2 border-cyan-400 rounded-3xl w-full max-w-3xl shadow-[0_0_40px_rgba(0,0,0,0.1)] relative z-10 flex flex-col overflow-hidden">
+            <div class="bg-slate-50 p-6 md:p-8 border-b-2 border-slate-200 flex justify-between items-center">
                 <div class="flex items-center gap-4 md:gap-6">
                     <div id="comp-modal-icon" class="text-4xl md:text-6xl"></div>
-                    <h3 id="comp-modal-title" class="text-2xl md:text-4xl font-black text-cyan-400"></h3>
+                    <h3 id="comp-modal-title" class="text-2xl md:text-4xl font-black text-cyan-700"></h3>
                 </div>
-                <button onclick="closeComp()" class="text-slate-500 hover:text-red-500 text-4xl md:text-5xl leading-none transition-colors">&times;</button>
+                <button onclick="closeComp()" class="text-slate-400 hover:text-red-500 text-4xl md:text-5xl leading-none transition-colors">&times;</button>
             </div>
             <div class="p-8 md:p-10 text-base md:text-xl">
-                <p id="comp-modal-desc" class="text-white font-medium leading-relaxed"></p>
+                <p id="comp-modal-desc" class="text-slate-800 font-medium leading-relaxed"></p>
             </div>
         </div>
     </div>
